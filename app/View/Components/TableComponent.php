@@ -9,17 +9,23 @@ class TableComponent extends Component
     public $title = '';
     public $headings = [];
     public $items = [];
+    public $actions = true;
+    public $bannable = false;
+    public $resource = '';
 
     /**
      * @param string $title
      * @param array $headings
      * @param array $items
      */
-    public function __construct(string $title = '', array $headings = [], array $items = [])
+    public function __construct(string $title = '', string $resource = '', array $headings = [], array $items = [], bool $actions = true, bool $bannable = false)
     {
         $this->title = $title;
+        $this->resource = $resource;
         $this->headings = $headings;
         $this->items = $items;
+        $this->actions = $actions;
+        $this->bannable = $bannable;
     }
 
     /**
