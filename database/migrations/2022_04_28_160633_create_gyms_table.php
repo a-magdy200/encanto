@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cover_image');
-            $table->foreignId("manager_id")->references("id")->on("users");
             $table->timestamps();
         });
     }
