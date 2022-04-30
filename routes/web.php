@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TrainingPackageController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,13 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
 
+Route::get('/table', [TrainingPackageController::class, 'index'])->name('packages.index');
+Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
+Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
+Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
+Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
+Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
+Route::delete('/packages/{package}', [TrainingPackageController::class, 'destroy'])->name('packages.destroy');
+Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
 Auth::routes();
