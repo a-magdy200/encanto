@@ -12,15 +12,14 @@ class CityManagerController extends Controller
 {
     public function index()
     {
-        
         //User::find()
         $items=[];
-        $roleId=Role::where('role_name','=','admin')->value('role_name');
-        $cityManagers=User::find(1)->get();
+        $roleId=Role::where('role_name','=','admin')->value('id');
+        $cityManagers=User::find($roleId)->get();
         //dd($cityManagers);
         foreach ($cityManagers as $cityManager)
              {
-              dd($cityManager->city);
+              dd($cityManager->city); // returns null ??????
               $item = ['id' => $cityManager->id, 'name'=>$cityManager->name, 'city'=> $cityManager->city];
               array_push($items,$item);
              }
