@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('manager_id');
-            $table->foreign('manager_id')->references('id')->on('users');
+            $table->foreignId('manager_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

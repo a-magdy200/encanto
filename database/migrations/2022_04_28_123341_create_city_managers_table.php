@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('city_managers', function (Blueprint $table) {
             $table->bigInteger('national_id')->unique();
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users');
         });
     }
 
