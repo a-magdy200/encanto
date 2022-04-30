@@ -8,7 +8,7 @@ class OrderController extends Controller
 {
    public function index()
    {
-       $orders=Order::all();
+       $orders=Order::all()->toArray();;
        $headings = ['id','user_id', 'package_id', 'number_of_sessions','price'];
        $title='orders';
        return view('orders.index')->with(['items'=> $orders, 'title'=>$title, 'headings' => $headings]);
