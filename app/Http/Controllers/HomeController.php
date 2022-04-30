@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index');
     }
 
     /**
@@ -24,5 +24,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function table() {
+        $items = [[1, 'hi'],[2, 'hi'],[3, 'hi'],[4, 'hi'],[5, 'hi'],[6, 'hi'],[7, 'hi'],[8, 'hi'],[9, 'hi'],[10, 'hi']];
+        $headings = ['id', 'name'];
+        $title='test';
+        return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
     }
 }
