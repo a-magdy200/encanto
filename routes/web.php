@@ -21,5 +21,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
 
 Auth::routes();
