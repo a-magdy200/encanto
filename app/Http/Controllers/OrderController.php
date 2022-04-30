@@ -56,11 +56,9 @@ class OrderController extends Controller
     {
         $order = User::find($id);
         $order->user_id = $request->get('user_id');
-        $post->package_id = $request->get('package_id');
-        $post->post_creator = $username;
-        $post->user_id = $userid;
-        $post->image=$name;
-        $post->update();
+        $order->package_id = $request->get('package_id');
+        
+        $order->update();
         
     }
 }
