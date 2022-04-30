@@ -12,11 +12,11 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendors/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendors/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendors/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendors/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/adminlte.min.css')}}">
     @yield('third_party_stylesheets')
@@ -104,26 +104,26 @@
     </footer>
 </div>
 <!-- jQuery -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- DataTables  & Plugins -->
-<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('/js/script.js')}}"></script>
+<script src="{{asset('js/script.js')}}"></script>
 @yield('third_party_scripts')
 @stack('page_scripts')
 </body>
