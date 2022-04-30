@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gyms', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('cover_image');
-            $table->foreignId("manager_id")->references("id")->on("users");
-            $table->timestamps();
+        Schema::create('training_sessions_coaches', function (Blueprint $table) {
+            $table->foreignId('training_session_id')->references('id')->on('training_sessions');
+            $table->foreignId('coach_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gyms');
+        //
     }
 };
