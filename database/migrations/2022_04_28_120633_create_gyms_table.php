@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cover_image');
-            $table->foreignId("city_it")->references("id")->on("cities");
+            $table->foreignId("city_id")->references("id")->on("cities");
             $table->timestamps();
         });
     }
