@@ -24,7 +24,7 @@
                                 @foreach($item as $key => $value)
                                     @if($key === 'is_banned')
                                         <td>
-                                            @if($item['is_banned'])
+                                            @if($item->is_banned)
                                                 <a href="{{$resource}}/restore" class="btn btn-success ml-2">U<i class="fa fa-check"></i></a>
                                             @else
                                                 <a href="{{$resource}}/ban" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
