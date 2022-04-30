@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
             $table->date('date_of_birth');
-            $table->string('gender');
+            $table->enum('gender', ['male', 'female']);
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

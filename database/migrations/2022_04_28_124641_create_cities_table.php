@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('city_name');
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('name');
+            $table->integer('manager_id');
+            $table->foreign('manager_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

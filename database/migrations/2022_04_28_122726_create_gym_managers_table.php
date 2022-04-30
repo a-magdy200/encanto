@@ -14,12 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('gym_managers', function (Blueprint $table) {
-            $table->id();
             $table->bigInteger('national_id')->unique();
             $table->boolean('is_banned');
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
         });
     }
 

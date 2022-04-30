@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('training_packages', function (Blueprint $table) {
             $table->id();
             $table->string('package_name');
-            $table->integer('sessions_number');
-            $table->integer('price_in_cents');
+            $table->integer('number_of_sessions');
+            $table->integer('price');
             $table->timestamps();
         });
     }

@@ -14,11 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('city_managers', function (Blueprint $table) {
-            $table->id();
             $table->bigInteger('national_id')->unique();
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
         });
     }
 
