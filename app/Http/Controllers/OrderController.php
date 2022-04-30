@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Order;
 use App\Models\User;
 use App\Models\TrainingPackage;
@@ -9,37 +10,64 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-   public function index()
-   {
-       $orders=Order::all('id','user_id','package_id','number_of_sessions','price')->toArray();
-       $headings = ['id','user_id', 'package_id', 'number_of_sessions','price'];
-       $title='orders';
-       return view('orders.index')->with(['items'=> $orders, 'title'=>$title, 'headings' => $headings]);
+    public function index()
+    {
+        $orders = Order::all('id', 'user_id', 'package_id', 'number_of_sessions', 'price')->toArray();
+        $headings = ['id', 'user_id', 'package_id', 'number_of_sessions', 'price'];
+        $title = 'orders';
+        return view('orders.index')->with(['items' => $orders, 'title' => $title, 'headings' => $headings]);
     }
     public function create()
     {
-        $users=User::all();
-        $packages=TrainingPackage::all();        
+        $users = User::all();
+        $packages = TrainingPackage::all();
         return view('orders.create', [
-            'users' => $users,'packages'=>$packages
+            'users' => $users, 'packages' => $packages
         ]);
     }
     public function store(Request $request)
     {
-        $package_id=$request->get('package_id');
-        $order_package=TrainingPackage::find($package_id);
+        $package_id = $request->get('package_id');
+        $order_package = TrainingPackage::find($package_id);
         Order::create([
-            'user_id'=>$request->get('user_id'),
-            'package_id'=>$package_id,
-            'number_of_sessions'=>$order_package->number_of_sessions,
-            'price'=>$order_package->price,
+            'user_id' => $request->get('user_id'),
+            'package_id' => $package_id,
+            'number_of_sessions' => $order_package->number_of_sessions,
+            'price' => $order_package->price,
 
         ]);
-       return to_route('orders.index');
-
+        return to_route('orders.index');
+    }
+    public function show($orderid)
+    {
+        $order = Order::find($orderid);
+        return view('orders.show', ['order' => $order]);
+    }
+    public function edit($orderid)
+    {
+        $users = User::all();
+        $packages = TrainingPackage::all();
+        $order = Order::find($orderid);
+        return view('orders.edit', [
+            'order' => $order, 'users' => $users, 'packages' => $packages
+        ]);
+    }
+    public function update($request,$id)
+    {
+        $order = User::find($id);
+        $order->user_id = $request->get('user_id');
+        $post->package_id = $request->get('package_id');
+        $post->post_creator = $username;
+        $post->user_id = $userid;
+        $post->image=$name;
+        $post->update();
+        
     }
 }
 /*
+return view('orders.create', [
+            'users' => $users, 'packages' => $packages
+        ]);
 <?php
 
 namespace App\Http\Controllers;
@@ -91,4 +119,4 @@ class UserController extends Controller
     
 }
 
-*/ 
+*/
