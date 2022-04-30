@@ -5,3 +5,19 @@
         <p>Home</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('show.AllGyms') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Gyms
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('show.gymForm') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Add Gym
+        </p>
+    </a>
+</li>

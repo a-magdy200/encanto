@@ -40,7 +40,6 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                     <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
                          class="user-image img-circle elevation-2" alt="User Image">
-
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
@@ -48,7 +47,6 @@
                         <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
                              class="img-circle elevation-2"
                              alt="User Image">
-
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
@@ -73,6 +71,25 @@
     <div class="content-wrapper">
         @yield('content-header')
         <section class="content">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
+        @if(session()->has('failed'))
+            <div class="alert alert-danger">
+                {{ session()->get('failed') }}
+            </div>
+        @endif
             @yield('content')
         </section>
     </div>
