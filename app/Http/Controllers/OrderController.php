@@ -55,13 +55,13 @@ class OrderController extends Controller
     public function update(Request $request,$orderid)
     {
        // dd($request);
-        $Order = User::find($orderid);
+        $Order = Order::find($orderid);
         $Order->user_id = $request->get('user_id');
         $Order->package_id = $request->get('package_id');
         $Order->price = $request->get('order_price');
         $Order->number_of_sessions = $request->get('number_of_sessions');
         $Order->update();
-        
+        return to_route("orders.index");
     }
 }
 
