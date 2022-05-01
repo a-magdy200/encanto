@@ -12,10 +12,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::all('id', 'user_id', 'package_id', 'number_of_sessions', 'price')->toArray();
-        $headings = ['id', 'user_id', 'package_id', 'number_of_sessions', 'price'];
-        $title = 'orders';
-        return view('orders.index')->with(['items' => $orders, 'title' => $title, 'headings' => $headings]);
+        $Orders = Order::all('id', 'user_id', 'package_id', 'number_of_sessions', 'price')->toArray();
+        $Headings = ['id', 'user_id', 'package_id', 'number_of_sessions', 'price'];
+        $Title = 'orders';
+        return view('orders.index')->with(['items' => $Orders, 'title' => $Title, 'headings' => $Headings]);
     }
     public function create()
     {
@@ -27,94 +27,41 @@ class OrderController extends Controller
     }
     public function store(Request $request)
     {
-        $package_id = $request->get('package_id');
-        $order_package = TrainingPackage::find($package_id);
+        $Package_id = $request->get('package_id');
+        $Order_Package = TrainingPackage::find($Package_id);
         Order::create([
             'user_id' => $request->get('user_id'),
-            'package_id' => $package_id,
-            'number_of_sessions' => $order_package->number_of_sessions,
-            'price' => $order_package->price,
+            'package_id' => $Package_id,
+            'number_of_sessions' => $Order_Package->number_of_sessions,
+            'price' => $Order_Package->price,
 
         ]);
         return to_route('orders.index');
     }
     public function show($orderid)
     {
-        $order = Order::find($orderid);
-        return view('orders.show', ['order' => $order]);
+        $Order = Order::find($orderid);
+        return view('orders.show', ['order' => $Order]);
     }
     public function edit($orderid)
     {
-        $users = User::all();
-        $packages = TrainingPackage::all();
-        $order = Order::find($orderid);
+        $Users = User::all();
+        $Packages = TrainingPackage::all();
+        $Order = Order::find($orderid);
         return view('orders.edit', [
-            'order' => $order, 'users' => $users, 'packages' => $packages
+            'order' => $Order, 'users' => $Users, 'packages' => $Packages
         ]);
     }
-    public function update($request,$id)
+    public function update(Request $request,$orderid)
     {
-        $order = User::find($id);
-        $order->user_id = $request->get('user_id');
-        $order->package_id = $request->get('package_id');
-        
-        $order->update();
+       // dd($request);
+        $Order = User::find($orderid);
+        $Order->user_id = $request->get('user_id');
+        $Order->package_id = $request->get('package_id');
+        $Order->price = $request->get('order_price');
+        $Order->number_of_sessions = $request->get('number_of_sessions');
+        $Order->update();
         
     }
 }
-/*
-return view('orders.create', [
-            'users' => $users, 'packages' => $packages
-        ]);
-<?php
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-class UserController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    public function index()
-    {
-        $users = User::all();
-        return view('users', ['users' => $users]);
-    }
-    public function create()
-    {
-        return view('users.create');
-    }
-    public function store(Request $request)
-    {
-        User::create([
-            'name'=>$request->get('name'),
-            'email'=>$request->get('email'),
-            'password'=>Hash::make($request->get('password')),
-            'role_id'=>$request->get('role_id'),
-
-        ]);
-        return to_route('users');
-
-    }
-    public function destory($userid)
-    {
-        $user = User::find($userid);
-        $user->delete();
-       return to_route('users');
-
-    }
-    public function show($userid)
-    {
-        $user = User::find($userid);
-        return view('users.view', ['user' => $user]);
-
-
-    }
-    
-}
-
-*/
