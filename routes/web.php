@@ -23,4 +23,8 @@ Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 't
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
 Route::get('/trainingSessions/create', [TrainingSessionController::class, 'create'])->name('trainingSessions.create');
+Route::post('/trainingSessions', [TrainingSessionController::class, 'store'])->name('trainingSessions.store');
+Route::put('/trainingSessions/update/{id}', [TrainingSessionController::class, 'update'])->name('trainingSessions.update');
+Route::get('/trainingSessions/{id}', [TrainingSessionController::class, 'show'])->name('trainingSessions.show');
+Route::get('/trainingSessions/{id}/edit', [TrainingSessionController::class, 'edit'])->name('trainingSessions.edit');
 Auth::routes();

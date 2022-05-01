@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrainingSession;
+use App\Models\TrainingSessionCoach;
 use App\Models\User;
 use App\Models\Gym;
 
@@ -32,8 +33,7 @@ class TrainingSessionController extends Controller
     }
     public function store(Request $request)
     {
-       
-        TrainingSession::create([
+        $session = TrainingSession::create([
             'name' => $request->get('SessionName'),
             'day' => $request->get('day'),
             'start_time' => $request->get('starttime'),
@@ -42,7 +42,37 @@ class TrainingSessionController extends Controller
 
 
         ]);
-        
-        return to_route('orders.index');
+
+        TrainingSessionCoach::create([
+            'training_session_id' => $session->id,
+            'coach_id' => $request->get('userid'),
+
+        ]);
+        return to_route('trainingSessions.index');
+    }
+    public function show($id)
+    {
+        $trainingSession = TrainingSession::find($id);
+        return view('trainingSessions.view', ['trainingSession' => $trainingSession]);
+    }
+    public function edit($sessionid)
+    {
+        $coaches = User::all(); //TODO choose coaches only based on role_id
+        $gyms = Gym::all();
+        $trainingSession = TrainingSession::find($sessionid);
+        return view('trainingSessions.edit', [
+            'trainingSession' => $trainingSession, 'coaches' => $coaches, 'gyms' => $gyms
+        ]);
+    }
+    public function update(Request $request, $sessionid)
+    {
+        $Session = TrainingSession::find($sessionid);
+        $Session->name = $request->get('SessionName');
+        $Session->day = $request->get('day');
+        $Session->start_time = $request->get('starttime');
+        $Session->finish_time = $request->get('finishtime');
+        $Session->gym_id = $request->get('gymid');
+        $Session->update();
+        return to_route("trainingSessions.index");
     }
 }

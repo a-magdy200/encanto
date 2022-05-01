@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="post" action="{{ route('trainingSession.store')}}">
+<form method="post" action="{{ route('trainingSessions.store')}}">
     @csrf
     <div class="form-group">
         <label>Session Name</label>
