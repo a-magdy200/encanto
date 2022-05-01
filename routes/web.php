@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TrainingSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,5 +21,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
 Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
-
+Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
+Route::get('/trainingSessions/create', [TrainingSessionController::class, 'create'])->name('trainingSessions.create');
 Auth::routes();

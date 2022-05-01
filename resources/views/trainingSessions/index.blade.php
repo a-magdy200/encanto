@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="text-center">
-  <a href="{{ route('trainingSession.create') }}" class="mt-4 btn btn-success">Create </a>
+  <a href="{{ route('trainingSessions.create') }}" class="mt-4 btn btn-success">Create </a>
 </div><br>
 <x-table-component resource="users" :bannable="true" :actions="true"  title="{{$title}}" :headings="$headings" :items="$items"/>
 
