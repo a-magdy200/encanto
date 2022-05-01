@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class GymManager extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $fillable = [
         'national_id',
         'is_banned',
         'user_id',
-        'gym_id'
+        'gym_id',
+        'updated_at'
     ];
     public function gym(): BelongsTo
     {

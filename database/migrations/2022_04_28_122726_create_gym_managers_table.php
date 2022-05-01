@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('is_banned');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('gym_id')->references('id')->on('gyms');
+            
         });
     }
 
