@@ -54,7 +54,6 @@ class OrderController extends Controller
     }
     public function update(Request $request,$orderid)
     {
-       // dd($request);
         $Order = Order::find($orderid);
         $Order->user_id = $request->get('user_id');
         $Order->package_id = $request->get('package_id');
