@@ -38,9 +38,9 @@ class OrderController extends Controller
         ]);
         return to_route('orders.index');
     }
-    public function show($orderid)
+    public function show($order)
     {
-        $Order = Order::find($orderid);
+        $Order = Order::find($order);
         return view('orders.show', ['order' => $Order]);
     }
     public function edit($orderid)
