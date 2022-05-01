@@ -18,5 +18,4 @@
 @endsection
 @section('content')
       <x-table-component resource="cityManagers" :bannable="true" :actions="true" title="{{$title}}" :headings="$headings" :items="$items"/>
-     
 @endsection
