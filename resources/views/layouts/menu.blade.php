@@ -6,9 +6,9 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('gymmanagers.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+    <a href="{{ route('cityManagers.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
-        <p>Gym Management</p>
+        <p>City Managers</p>
     </a>
 </li>
 

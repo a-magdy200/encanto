@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
 Route::get('/table/citymanagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
-//Route::get('/table/cityManagers/{cityManager}', [PostController::class, 'show'])->name('posts.show')->middleware(['auth']);
+Route::get('/table/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('cityManagers.show');
 //Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 //Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 

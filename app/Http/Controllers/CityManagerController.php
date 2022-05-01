@@ -19,7 +19,7 @@ class CityManagerController extends Controller
         //dd($cityManagers);
         foreach ($cityManagers as $cityManager)
              {
-              dd($cityManager->city); // returns null ??????
+              //dd($cityManager->city); // returns null ??????
               $item = ['id' => $cityManager->id, 'name'=>$cityManager->name, 'city'=> $cityManager->city];
               array_push($items,$item);
              }
@@ -29,6 +29,9 @@ class CityManagerController extends Controller
         return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
       
         //return view('CityManagers.index',compact('cityManagers'));
+    }
+    public function show($ManagerId){
+        return view('CityManagers.show');
     }
 }
 
