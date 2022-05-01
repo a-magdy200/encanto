@@ -36,7 +36,7 @@
                                 @endforeach
                                 @if($actions)
                                     <td class="d-flex align-items-center">
-                                        <a href="{{$resource}}/{{$item['id']}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                       <a href="{{$resource}}/{{$item['id']}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                         <a href="{{$resource}}/{{$item['id']}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
                                         <a href="{{$resource}}/{{$item['id']}}/delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
                                     </td>
