@@ -6,7 +6,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('cityManagers.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+    <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>City Managers</p>
     </a>

@@ -19,8 +19,11 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
-Route::get('/table/citymanagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
-Route::get('/table/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('cityManagers.show');
+Route::get('/table/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
+Route::get('/table/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
+Route::get('/table/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
+Route::post('/table/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
+
 //Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 //Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
