@@ -17,7 +17,7 @@
       </div><!-- /.container-fluid -->
 @endsection
 @section('content')
-<div class="text-center">
+<div class="text-center mb-3">
   <a href="{{ route('citymanagers.create') }}" class="btn btn-primary"><b>Add Manager</b></a>
 </div>
       <x-table-component resource="citymanagers" :bannable="true" :actions="true" title="{{$title}}" :headings="$headings" :items="$items"/>

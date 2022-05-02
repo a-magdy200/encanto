@@ -28,28 +28,28 @@
                                 alt="User profile picture">
                         </div>
 
-                        <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <h3 class="profile-username text-center">{{ $user->name}}</h3>
 
-                        <p class="text-muted text-center">Nina@gmail.com</p>
+                        <p class="text-muted text-center">{{ $user->email }}</p>
 
                         <div class="list-group list-group-unbordered mb-3">
-                            <strong><i class="fas fa-id-card"></i> National id</strong>
+                            <strong><i class="fas fa-id-card"></i> National Id</strong>
 
                             <p class="text-muted">
-                                1234567891011
+                                {{ $user->manager->national_id }}
                             </p>
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                            <p class="text-muted">Alexandria, Egypt</p>
+                            <p class="text-muted">{{ $user->manager->city}}</p>
 
                         </div>
-                        <div class="row mb-2 ">
+                        <div class="row mb-2 justify-content-center ">
                             <div class="col-3">
                                 <a href="#" class="btn btn-primary btn-block "><b>Edit</b></a>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row justify-content-center ">
                           <div class="col-3 ">
                             <a href="#" class="btn btn-danger btn-block"><b>Delete</b></a>
                           </div>

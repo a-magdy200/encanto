@@ -23,7 +23,9 @@ Route::get('/table/citymanagers', [CityManagerController::class, 'index'])->name
 Route::get('/table/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
 Route::get('/table/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
 Route::post('/table/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
-
+Route::get('/table/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
+Route::put('/table/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
+Route::delete('/table/citymanagers/{citymanager}',[CityManagerController::class,'destroy'])->name('citymanagers.destroy');
 //Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 //Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 

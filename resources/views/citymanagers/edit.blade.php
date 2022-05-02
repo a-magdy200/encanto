@@ -23,8 +23,9 @@
       </div>
       <!-- /.card-header -->
       <!-- form start -->
-      <form method="POST" action="{{ route('citymanagers.store') }}">
+      <form method="POST" action="{{ route('citymanagers.update', ['citymanager' => $user['id']]) }}">
         @csrf
+        @method('put')
         <div class="card-body">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>

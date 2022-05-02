@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -15,9 +16,9 @@ class City extends Model
         'manager_id',
     ];
     
-    public function manager(): HasOne
+    public function manager(): BelongsTo
     {
-        return $this->hasOne(CityManager::class, 'manager_id');
+        return $this->belongsTo(CityManager::class,'manager_id');
     }
     public function gyms(): HasMany
     {

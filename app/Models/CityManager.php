@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CityManager extends Model
 {
@@ -15,12 +16,12 @@ class CityManager extends Model
         'city_id',
     ];
 
-    public function city(): BelongsTo
+    public function city(): HasOne
     {
-        return $this->belongsTo(City::class, 'city_id');
+        return $this->hasOne(City::class,'manager_id');
     }
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

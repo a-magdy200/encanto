@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class User extends Authenticatable
 {
@@ -55,4 +57,9 @@ class User extends Authenticatable
         // TODO:: complete relation
         return $this->belongsTo(Gym::class);
     }
+    public function manager(): HasOne
+    {
+        return $this->hasOne(CityManager::class,'user_id');
+    }
+ 
 }
