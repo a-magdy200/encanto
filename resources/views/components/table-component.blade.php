@@ -19,30 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($items as $item)
-                            <tr>
-                                @foreach($item as $key => $value)
-                                    @if($key === 'is_banned')
-                                        <td>
-                                            @if($item['is_banned'])
-                                                <a href="{{$resource}}/restore" class="btn btn-success ml-2">U<i class="fa fa-check"></i></a>
-                                            @else
-                                                <a href="{{$resource}}/ban" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
-                                            @endif
-                                        </td>
-                                    @else
-                                        <td>{{$value}}</td>
-                                    @endif
-                                @endforeach
-                                @if($actions)
-                                    <td class="d-flex align-items-center">
-                                        <a href="{{$resource}}/{{$item['id']}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                        <a href="{{$resource}}/{{$item['id']}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                                        <a href="{{$resource}}/{{$item['id']}}/delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
-                                    </td>
-                                @endif
-                            </tr>
-                        @endforeach
+                        {{$slot}}
                         </tbody>
                     </table>
                 </div>
@@ -54,3 +31,29 @@
     </div>
     <!-- /.row -->
 </div>
+<div class="modal fade" id="delete-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Deletion</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure that you want to delete this item?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <form method="POST" action="">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit" class="btn btn-danger">Yes, Delete it</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

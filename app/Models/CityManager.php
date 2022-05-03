@@ -13,12 +13,12 @@ class CityManager extends Model
     protected $fillable = [
         'national_id',
         'user_id',
-        'city_id',
+        'city_id'
     ];
 
     public function city(): HasOne
     {
-        return $this->hasOne(City::class,'manager_id');
+        return $this->belongsTo(City::class);
     }
     public function user(): BelongsTo
     {
