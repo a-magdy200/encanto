@@ -12,10 +12,10 @@ class GymController extends Controller
 {
     public function showGyms(){
         $gyms=Gym::all();
-        return view('pagesContent.table',["gyms"=>$gyms]);
+        return view('GymPages.gyms',["gyms"=>$gyms]);
     }
     public function showGymForm(){
-        return view('pagesContent.createGym');
+        return view('GymPages.createGym');
     }
     public function createGymForm(StoreGymRequest $request){
 
@@ -41,13 +41,13 @@ class GymController extends Controller
 
     public function showSingleGym($gymId){
         $Gym=Gym::find($gymId);
-        return view('pagesContent.showSingleGym',["Gym"=>$Gym]);
+        return view('GymPages.showSingleGym',["Gym"=>$Gym]);
     }
     public function editGymForm($gymId){
         $Gym=Gym::find($gymId);
-        return view('pagesContent.updateGym',["Gym"=>$Gym]);
+        return view('GymPages.updateGym',["Gym"=>$Gym]);
     }
-    public function updateGymForm(Request $request,$gymId){
+    public function updateGymForm(StoreGymRequest $request,$gymId){
         $gym=Gym::find($gymId);
         if ($request->hasFile('gymCoverImg')) {
             Storage::disk('public')->delete('GymImages/'.$gym['cover_image']);

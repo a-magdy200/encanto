@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageContent\CityController;
 use App\Http\Controllers\PageContent\GymController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -28,5 +29,20 @@ Route::get('/gyms/show/{gymId}', [GymController::class, 'showSingleGym'])->name(
 Route::get('/gyms/edit/{gymId}', [GymController::class, 'editGymForm'])->name('edit.gymForm');
 Route::put('/gyms/update/{gymId}', [GymController::class, 'updateGymForm'])->name('update.gymForm');
 Route::delete('/gyms/delete/{gymId}', [GymController::class, 'deleteGym'])->name('delete.gym');
+
+/////////////////// City Routes ///////////
+
+Route::get('/cities', [CityController::class, 'showCities'])->name('show.cities');
+Route::get('/cities/show', [CityController::class, 'showCreateCity'])->name('show.addCity');
+Route::post('/cities/create', [CityController::class, 'createCity'])->name('create.city');
+Route::get('/cities/show/{cityId}', [CityController::class, 'showSingleCity'])->name('show.singleCity');
+Route::get('/cities/edit/{cityId}', [CityController::class, 'editCity'])->name('edit.city');
+Route::put('/cities/update/{cityId}', [CityController::class, 'updateCity'])->name('update.city');
+Route::delete('/cities/delete/{cityId}', [CityController::class, 'deleteCity'])->name('delete.city');
+
+
+
+
+
 
 Auth::routes();

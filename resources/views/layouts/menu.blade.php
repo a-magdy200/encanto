@@ -21,3 +21,19 @@
         </p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('show.cities') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Cities
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('show.addCity') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Add City
+        </p>
+    </a>
+</li>
