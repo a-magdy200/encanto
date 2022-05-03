@@ -13,6 +13,7 @@ class Attendance extends Model
         'user_id',
         'training_session_id',
         'attended_at',
+        'added_by',
     ];
     public function user(): BelongsTo
     {
