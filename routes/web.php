@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+    use App\Http\Controllers\CityManagerController;
+    use App\Http\Controllers\OrderController;
+    use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\GymManagerController;
+    use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/table', [HomeController::class, 'table'])->name('home');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
+Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 Route::get('/table/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
 Route::get('/table/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
 Route::get('/table/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
@@ -28,7 +37,7 @@ Route::put('/table/citymanagers/{citymanager}', [CityManagerController::class, '
 Route::delete('/table/citymanagers/{citymanager}',[CityManagerController::class,'destroy'])->name('citymanagers.destroy');
 //Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 //Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
-Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
-Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Auth::routes();
