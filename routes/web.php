@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CityManagerController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,5 +28,7 @@ Route::put('/table/citymanagers/{citymanager}', [CityManagerController::class, '
 Route::delete('/table/citymanagers/{citymanager}',[CityManagerController::class,'destroy'])->name('citymanagers.destroy');
 //Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 //Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Auth::routes();

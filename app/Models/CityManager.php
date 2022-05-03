@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CityManager extends Model
 {
@@ -13,15 +12,15 @@ class CityManager extends Model
     protected $fillable = [
         'national_id',
         'user_id',
-        'city_id',
+        'city_id'
     ];
 
-    public function city(): HasOne
+    public function city(): BelongsTo
     {
-        return $this->hasOne(City::class,'manager_id');
+        return $this->belongsTo(City::class);
     }
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

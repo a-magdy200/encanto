@@ -22,9 +22,9 @@ class TrainingSession extends Model
     {
         return $this->belongsTo(Gym::class);
     }
-    public function coach(): BelongsToMany
+    public function coaches(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'training_sessions_coaches', 'training_session_id', 'user_id');
+        return $this->belongsToMany(User::class, 'training_sessions_coaches', 'training_session_id', 'coach_id');
     }
     public function attendance(): HasMany
     {

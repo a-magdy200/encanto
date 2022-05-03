@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-
 
 class User extends Authenticatable
 {
@@ -27,7 +26,6 @@ class User extends Authenticatable
         'avatar',
         'role_id'
     ];
- 
 
     /**
      * The attributes that should be hidden for serialization.
@@ -57,9 +55,13 @@ class User extends Authenticatable
         // TODO:: complete relation
         return $this->belongsTo(Gym::class);
     }
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
     public function manager(): HasOne
     {
         return $this->hasOne(CityManager::class,'user_id');
     }
- 
+
 }
