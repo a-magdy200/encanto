@@ -23,7 +23,7 @@ class GymManagerController extends Controller
         dd($gymmanager);
 //        Storage::delete($post->path);
         $gymmanager->delete();
-        return to_route('gymmanager.index');
+        //return to_route('gymmanager.index');
     }
 
 }

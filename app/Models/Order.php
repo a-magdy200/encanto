@@ -24,4 +24,8 @@ class Order extends Model
     {
         return $this->belongsTo(TrainingPackage::class, 'package_id');
     }
+    public function trainingPackage()
+    {
+        return $this->belongsTo(TrainingPackage::class, 'package_id');
+    }
 }
