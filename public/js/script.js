@@ -49,7 +49,7 @@
                     icon: 'success',
                     title: 'Successfully deleted.'
                 })
-                $(`a[href="${path}"`).parentsUntil('tr').parent().remove();
+                $(`a[href="${path}"]`).parentsUntil('tr').parent().remove();
                 $("#delete-modal").modal('hide');
             },
             error: err => {
@@ -61,5 +61,4 @@
             }
         });
     })
-})(jQuery)
-
+})(jQuery);

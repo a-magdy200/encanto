@@ -33,12 +33,12 @@
                           <td>{{$value}}</td>
                       @endif
                   @endforeach
-                      <td class="d-flex align-items-center">
-                          <a href="users/{{$item['id']}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                          <a href="users/{{$item['id']}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                          <a href="users/{{$item['id']}}/delete" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>
-                      </td>
+                  <td class="d-flex align-items-center">
+                      <a href="users/{{$item['id']}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                      <a href="users/{{$item['id']}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
+                      <a href="users/{{$item['id']}}/delete" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>
+                  </td>
               </tr>
-    @endforeach
+          @endforeach
       </x-table-component>
 @endsection
