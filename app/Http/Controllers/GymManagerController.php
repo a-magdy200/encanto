@@ -11,31 +11,25 @@ use Illuminate\Http\Request;
 
 class GymManagerController extends Controller
 {
-    public function table() {
-        $gymmanagers=GymManager::all()->toArray();
-        // dd($gymmanagers);
-        // $data=$gymmanagers;
-        // dd($data);
-        // foreach ($gymmanagers as $gymmanager) {}
-            // dd($gymmanager->national_id);
-        
-            $items = [['id' => 1, 'name'=>'rowan','email'=>'rowan@gmail.com', 'is_banned' => 'true'],['id' => 2, 'name'=>'dina','email'=>'dina@gmail.com', 'is_banned' => false]];
-            $headings = ['id', 'name','email', 'is banned'];
+    public function index() {
+            $items=GymManager::all();
+            $headings = ['name','email','avatar','national_id','is_banned','id' ];
             $title='gymmanager';
         
-        return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+        return view('gymmanagers.index')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
 
     }
     public function destory($gymmanagerid)
     {
-        $gymmanager = GymManager::find($gymmanagerid);
-        dd($gymmanager);
+        // $gymmanager = GymManager::find($gymmanagerid);
+        $user = User::where('id',$gymmanagerid)->delete();
+        $gymmanager = GymManager::where('user_id', $gymmanagerid)->delete();
+        // dd($gymmanager);
 //        Storage::delete($post->path);
-        $gymmanager->delete();
-        $items = [['id' => 1, 'name'=>'rowan','email'=>'rowan@gmail.com', 'is_banned' => 'true'],['id' => 2, 'name'=>'dina','email'=>'dina@gmail.com', 'is_banned' => false]];
-        $headings = ['id', 'name','email', 'is banned'];
-        $title='gymmanager';
-        return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+        // $gymmanager->delete();
+        // $user->delete();
+        return to_route('gymmanagers.index');
+
     }
 
     public function show($gymmanagerid){
@@ -53,6 +47,11 @@ class GymManagerController extends Controller
 
 
         /********************************************************************************* */
+
+        $headings = ['name','email','avatar','national_id','is_banned','id' ];
+        $title='gymmanager';
+    
+    // return view('gymmanagers.show')->with(['items'=> $gymmanager, 'title'=>$title, 'headings' => $headings]);
 
         return view('gymmanagers.show', [
             'gymmanager' => $gymmanager,
@@ -99,6 +98,35 @@ class GymManagerController extends Controller
 
 
     }
+    public function create (){
+        $gyms=Gym::all();
+        return view('gymmanagers.create',[
+            'gyms'=>$gyms,
+        ]);
+    }
+    public function store()
+    {
+        $data = request()->all();
+        dd($data);
+
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'nationalid' => $data['nationalid'],
+            'gym' => $data['gym'],
+
+
+        ]);
+        return to_route('gymmanagers.index');
+
+        // $items = [['id' => 1, 'name'=>'rowan','email'=>'rowan@gmail.com', 'is_banned' => 'false'],['id' => 2, 'name'=>'dina','email'=>'dina@gmail.com', 'is_banned' => false]];
+        // $headings = ['id', 'name','email', 'is banned'];
+        // $title='gymmanager';
+    
+    // return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+    }
+
 
 
 }

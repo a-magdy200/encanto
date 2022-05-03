@@ -1,5 +1,4 @@
 <?php
-
 namespace App\View\Components;
 
 use Illuminate\View\Component;
@@ -8,24 +7,18 @@ class TableComponent extends Component
 {
     public $title = '';
     public $headings = [];
-    public $items = [];
     public $actions = true;
-    public $bannable = false;
-    public $resource = '';
 
     /**
      * @param string $title
      * @param array $headings
      * @param array $items
      */
-    public function __construct(string $title = '', string $resource = '', array $headings = [], array $items = [], bool $actions = true, bool $bannable = false)
+    public function __construct(string $title = '', array $headings = [], bool $actions = true)
     {
         $this->title = $title;
-        $this->resource = $resource;
         $this->headings = $headings;
-        $this->items = $items;
         $this->actions = $actions;
-        $this->bannable = $bannable;
     }
 
     /**

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-post
 @section('title')Create @endsection
 
 @section('content')
