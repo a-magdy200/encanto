@@ -33,6 +33,12 @@ Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 
+Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendace.index');
+
+Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+
+
 Route::get('/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
 Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
 Route::get('/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
