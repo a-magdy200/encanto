@@ -5,6 +5,9 @@
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\GymManagerController;
     use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TrainingPackageController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,4 +43,12 @@ Route::delete('/table/citymanagers/{citymanager}',[CityManagerController::class,
 Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymmanagers.index');
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
+Route::get('/table', [TrainingPackageController::class, 'index'])->name('packages.index');
+Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
+Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
+Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
+Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
+Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
+Route::delete('/packages/{package}', [TrainingPackageController::class, 'destroy'])->name('packages.destroy');
+Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
 Auth::routes();
