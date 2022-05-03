@@ -16,7 +16,7 @@ class City extends Model
     ];
     public function manager(): HasOne
     {
-        return $this->hasOne(CityManager::class, 'manager_id');
+        return $this->hasOne(CityManager::class);
     }
     public function gyms(): HasMany
     {

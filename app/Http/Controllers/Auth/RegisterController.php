@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CityManager;
+use App\Models\Client;
+use App\Models\GymManager;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class RegisterController extends Controller
 {
@@ -55,7 +60,10 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required','exists:roles,id'],
-            'national_id' => Rule::requiredIf(fn () => $data['role_id'] === 2 || $data['role_id'] === 3),
+            'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16'],
+            'gender' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'in:male,female'],
+            'date_of_birth' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'date', 'before:today'],
+            'avatar' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'image'],
         ]);
     }
 
@@ -67,11 +75,40 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id']
         ]);
+        switch($user->role_id) {
+            case 2:
+                CityManager::create([
+                    'user_id'=>$user->id,
+                    'national_id' => $data['national_id']
+                ]);
+                break;
+            case 3:
+                GymManager::create([
+                    'user_id'=>$user->id,
+                    'national_id' => $data['national_id']
+                ]);
+                break;
+            case 4:
+                // Coach
+                break;
+            case 5:
+                $avatarUrl = $data['avatar']->store();
+                Client::create([
+                    'user_id' =>  $user->id,
+                    'gender' => $data['gender'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'avatar' => $avatarUrl
+                ]);
+                break;
+            default:
+                break;
+        }
+        return $user;
     }
 }

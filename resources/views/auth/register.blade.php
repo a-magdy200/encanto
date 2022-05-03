@@ -29,6 +29,20 @@
                 @csrf
 
                 <div class="input-group mb-3">
+                        <select name="role_id" id="role_id" class="custom-select @error('role_id') is-invalid @enderror">
+                            <option value="3">Gym Manager</option>
+                            <option value="2">City Manager</option>
+                        </select>
+                    <div class="input-group-append">
+                        <div class="input-group-text"><span class="fas fa-id-badge"></span></div>
+                    </div>
+                    @error('role_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="input-group mb-3">
                     <input type="text"
                            name="name"
                            class="form-control @error('name') is-invalid @enderror"
@@ -38,6 +52,21 @@
                         <div class="input-group-text"><span class="fas fa-user"></span></div>
                     </div>
                     @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text"
+                           name="national_id"
+                           class="form-control @error('national_id') is-invalid @enderror"
+                           value="{{ old('national_id') }}"
+                           placeholder="XXXXXXXXXXXXXXXX">
+                    <div class="input-group-append">
+                        <div class="input-group-text"><span class="fas fa-id-card"></span></div>
+                    </div>
+                    @error('national_id')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

@@ -18,7 +18,7 @@
     $(".datatable").DataTable({
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "responsive": true,
-        "dom": '<"top"Bfrtip>rt',
+        "dom": 'Bfrtip',
         "pageLength": 10,
         "paging": true,
         "lengthChange": false,
