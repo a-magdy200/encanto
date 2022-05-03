@@ -1,5 +1,6 @@
 <?php
 
+    use App\Http\Controllers\AttendanceController;
     use App\Http\Controllers\CityManagerController;
     use App\Http\Controllers\OrderController;
     use App\Http\Controllers\HomeController;
@@ -27,6 +28,7 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/table', [HomeController::class, 'table'])->name('home');
+Route::delete('/users/{gymId}/delete', [HomeController::class, 'sampleDelete'])->name('delete.sample');
 
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
