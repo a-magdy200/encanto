@@ -54,4 +54,8 @@ class User extends Authenticatable
         // TODO:: complete relation
         return $this->belongsTo(Gym::class);
     }
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
