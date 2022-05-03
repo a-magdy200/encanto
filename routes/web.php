@@ -8,6 +8,8 @@
 use App\Http\Controllers\TrainingSessionController;
 use App\Http\Controllers\TrainingPackageController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PageContent\CityController;
+use App\Http\Controllers\PageContent\GymController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -33,10 +35,34 @@ Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 
-Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendace.index');
+Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendace.index');
 
-Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
-Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/gyms', [GymController::class, 'showGyms'])->name('show.AllGyms');
+Route::get('/gyms/show', [GymController::class, 'showGymForm'])->name('show.gymForm');
+Route::post('/gyms/create', [GymController::class, 'createGymForm'])->name('create.gymForm');
+Route::get('/gyms/show/{gymId}', [GymController::class, 'showSingleGym'])->name('show.singleGym');
+Route::get('/gyms/edit/{gymId}', [GymController::class, 'editGymForm'])->name('edit.gymForm');
+Route::put('/gyms/update/{gymId}', [GymController::class, 'updateGymForm'])->name('update.gymForm');
+Route::delete('/gyms/delete/{gymId}', [GymController::class, 'deleteGym'])->name('delete.gym');
+
+/////////////////// City Routes ///////////
+
+Route::get('/cities', [CityController::class, 'showCities'])->name('show.cities');
+Route::get('/cities/show', [CityController::class, 'showCreateCity'])->name('show.addCity');
+Route::post('/cities/create', [CityController::class, 'createCity'])->name('create.city');
+Route::get('/cities/show/{cityId}', [CityController::class, 'showSingleCity'])->name('show.singleCity');
+Route::get('/cities/edit/{cityId}', [CityController::class, 'editCity'])->name('edit.city');
+Route::put('/cities/update/{cityId}', [CityController::class, 'updateCity'])->name('update.city');
+Route::delete('/cities/delete/{cityId}', [CityController::class, 'deleteCity'])->name('delete.city');
+
+
+
+
 
 
 Route::get('/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
