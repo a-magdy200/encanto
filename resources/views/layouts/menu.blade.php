@@ -30,7 +30,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('show.addCity') }}" class="nav-link">
+    <a href="{{ route('show.addCity') }}" class="nav-link {{ Request::is('cities') ? 'active' : '' }}">
         <i class="nav-icon fas fa-table"></i>
         <p>
         Add City
@@ -38,9 +38,29 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+    <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('citymanagers') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>City Managers</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('packages.index') }}" class="nav-link {{ Request::is('packages') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Training Packages</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('trainingSessions.index') }}" class="nav-link {{ Request::is('trainingSessions') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Training Sessions</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('orders.index') }}" class="nav-link {{ Request::is('orders') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Orders History</p>
     </a>
 </li>
 

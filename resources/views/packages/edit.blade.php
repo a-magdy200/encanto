@@ -11,11 +11,11 @@
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Session Numbers</label>
-        <input name="sessions_number" class="form-control" id="exampleFormControlTextarea1" placeholder="{{ $packages->sessions_number}}">
+        <input name="number_of_sessions" class="form-control" id="exampleFormControlTextarea1" placeholder="{{ $packages->number_of_sessions}}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Price in cents</label>
-        <input name="price_in_cents" type="text" class="form-control" id="exampleFormControlTextarea1" placeholder="{{ $packages->price_in_cents}}">
+        <input name="price" type="text" class="form-control" id="exampleFormControlTextarea1" placeholder="{{ $packages->price}}">
     </div>
     @method('PUT')
     <button class="btn btn-primary">Update</button>

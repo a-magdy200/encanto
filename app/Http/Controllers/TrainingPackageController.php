@@ -11,8 +11,8 @@ class TrainingPackageController extends Controller
 {
     public function index()
     {
-        $packages = TrainingPackage::all()->toArray();
-        //$packages[0]['price_in_cents']/100;
+        $packages = TrainingPackage::all();
+        //$packages[0]['price']/100;
         return view('packages.index', [
             'items' => $packages,
             'title' => 'Training Packages',
@@ -33,10 +33,10 @@ class TrainingPackageController extends Controller
         $request = request()->all();
         TrainingPackage::create([
             'package_name' => $request['package_name'],
-            'sessions_number' => $request['sessions_number'],
-            'price_in_cents' => $request['price_in_cents'],
+            'number_of_sessions' => $request['number_of_sessions'],
+            'price' => $request['price'],
         ]);
-        
+
         return to_route('packages.index');
     }
 

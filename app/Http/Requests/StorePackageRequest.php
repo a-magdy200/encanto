@@ -25,8 +25,8 @@ class StorePackageRequest extends FormRequest
     {
         return [
             'package_name'=>['required'],
-            'sessions_number'=>['required'],
-            'price_in_cents'=>['required','integer'],
+            'number_of_sessions'=>['required'],
+            'price'=>['required','integer'],
         ];
     }
 }

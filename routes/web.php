@@ -78,6 +78,7 @@ Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymman
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
+Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
 Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
 Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
 Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');

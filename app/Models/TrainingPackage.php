@@ -11,8 +11,8 @@ class TrainingPackage extends Model
     use HasFactory;
     protected $fillable = [
         'package_name',
-        'sessions_number',
-        'price_in_cents',
+        'number_of_sessions',
+        'price',
     ];
     public function orders(): HasMany
     {
