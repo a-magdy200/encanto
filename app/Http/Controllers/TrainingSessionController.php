@@ -33,6 +33,7 @@ class TrainingSessionController extends Controller
     }
     public function store(Request $request)
     {
+        dd($request);
         $session = TrainingSession::create([
             'name' => $request->get('SessionName'),
             'day' => $request->get('day'),
@@ -42,7 +43,7 @@ class TrainingSessionController extends Controller
 
 
         ]);
-
+///$session->sync([]);
         TrainingSessionCoach::create([
             'training_session_id' => $session->id,
             'coach_id' => $request->get('userid'),
