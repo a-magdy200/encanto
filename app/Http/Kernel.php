@@ -2,6 +2,11 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ClientMiddleware;
+use App\Http\Middleware\CoachMiddleware;
+use App\Models\CityManager;
+use App\Models\GymManager;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -37,7 +42,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
@@ -54,6 +58,11 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'Admin' => AdminMiddleware::class,
+        'GymManager' => GymManager::class,
+        'CityManager' => CityManager::class,
+        'Coach' => CoachMiddleware::class,
+        'Client' => ClientMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
