@@ -17,7 +17,10 @@ class GymManagerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'national_id' => rand(0000000000000000,9999999999999999),
+            'is_banned' => $this->faker->boolean(),
+            'user_id'=>rand(1,100),
+            'gym_id'=>rand(1, 100),
         ];
     }
 }

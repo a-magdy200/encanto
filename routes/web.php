@@ -25,7 +25,7 @@
     */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 Route::get('/test', [\App\Http\Controllers\HomeController::class, 'test'])->name('test');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -54,11 +54,11 @@ Route::put('/clients/{client}/', [App\Http\Controllers\ClientController::class, 
 Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'delete'])->name('clients.delete');
 Route::group(['middleware' => ['web']], function () {
     // Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
-    Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create')->middleware('auth');
-    Route::get('/gymmanagers/{gymmanagerid}/edit', [GymManagerController::class, 'edit'])->name('gymmanagers.edit')->middleware('auth');
-    Route::get('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'show'])->name('gymmanagers.show')->middleware('auth');
-    Route::put('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'update'])->name('gymmanagers.update')->middleware('auth');
-    Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store')->middleware('auth');
+    Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create');
+    Route::get('/gymmanagers/{gymmanagerid}/edit', [GymManagerController::class, 'edit'])->name('gymmanagers.edit');
+    Route::get('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'show'])->name('gymmanagers.show');
+    Route::put('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'update'])->name('gymmanagers.update');
+    Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store');
     Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index');
     Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 

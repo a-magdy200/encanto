@@ -14,15 +14,17 @@ class GymManagerController extends Controller
 {
     public function index()
     {
-        $items = GymManager::all();
+        $items = GymManager::all();   
         $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned', 'id'];
         $title = 'gymmanager';
         return view('gymmanagers.index')->with(['items' => $items, 'title' => $title, 'headings' => $headings]);
     }
     public function destroy($gymmanagerid)
     {
-        $gymmanager = GymManager::find( $gymmanagerid)->delete();
-        $user=User::find($gymmanagerid)->delete($gymmanagerid);
+        $gymmanager = GymManager::find($gymmanagerid);
+        $user_id=$gymmanager->user_id;
+        $gymmanager->delete();
+        User::find($user_id)->delete();
         return response()->json([
             'success' => 'Record deleted successfully!'
         ]);
@@ -83,13 +85,13 @@ class GymManagerController extends Controller
     {
         $data = request()->all();
         // dd($data);
-        // $path=Storage::putFile('avatars/gym_managers',$request->file('image'));
+        $path=Storage::putFile('avatars/gym_managers',$request->file('image'));
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
             'role_id'=>'3',
-            // 'avatar'=>$path,
+            'avatar'=>$path,
         ]);
         $gymmanager=GymManager::create([
             'national_id' => $data['nationalid'],

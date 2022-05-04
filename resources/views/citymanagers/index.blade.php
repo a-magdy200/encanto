@@ -26,8 +26,8 @@
         </form>
 
         <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
-            
-                @foreach ( $cityManagers as $cityManager)       
+
+                @foreach ( $cityManagers as $cityManager)
                   <tr>
                     <td>{{ $cityManager['id'] }}</th>
                     <td>{{$cityManager['name']  }}</td>
@@ -41,7 +41,7 @@
                     </td>
                   </tr>
                   @endforeach
-    
-                
+
+
         </x-table-component>
     @endsection
