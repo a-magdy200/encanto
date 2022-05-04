@@ -21,17 +21,8 @@ class GymManagerController extends Controller
     }
     public function destroy($gymmanagerid)
     {
-        // dd('reached here');
-        // $gymmanager = GymManager::find($gymmanagerid);
-        // $user = User::where('id', $gymmanagerid)->delete();
         $gymmanager = GymManager::where('user_id', $gymmanagerid)->delete();
         $user=User::find($gymmanagerid)->delete($gymmanagerid);
-
-        // dd($gymmanager);
-        //        Storage::delete($post->path);
-        // $gymmanager->delete();
-        // $user->delete();
-        // return to_route('gymmanagers.index');
         return response()->json([
             'success' => 'Record deleted successfully!'
         ]);   
@@ -44,8 +35,6 @@ class GymManagerController extends Controller
         $gym = Gym::where('id', $gymmanager->gym_id)->first();
         $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned',];
         $title = 'gymmanager';
-
-
         return view('gymmanagers.show', [
             'gymmanager' => $gymmanager,
             'user' => $user,
