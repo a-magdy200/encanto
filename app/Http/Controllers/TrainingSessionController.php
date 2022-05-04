@@ -5,23 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingSession;
 use App\Models\TrainingSessionCoach;
+use App\Http\Requests\StoreSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
 
 class TrainingSessionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
     public function index()
     {
         $trainingSessions = TrainingSession::all();
-        $items = [];
-        foreach ($trainingSessions as $trainingSession) {
-            $gymName = Gym::find($trainingSession->gym_id)->name;
-            $item = ['id' => $trainingSession->id, 'name' => $trainingSession->name, 'day' => $trainingSession->day, 'start_time' => $trainingSession->start_time, 'finish_time' => $trainingSession->finish_time, 'gym_name' => $gymName];
-            array_push($items, $item);
-        }
         $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
         $Title = 'TrainingSessions';
-        return view('trainingSessions.index')->with(['items' => $items, 'title' => $Title, 'headings' => $Headings]);
+        return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);
     }
     public function create()
     {
@@ -31,9 +30,9 @@ class TrainingSessionController extends Controller
             'users' => $users, 'gyms' => $gyms
         ]);
     }
-    public function store(Request $request)
+    public function store(StoreSessionRequest $request)
     {
-        dd($request);
+        dd($request->all());
         $session = TrainingSession::create([
             'name' => $request->get('SessionName'),
             'day' => $request->get('day'),
@@ -44,11 +43,11 @@ class TrainingSessionController extends Controller
 
         ]);
 ///$session->sync([]);
-        TrainingSessionCoach::create([
+      /*  TrainingSessionCoach::create([
             'training_session_id' => $session->id,
             'coach_id' => $request->get('userid'),
 
-        ]);
+        ]);*/
         return to_route('trainingSessions.index');
     }
     public function show($id)
@@ -65,7 +64,7 @@ class TrainingSessionController extends Controller
             'trainingSession' => $trainingSession, 'coaches' => $coaches, 'gyms' => $gyms
         ]);
     }
-    public function update(Request $request, $sessionid)
+    public function update(StoreSessionRequest $request, $sessionid)
     {
         $Session = TrainingSession::find($sessionid);
         $Session->name = $request->get('SessionName');
@@ -75,5 +74,10 @@ class TrainingSessionController extends Controller
         $Session->gym_id = $request->get('gymid');
         $Session->update();
         return to_route("trainingSessions.index");
+    }
+    public function delete($sessionid)
+    {
+       TrainingSession::find($sessionid);
+        return response()->json([],status:200);
     }
 }

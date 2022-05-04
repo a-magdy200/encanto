@@ -9,6 +9,10 @@ use App\Http\Requests\UpdatePackageRequest;
 
 class TrainingPackageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
     public function index()
     {
         $packages = TrainingPackage::all();

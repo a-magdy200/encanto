@@ -63,4 +63,10 @@
         <p>Orders History</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('profiles.info') }}" class="nav-link {{ Request::is('profiles') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>profile info</p>
+    </a>
+</li>
 

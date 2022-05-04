@@ -10,10 +10,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
     public function index()
     {
-        $Orders = Order::all('id', 'user_id', 'package_id', 'number_of_sessions', 'price')->toArray();
-        $Headings = ['id', 'user_id', 'package_id', 'number_of_sessions', 'price'];
+        $Orders = Order::all();
+        $Headings = ['id', 'user_id', 'package_name', 'number_of_sessions', 'price'];
         $Title = 'orders';
         return view('orders.index')->with(['items' => $Orders, 'title' => $Title, 'headings' => $Headings]);
     }
@@ -61,6 +65,11 @@ class OrderController extends Controller
         $Order->number_of_sessions = $request->get('number_of_sessions');
         $Order->update();
         return to_route("orders.index");
+    }
+    public function delete($orderid)
+    {
+        Order::find($orderid);
+        return response()->json([],status:200);
     }
 }
 

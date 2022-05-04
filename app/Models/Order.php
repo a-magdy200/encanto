@@ -18,7 +18,7 @@ class Order extends Model
     ];
     public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class,'user_id');
     }
     public function package(): BelongsTo
     {
