@@ -46,7 +46,7 @@ Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymman
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.info');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.info');
 
 Route::get('/gyms', [GymController::class, 'showGyms'])->name('show.AllGyms');
 Route::get('/gyms/show', [GymController::class, 'showGymForm'])->name('show.gymForm');
