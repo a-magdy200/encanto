@@ -34,16 +34,20 @@ class TrainingSessionController extends Controller
     }
     public function store(StoreSessionRequest $request)
     {
-        $session = TrainingSession::create([
-            'name' => $request->get('SessionName'),
-            'day' => $request->get('day'),
-            'start_time' => $request->get('starttime'),
-            'finish_time' => $request->get('endtime'),
-            'gym_id' => $request->get('gymid'),
-
-
-        ]);
-        $session->coaches()->sync($request->get('users'));
+        $findSessions = TrainingSession::where('day', '=', $request->get('day'))
+            ->where('gym_id', '=', $request->get('gymid'))
+            ->whereBetween('start_time', [$request->get('starttime'), $request->get('endtime')])
+            ->count();
+        if ($findSessions == 0) {
+            $session = TrainingSession::create([
+                'name' => $request->get('SessionName'),
+                'day' => $request->get('day'),
+                'start_time' => $request->get('starttime'),
+                'finish_time' => $request->get('endtime'),
+                'gym_id' => $request->get('gymid'),
+            ]);
+            $session->coaches()->sync($request->get('users'));
+        }
         return to_route('trainingSessions.index');
     }
     public function show($id)
@@ -63,29 +67,24 @@ class TrainingSessionController extends Controller
     public function update(UpdateSessionRequest $request, $sessionid)
     {
         $Session = TrainingSession::find($sessionid);
-        $findSession=Attendance::where('training_session_id','=',$sessionid)->count();
-        if($findSession==0)
-        {
+        $findSession = Attendance::where('training_session_id', '=', $sessionid)->count();
+        if ($findSession == 0) {
             $Session->day = $request->get('day');
             $Session->start_time = $request->get('starttime');
             $Session->finish_time = $request->get('finishtime');
             $Session->update();
         }
-        
+
         return to_route("trainingSessions.index");
     }
     public function delete($id)
     {
-       $session=TrainingSession::find($id);
-       $findSession=Attendance::where('training_session_id','=',$id)->count();
-       //dd($findSession);
-      if($findSession==0)
-       {
-           $session->delete();
-           return response()->json([], status: 200);
-       }
-       else
-       return response()->json(['error'=>"can't delete session"], status: 200);
-
+        $session = TrainingSession::find($id);
+        $findSession = Attendance::where('training_session_id', '=', $id)->count();
+        if ($findSession == 0) {
+            $session->delete();
+            return response()->json([], status: 200);
+        } else
+            return response()->json(['error' => "can't delete session"], status: 200);
     }
 }
