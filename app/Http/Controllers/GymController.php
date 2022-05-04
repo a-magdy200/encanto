@@ -12,8 +12,9 @@ class GymController extends Controller
 {
     public function showGyms(){
         $gyms=Gym::all();
-
-        return view('GymPages.gyms',["gyms"=>$gyms]);
+        $headings=['Gym Name','Cover Image','City Name'];
+        $title="Gyms";
+        return view('GymPages.showAllGyms',["gyms"=>$gyms,"headings"=>$headings,"title"=>$title]);
     }
     public function showGymForm(){
         $cities=City::all();
@@ -44,6 +45,7 @@ class GymController extends Controller
 
     public function showSingleGym($gymId){
         $Gym=Gym::find($gymId);
+
         return view('GymPages.showSingleGym',["Gym"=>$Gym]);
     }
     public function editGymForm($gymId){
@@ -79,13 +81,14 @@ class GymController extends Controller
 
     public function deleteGym($gymId){
         $gym=Gym::find($gymId);
-        $result=$gym->delete();
-        if($result){
+        $sessions=$gym->sessions->count();
+        if($sessions == 0){
+            $gym->delete();
             Storage::disk('public')->delete('GymImages/'.$gym['cover_image']);
-            return redirect()->back()->with(['success'=>'Gym is delete Successfully']);
+            return response()->json([], 200);
 
         }else{
-            return redirect()->back()->with(['failed'=>'Gym failed to delete']);
+            return response()->json([], 400);
 
         }
     }
