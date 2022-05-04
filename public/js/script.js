@@ -44,6 +44,9 @@
         $.ajax({
             url: path,
             type: 'DELETE',
+            data: {
+                _token: $("input[name='_token']").val(),
+            },
             success: () => {
                 Toast.fire({
                     icon: 'success',
