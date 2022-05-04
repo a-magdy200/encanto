@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // $table->foreignId("manager_id")->references("user_id")->on("gym_managers");
+            // $table->foreignId("gym_id")->references("id")->on("gyms");
+
             $table->timestamps();
         });
     }
