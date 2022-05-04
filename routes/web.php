@@ -106,7 +106,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
     Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
     Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
-    Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
+    Route::delete('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
     Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
 
     Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');

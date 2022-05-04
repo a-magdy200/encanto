@@ -12,6 +12,7 @@
         <div class="card-body">
             <p class="lead"><strong>Package Name: </strong>{{$items->package_name}}</p>
             <p class="lead"><strong>Session Numbers: </strong>{{$items->number_of_sessions}}</p>
+            <p class="lead"><strong>Gym: </strong>{{$items->gym->name}}</p>
             <p class="lead"><strong>Price in dollars: </strong>{{$items->price/100}}</p>
         </div>
     </div>
