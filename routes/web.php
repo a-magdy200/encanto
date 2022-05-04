@@ -33,5 +33,12 @@ Route::post('/coaches/store', [App\Http\Controllers\CoachController::class, 'sto
 Route::get('/coaches/{coach}/edit', [App\Http\Controllers\CoachController::class, 'edit'])->name('coaches.edit');
 Route::get('/coaches/{coach}/show', [App\Http\Controllers\CoachController::class, 'show'])->name('coaches.show');
 Route::put('/coaches/{coach}/', [App\Http\Controllers\CoachController::class, 'update'])->name('coaches.update');
-Route::delete('/coaches/{coach}/', [App\Http\Controllers\CoachController::class, 'delete'])->name('coaches.delete');
+Route::delete('/coaches/{coach}', [App\Http\Controllers\CoachController::class, 'delete'])->name('coaches.delete');
+Route::get('/clients', [App\Http\Controllers\ClientController::class, 'index'])->name('clients.index');
+Route::get('/clients/create', [App\Http\Controllers\ClientController::class, 'create'])->name('clients.create');
+Route::post('/clients/store', [App\Http\Controllers\ClientController::class, 'store'])->name('clients.store');
+Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientController::class, 'edit'])->name('clients.edit');
+Route::get('/clients/{client}/show', [App\Http\Controllers\ClientController::class, 'show'])->name('clients.show');
+Route::put('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'update'])->name('clients.update');
+Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'delete'])->name('clients.delete');
 Auth::routes();

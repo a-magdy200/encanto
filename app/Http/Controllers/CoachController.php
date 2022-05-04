@@ -64,9 +64,9 @@ class CoachController extends Controller
         return to_route('coaches.index');
     }
 
-    public function delete($coachId)
-    {
-        Attendance::find($coachId)->delete();
+    public function delete($coach)
+    {  dd('jdndcbdnc');
+        User::find($coach)->delete();
         return response()->json([], 200);
 
     }
@@ -74,8 +74,6 @@ class CoachController extends Controller
     public function show($coachId)
     {  $coach = User::find($coachId);
         return view('coaches.show',['coach'=>$coach]);
-
-
     }
 
 
