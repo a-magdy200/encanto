@@ -11,7 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'client_id',
         'package_id',
         'number_of_sessions',
         'price',
@@ -21,6 +21,10 @@ class Order extends Model
         return $this->belongsTo(Client::class);
     }
     public function package(): BelongsTo
+    {
+        return $this->belongsTo(TrainingPackage::class, 'package_id');
+    }
+    public function trainingPackage()
     {
         return $this->belongsTo(TrainingPackage::class, 'package_id');
     }

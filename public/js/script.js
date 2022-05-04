@@ -15,6 +15,12 @@
         showConfirmButton: false,
         timer: 3000
     });
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    })
     $(".datatable").DataTable({
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "responsive": true,
@@ -40,7 +46,9 @@
         // in case of success, shows toast of success, and remove the row from html
         // in case of error, shows toast of error
         e.preventDefault();
+        console.log('delete');
         const path = $(e.target).attr('action');
+        console.log(path);
         $.ajax({
             url: path,
             type: 'DELETE',
@@ -63,5 +71,11 @@
                 console.error(err);
             }
         });
+    });
+    $('.custom-file-input').on('change',function(){
+        //get the file name
+        const fileName = this.files[0].name;
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
     })
 })(jQuery);

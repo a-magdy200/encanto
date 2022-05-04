@@ -25,7 +25,7 @@ class GymManagerController extends Controller
         $user=User::find($gymmanagerid)->delete($gymmanagerid);
         return response()->json([
             'success' => 'Record deleted successfully!'
-        ]);   
+        ]);
      }
 
     public function show($gymmanagerid)

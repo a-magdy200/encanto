@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Gym;
+use http\Env\Request;
+
 class HomeController extends Controller
 {
     /**
@@ -29,5 +32,9 @@ class HomeController extends Controller
         $headings = ['id', 'name', 'is banned'];
         $title='test';
         return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+    }
+    public function sampleDelete($gymId) {
+        Gym::find($gymId)->delete();
+        return response()->json([], 200);
     }
 }
