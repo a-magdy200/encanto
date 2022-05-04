@@ -19,19 +19,23 @@ class GymManagerController extends Controller
         $title = 'gymmanager';
         return view('gymmanagers.index')->with(['items' => $items, 'title' => $title, 'headings' => $headings]);
     }
-    public function destory($gymmanagerid)
+    public function destroy($gymmanagerid)
     {
-        dd('reached here');
+        // dd('reached here');
         // $gymmanager = GymManager::find($gymmanagerid);
-        $user = User::where('id', $gymmanagerid)->delete();
+        // $user = User::where('id', $gymmanagerid)->delete();
         $gymmanager = GymManager::where('user_id', $gymmanagerid)->delete();
+        $user=User::find($gymmanagerid)->delete($gymmanagerid);
+
         // dd($gymmanager);
         //        Storage::delete($post->path);
         // $gymmanager->delete();
         // $user->delete();
         // return to_route('gymmanagers.index');
-        return response()->json([],status:200);
-    }
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);   
+     }
 
     public function show($gymmanagerid)
     {
@@ -86,21 +90,23 @@ class GymManagerController extends Controller
             'gyms' => $gyms,
         ]);
     }
-    public function store()
+    public function store(Request $request)
     {
         $data = request()->all();
+        // dd($data);
+        // $path=Storage::putFile('avatars/gym_managers',$request->file('image'));
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
             'role_id'=>'3',
+            // 'avatar'=>$path,
         ]);
-        $gym = Gym::where('name', $data['gym'])->first();
         $gymmanager=GymManager::create([
             'national_id' => $data['nationalid'],
             'is_banned' => '0',
             'user_id'=>$user->id,
-            'gym_id'=>$gym->id,
+            'gym_id'=>$data['gym'],
 
         ]);
         return to_route('gymmanagers.index');
