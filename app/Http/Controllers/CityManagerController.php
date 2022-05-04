@@ -10,10 +10,6 @@ use App\Models\CityManager;
 
 class CityManagerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->only('index');
-    }
     public function index()
     {
         //User::find()

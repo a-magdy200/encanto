@@ -11,10 +11,6 @@ use App\Models\Gym;
 
 class TrainingSessionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->only('index');
-    }
     public function index()
     {
         $trainingSessions = TrainingSession::all();

@@ -17,9 +17,7 @@
         </div><!-- /.container-fluid -->
     @endsection
     @section('content')
-    
+
             <x-table-component resource="citymanagers" :bannable="false" :actions="true" title="{{ $title }}"
                 :headings="$headings" :items="$items" />
-              
-
         @endsection

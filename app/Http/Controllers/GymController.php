@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\PageContent;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGymRequest;
-use Illuminate\Http\Request;
 use App\Models\Gym;
 use Illuminate\Support\Facades\Storage;
 

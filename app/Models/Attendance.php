@@ -10,7 +10,7 @@ class Attendance extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'client_id',
         'training_session_id',
         'attended_at',
     ];

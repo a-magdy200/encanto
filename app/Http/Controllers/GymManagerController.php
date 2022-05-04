@@ -21,7 +21,7 @@ class GymManagerController extends Controller
     }
     public function destroy($gymmanagerid)
     {
-        $gymmanager = GymManager::where('user_id', $gymmanagerid)->delete();
+        $gymmanager = GymManager::find( $gymmanagerid)->delete();
         $user=User::find($gymmanagerid)->delete($gymmanagerid);
         return response()->json([
             'success' => 'Record deleted successfully!'

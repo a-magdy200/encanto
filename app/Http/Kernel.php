@@ -47,7 +47,6 @@ class Kernel extends HttpKernel
         PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
         TrimStrings::class,
-        VerifyCsrfToken::class,
         ConvertEmptyStringsToNull::class,
     ];
 
@@ -62,6 +61,7 @@ class Kernel extends HttpKernel
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
         'api' => [

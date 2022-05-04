@@ -40,9 +40,9 @@
 
 
             <td class="d-flex align-items-center">
-                <a href="gymmanagers/{{$item->user->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                <a href="gymmanagers/{{$item->user->id}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                <a href="gymmanangers/{{$item->user->id}}/delete" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>    
+                <a href="gymmanagers/{{$item->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                <a href="gymmanagers/{{$item->id}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
+                <a href="{{route('gymmanagers.destroy', ['gymmanagerid' => $item->id])}}" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>
 
             </td>
         </tr>

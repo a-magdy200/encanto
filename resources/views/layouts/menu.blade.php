@@ -38,6 +38,12 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('gymmanagers.index') }}" class="nav-link {{ Request::is('gymmanagers') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Gym Managers</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('citymanagers') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>City Managers</p>

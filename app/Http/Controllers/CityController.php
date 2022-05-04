@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\PageContent;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCityRequest;
 use App\Models\City;
-use Illuminate\Http\Request;
 
 
 class CityController extends Controller
