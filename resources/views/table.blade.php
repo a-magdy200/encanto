@@ -17,6 +17,21 @@
       </div><!-- /.container-fluid -->
 @endsection
 @section('content')
+
+            <div class="form-group">
+                <label>Multiple (.select2-purple)</label>
+                <div class="select2-purple">
+                    <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                        <option>Alabama</option>
+                        <option>Alaska</option>
+                        <option>California</option>
+                        <option>Delaware</option>
+                        <option>Tennessee</option>
+                        <option>Texas</option>
+                        <option>Washington</option>
+                    </select>
+                </div>
+            </div>
       <x-table-component  :actions="true" title="{{$title}}" :headings="$headings" >
           @foreach($items as $item)
               <tr>
@@ -41,4 +56,18 @@
               </tr>
           @endforeach
       </x-table-component>
+            <form action="">
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
 @endsection

@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('client_id')->references('id')->on('clients');
             $table->foreignId('training_session_id')->references('id')->on('training_sessions');
             $table->dateTime('attended_at');
-            $table->foreignId("added_by")->references("id")->on("users");
             $table->timestamps();
         });
     }

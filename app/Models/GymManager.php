@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GymManager extends Model
 {
+    public $timestamps = false;
+
     use HasFactory;
     protected $fillable = [
         'national_id',

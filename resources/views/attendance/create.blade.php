@@ -1,0 +1,43 @@
+@extends('layouts.app')
+@section('content')
+
+
+    <form method="post" action="{{route('attendance.store')}}" enctype="multipart/form-data">
+        @csrf
+
+        <div class="card-body">
+
+
+
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">user name</label>
+                <select  name="user_id" class="form-control">
+                    @foreach ($clients as $client)
+                        <option value="{{$client->user_id}}">{{$client->user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">training seesion</label>
+                <select  name="training_session_id" class="form-control">
+                    @foreach ($trainingSessions as $trainingSession)
+                        <option value="{{$trainingSession->id}}">{{$trainingSession->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1">attend at</label>
+                <input type="datetime-local"  name ="date" class="form-control" id="exampleInputPassword1" placeholder="">
+            </div>
+
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">add</button>
+        </div>
+    </form>
+
+@endsection

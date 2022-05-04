@@ -12,8 +12,8 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $Orders = Order::all('id', 'user_id', 'package_id', 'number_of_sessions', 'price')->toArray();
-        $Headings = ['id', 'user_id', 'package_id', 'number_of_sessions', 'price'];
+        $Orders = Order::all();
+        $Headings = ['id', 'user_name', 'package_name', 'number_of_sessions', 'price'];
         $Title = 'orders';
         return view('orders.index')->with(['items' => $Orders, 'title' => $Title, 'headings' => $Headings]);
     }
@@ -30,7 +30,7 @@ class OrderController extends Controller
         $Package_id = $request->get('package_id');
         $Order_Package = TrainingPackage::find($Package_id);
         Order::create([
-            'user_id' => $request->get('user_id'),
+            'client_id' => $request->get('user_id'),
             'package_id' => $Package_id,
             'number_of_sessions' => $Order_Package->number_of_sessions,
             'price' => $Order_Package->price,
@@ -61,6 +61,11 @@ class OrderController extends Controller
         $Order->number_of_sessions = $request->get('number_of_sessions');
         $Order->update();
         return to_route("orders.index");
+    }
+    public function delete($orderid)
+    {
+        Order::find($orderid);
+        return response()->json([],status:200);
     }
 }
 

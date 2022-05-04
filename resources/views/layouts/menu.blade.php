@@ -38,9 +38,36 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('gymmanagers.index') }}" class="nav-link {{ Request::is('gymmanagers') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Gym Managers</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('citymanagers') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>City Managers</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Attendance</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('coaches.index') }}" class="nav-link {{ Request::is('coaches') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Coaches</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Clients</p>
     </a>
 </li>
 
@@ -61,6 +88,12 @@
     <a href="{{ route('orders.index') }}" class="nav-link {{ Request::is('orders') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>Orders History</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('profiles.info') }}" class="nav-link {{ Request::is('profiles') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>profile info</p>
     </a>
 </li>
 
