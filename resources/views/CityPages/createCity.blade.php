@@ -17,9 +17,18 @@
                   <label for="cityName">City</label>
                   <input type="text" id="cityName" class="form-control" name="cityName" placeholder="Enter ...">
                 </div>
+
+
                 <div class="form-group">
-                    <label for="cityManager">City Manager</label>
-                    <input type="text" id="cityManager" class="form-control" name="cityManager" placeholder="Enter ...">
+                  <label for="cityManager">City Manager</label>
+                  <select id="cityManager" name="cityManager" class="form-control select2" style="width: 100%;">
+                    {{--  <option selected="selected" value="">Alabama</option>  --}}
+                    @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->manager->user->role_name }}</option>
+                    @endforeach
+
+
+                  </select>
                 </div>
 
               <div class="form-group">

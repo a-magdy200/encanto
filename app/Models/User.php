@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,4 +45,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function city(): BelongsTo
+    {
+        // TODO:: complete relation
+        return $this->belongsTo(City::class);
+    }
+    public function gym(): BelongsTo
+    {
+        // TODO:: complete relation
+        return $this->belongsTo(Gym::class);
+    }
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function manager(): HasOne
+    {
+        return $this->hasOne(CityManager::class,'user_id');
+    }
+
 }
