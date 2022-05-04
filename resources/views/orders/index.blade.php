@@ -9,7 +9,7 @@
               <tr>
                  
                   <td>{{$item->id}}</td>
-                  <td>{{$item->client}}</td>
+                  <td>{{$item->client->user->name}}</td>
                   <td>{{$item->package->package_name}}</td>
                   <td>{{$item->number_of_sessions}}</td>
                   <td>{{$item->price}}</td>

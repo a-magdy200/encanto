@@ -25,7 +25,7 @@
     <div class="form-group">
         <div class="select2-purple">
             <label>Coach Name</label>
-            <select id="userid" name="userid[]" class="select2" multiple="multiple" data-placeholder="select coach" data-dropdown-css-class="select2-purple" style="width: 100%"; >
+            <select id="userid" name="users[]" class="select2" multiple="multiple" data-placeholder="select coach" data-dropdown-css-class="select2-purple" style="width: 100%"; >
                 @foreach($users as $user)
                 <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach

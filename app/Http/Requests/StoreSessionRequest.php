@@ -28,9 +28,9 @@ class StoreSessionRequest extends FormRequest
             'SessionName'=>['required','min:5'],
             'day'=>['required'],
             'starttime'=>['required'],
-            'endtime'=>['required','gt:start_time'],
+            'endtime'=>'required|after:starttime',
         ];
-    }
+    } 
     public function messages()
     {
         return [
@@ -39,7 +39,7 @@ class StoreSessionRequest extends FormRequest
            'day.required'=>'you should add session day',
            'starttime.required'=>'you should add start_time',
            'endtime.required'=>'you should add finish_time',
-           'endtime.gt'=>'finish_time must be greater than start_time',
+           'endtime.after'=>'finish_time must be greater than start_time',
 
         ];
     }

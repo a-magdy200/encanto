@@ -32,7 +32,6 @@ class TrainingSessionController extends Controller
     }
     public function store(StoreSessionRequest $request)
     {
-        dd($request->all());
         $session = TrainingSession::create([
             'name' => $request->get('SessionName'),
             'day' => $request->get('day'),
@@ -42,12 +41,7 @@ class TrainingSessionController extends Controller
 
 
         ]);
-///$session->sync([]);
-      /*  TrainingSessionCoach::create([
-            'training_session_id' => $session->id,
-            'coach_id' => $request->get('userid'),
-
-        ]);*/
+        $session->coaches()->sync($request->get('users'));
         return to_route('trainingSessions.index');
     }
     public function show($id)
@@ -77,7 +71,7 @@ class TrainingSessionController extends Controller
     }
     public function delete($sessionid)
     {
-       TrainingSession::find($sessionid);
-        return response()->json([],status:200);
+        TrainingSession::find($sessionid);
+        return response()->json([], status: 200);
     }
 }
