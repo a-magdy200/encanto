@@ -13,6 +13,7 @@ class City extends Model
     protected $fillable = [
         'name',
     ];
+
     public function manager(): HasOne
     {
         return $this->hasOne(CityManager::class);

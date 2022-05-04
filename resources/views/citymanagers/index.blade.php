@@ -17,14 +17,17 @@
         </div><!-- /.container-fluid -->
     @endsection
     @section('content')
-        <div class="text-center mb-3">
-            <a href="{{ route('citymanagers.create') }}" class="btn btn-primary">
-                Add City Manager
-            </a>
-        </div>
-        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+        <form action="{{ route('citymanagers.create') }}" class="get">
+            <div class="text-center mb-3">
+                <button type="submit" class="btn btn-primary">
+                    Add City Manager
+                </button>
+            </div>
+        </form>
 
-                @foreach ( $cityManagers as $cityManager)
+        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+            
+                @foreach ( $cityManagers as $cityManager)       
                   <tr>
                     <td>{{ $cityManager['id'] }}</th>
                     <td>{{$cityManager['name']  }}</td>
@@ -38,7 +41,7 @@
                     </td>
                   </tr>
                   @endforeach
-
-
+    
+                
         </x-table-component>
     @endsection

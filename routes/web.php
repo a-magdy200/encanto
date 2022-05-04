@@ -25,9 +25,13 @@
     */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('welcome');
 });
-Route::group(['middleware' => ['web']], function () {
+Route::get('/test', [\App\Http\Controllers\HomeController::class, 'test'])->name('test');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/table',  [App\Http\Controllers\HomeController::class, 'table'])->name('home');
+Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance.index');
 Route::get('/attendance/create', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendance.create');
 Route::post('/attendance/store', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendance.store');
@@ -48,6 +52,7 @@ Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientController::cla
 Route::get('/clients/{client}/show', [App\Http\Controllers\ClientController::class, 'show'])->name('clients.show');
 Route::put('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'update'])->name('clients.update');
 Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'delete'])->name('clients.delete');
+Route::group(['middleware' => ['web']], function () {
     // Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
     Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create')->middleware('auth');
     Route::get('/gymmanagers/{gymmanagerid}/edit', [GymManagerController::class, 'edit'])->name('gymmanagers.edit')->middleware('auth');
@@ -94,15 +99,15 @@ Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::clas
     Route::put('/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
     Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
 
-Route::get('/packages/purchase', [TrainingPackageController::class, 'purchase'])->name('packages.purchase');
-Route::post('/packages/order', [TrainingPackageController::class, 'order'])->name('packages.order');
-Route::get('/packages/create', [TrainingPackageController::class, 'create'])->name('packages.create');
-Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
-Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
-Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
-Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
-Route::delete('/packages/{package}/danger', [TrainingPackageController::class, 'delete']);
-Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
+    Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
+    Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
+    Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
+    Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
+    Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
+    Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
+    Route::delete('/packages/{package}', [TrainingPackageController::class, 'destroy'])->name('packages.destroy');
+    Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
+
     Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
     Route::get('/trainingSessions/create', [TrainingSessionController::class, 'create'])->name('trainingSessions.create');
     Route::post('/trainingSessions', [TrainingSessionController::class, 'store'])->name('trainingSessions.store');

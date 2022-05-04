@@ -24,7 +24,7 @@
                 <div class="card card-primary card-outline ">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{ asset('public/images/'.$user->avatar) }}"
+                            <img class="profile-user-img img-fluid img-circle" src="{{ asset('/storage/app/public/images/'.$user->avatar) }}"
                                 >
                         </div>
 
@@ -44,9 +44,14 @@
                             <p class="text-muted">{{ $user->manager->city->name}}</p>
 
                         </div>
-        
-                        
-                        
+                        <div class="row justify-content-center">
+                            <div class="col-3">
+                                <a href="{{ route('citymanagers.index') }}" class="btn btn-primary btn-block"><b>Back</b></a>
+
+                            </div>
+
+                        </div>
+                                 
                     </div>
                     <!-- /.card-body -->
                 </div>
