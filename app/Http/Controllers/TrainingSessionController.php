@@ -63,10 +63,15 @@ class TrainingSessionController extends Controller
     public function update(UpdateSessionRequest $request, $sessionid)
     {
         $Session = TrainingSession::find($sessionid);
-        $Session->day = $request->get('day');
-        $Session->start_time = $request->get('starttime');
-        $Session->finish_time = $request->get('finishtime');
-        $Session->update();
+        $findSession=Attendance::where('training_session_id','=',$sessionid)->count();
+        if($findSession==0)
+        {
+            $Session->day = $request->get('day');
+            $Session->start_time = $request->get('starttime');
+            $Session->finish_time = $request->get('finishtime');
+            $Session->update();
+        }
+        
         return to_route("trainingSessions.index");
     }
     public function delete($id)
