@@ -57,6 +57,8 @@ class TrainingSessionController extends Controller
                 'start_time' => $request->get('starttime'),
                 'finish_time' => $request->get('endtime'),
                 'gym_id' => $request->get('gymid'),
+                'users' => $request->get('users'),
+
         ]);
                 
         }
