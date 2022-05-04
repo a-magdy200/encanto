@@ -31,7 +31,7 @@
             <label>Coach Name</label>
             <select id="userid" name="users[]" class="select2" multiple="multiple" data-placeholder="select coach" data-dropdown-css-class="select2-purple" style="width: 100%"; >
                 @foreach($users as $user)
-                <option value="{{$user->id}}">{{$user->name}}</option>
+                <option  value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -40,7 +40,7 @@
         <label>Gym Name</label>
         <select class="form-control" name="gymid">
             @foreach($gyms as $gym)
-            <option  value="{{$gym->id}}">{{$gym->name}}</option>
+            <option value="{{$gym->id}}">{{$gym->name}}</option>
             @endforeach
         </select>
     </div>
