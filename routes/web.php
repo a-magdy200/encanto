@@ -100,12 +100,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
 
     Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
+    Route::get('/packages/purchase', [TrainingPackageController::class, 'purchase'])->name('packages.purchase');
+    Route::post('/packages/order', [TrainingPackageController::class, 'order'])->name('packages.order');
     Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
     Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
     Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
     Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
     Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
-    Route::delete('/packages/{package}', [TrainingPackageController::class, 'destroy'])->name('packages.destroy');
     Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
 
     Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');

@@ -86,9 +86,10 @@ class TrainingPackageController extends Controller
 
     public function order(OrderPackageRequest $request)
     {
+        //dd($request->all());
         $package = TrainingPackage::find($request->get('package_id'));
         Order::create([
-            'user_id' => $request->get('user_id'),
+            'client_id' => $request->get('client_id'),
             'package_id' => $request->get('package_id'),
             'number_of_sessions'=>$package->number_of_sessions,
             'price' => $package->price,
