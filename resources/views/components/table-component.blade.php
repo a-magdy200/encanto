@@ -31,6 +31,7 @@
     </div>
     <!-- /.row -->
 </div>
+
 <div class="modal fade" id="delete-modal">
     <div class="modal-dialog">
         <div class="modal-content">

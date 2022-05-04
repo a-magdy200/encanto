@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Gym extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'cover_image',
@@ -26,5 +28,9 @@ class Gym extends Model
     public function sessions(): HasMany
     {
         return $this->hasMany(TrainingSession::class);
+    }
+    public function packages(): HasMany
+    {
+        return $this->hasMany(TrainingPackage::class);
     }
 }

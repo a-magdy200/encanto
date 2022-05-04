@@ -17,6 +17,7 @@ class CityManagerController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         $roleId = Role::where('name', '=', 'city_manager')->value('id');
         $cityManagers = User::where('role_id', '=', $roleId)->get();
         $headings = ['id', 'name', 'city'];
@@ -34,6 +35,33 @@ class CityManagerController extends Controller
         
         $user = User::find($managerId);
         return view('citymanagers.show', [
+=======
+        //User::find()
+        $items=[];
+        $roleId=Role::where('name','=','city_manager')->value('id');
+        $cityManagers=User::find($roleId)->get();
+        //dd($cityManagers);
+        foreach ($cityManagers as $cityManager)
+             {
+              //dd($cityManager->city); // returns null ??????
+              $item = ['id' => $cityManager->id, 'name'=>$cityManager->name, 'city'=> $cityManager->city];
+              //dd($item['id']);
+              array_push($items,$item);
+             }
+        //$items = [['id' => 1, 'test'=>'hi', 'is_banned' => true],['id' => 2, 'test'=>'hi', 'is_banned' => false],['id' => 3, 'test'=>'hi', 'is_banned' => false],['id' => 4, 'test'=>'hi', 'is_banned' => false],['id' => 5, 'test'=>'hi', 'is_banned' => false],['id' => 6, 'test'=>'hi', 'is_banned' => false],['id' => 7, 'test'=>'hi', 'is_banned' => false],['id' => 8, 'test'=>'hi', 'is_banned' => false],['id' => 9, 'test'=>'hi', 'is_banned' => false],['id' => 10, 'test'=>'hi', 'is_banned' => false]];
+        $headings = ['id', 'name', 'city'];
+        $title='citymanager';
+
+        return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+
+        //return view('CityManagers.index',compact('cityManagers'));
+    }
+    public function show($ManagerId){
+
+        $user = User::find($ManagerId)->first();
+        //dd($user->manger->national_id);
+        return view('citymanagers.show',[
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
             'user' => $user
         ]);
     }
@@ -82,6 +110,7 @@ class CityManagerController extends Controller
             'cities' => $cities,
         ]);
     }
+<<<<<<< HEAD
     public function store(AddCityManagerRequest $request)
     {
         $data = request()->all();
@@ -93,6 +122,54 @@ class CityManagerController extends Controller
         } else {
             $avatar_name = 'default_avatar.jpg';
         }
+=======
+    public function store()
+    {
+        //$post = request()->all();
+       // $path = Storage::putFile('avatars', $request->file('avatar'));
+        // Post::create([
+        //     'title' => $post['title'],
+        //     'description' => $post['description'],
+        //     'user_id' => $post['post_creator'],
+        //     'path' => $path,
+        // ]);
+        return redirect()->route('citymanagers.index');
+
+}
+public function edit($managerId)
+{
+
+    $user = User::find($managerId);
+    //dd($user['id']);
+    return view('citymanagers.edit',[
+        'user' => $user,
+    ]);
+
+}
+public function update($managerId){
+    //$data = request()->all();
+
+    //Storage::delete(Post::find($managerId)->path);
+    //$path = Storage::putFile('avatars', $request->file('avatar'));
+
+  /*  User::where('id',$managerId)->update([
+        'title' => $post['Title'],
+        'description' =>  $post ['Description'],
+        'user_id' => $post['post_creator'],
+        'path' => $path,
+    ]);*/
+    return redirect()->route('citymanagers.index');
+
+}
+public function destroy($managerId)
+{
+    //Storage::delete(User::find($managerId)->path);
+    $user = User::find($managerId);
+    $user->delete();
+    return redirect()->route('citymanagers.index');
+}
+}
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
 
         User::create([
             'name' => $data['name'],

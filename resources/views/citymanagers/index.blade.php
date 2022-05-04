@@ -17,6 +17,7 @@
         </div><!-- /.container-fluid -->
     @endsection
     @section('content')
+<<<<<<< HEAD
         <form action="{{ route('citymanagers.create') }}" class="get">
             <div class="text-center mb-3">
                 <button type="submit" class="btn btn-primary">
@@ -45,3 +46,9 @@
                 
         </x-table-component>
     @endsection
+=======
+
+            <x-table-component resource="citymanagers" :bannable="false" :actions="true" title="{{ $title }}"
+                :headings="$headings" :items="$items" />
+        @endsection
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
