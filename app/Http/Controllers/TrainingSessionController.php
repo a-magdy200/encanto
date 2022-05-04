@@ -37,6 +37,7 @@ class TrainingSessionController extends Controller
         $findSessions = TrainingSession::where('day', '=', $request->get('day'))
             ->where('gym_id', '=', $request->get('gymid'))
             ->whereBetween('start_time', [$request->get('starttime'), $request->get('endtime')])
+            ->orWhereBetween('finish_time', [$request->get('starttime'), $request->get('endtime')])
             ->count();
         if ($findSessions == 0) {
             $session = TrainingSession::create([
@@ -50,7 +51,7 @@ class TrainingSessionController extends Controller
             return to_route('trainingSessions.index');
         } else {
             return Redirect()->back()->with([
-                'error' => 'invalid session time',
+                'error' => 'session time overlap',
                 'name' => $request->get('SessionName'),
                 'day' => $request->get('day'),
                 'start_time' => $request->get('starttime'),

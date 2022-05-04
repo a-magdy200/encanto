@@ -9,21 +9,21 @@
     @csrf
     <div class="form-group">
         <label>Session Name</label>
-        <input type="text" class="form-control" name="SessionName" @if(Session::has('name')) value="{{Session::get('name')}}" @endif>
+        <input type="text" class="form-control" name="SessionName" value="{{ Session::get('name') }}" >
     </div>
 
     <div class="form-group">
         <label>Session Day</label>
-        <input type="date" class="form-control" name="day">
+        <input type="date" class="form-control" name="day" value="{{Session::get('day') }}">
     </div>
 
     <div class="form-group">
         <label>Session Start Time</label>
-        <input type="time" class="form-control" name="starttime">
+        <input type="time" class="form-control" name="starttime"value="{{Session::get('start_time') }}">
     </div>
     <div class="form-group">
         <label>Session End Time</label>
-        <input type="time" class="form-control" name="endtime">
+        <input type="time" class="form-control" name="endtime" value="{{Session::get('finish_time') }}">
     </div>
 
     <div class="form-group">
