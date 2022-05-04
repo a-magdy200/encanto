@@ -25,10 +25,21 @@
     */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 Route::get('/test', [\App\Http\Controllers\HomeController::class, 'test'])->name('test');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+<<<<<<< HEAD
+Route::get('/home/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
+Route::get('/home/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
+Route::post('/home/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
+Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+Route::get('/home/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
+Route::put('/home/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
+Route::delete('/home/citymanagers/{citymanager}',[CityManagerController::class,'destroy'])->name('citymanagers.destroy');
+Route::get('/home/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
+=======
 Route::get('/table',  [App\Http\Controllers\HomeController::class, 'table'])->name('home');
 Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
@@ -61,6 +72,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store')->middleware('auth');
     Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index');
     Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
@@ -99,15 +111,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
     Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
 
-    Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
-    Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
-    Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
-    Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
-    Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
-    Route::get('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
-    Route::delete('/packages/{package}', [TrainingPackageController::class, 'destroy'])->name('packages.destroy');
-    Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
-
+Route::get('/packages/purchase', [TrainingPackageController::class, 'purchase'])->name('packages.purchase');
+Route::post('/packages/order', [TrainingPackageController::class, 'order'])->name('packages.order');
+Route::get('/packages/create', [TrainingPackageController::class, 'create'])->name('packages.create');
+Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
+Route::post('/packages', [TrainingPackageController::class, 'store'])->name('packages.store');
+Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
+Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
+Route::delete('/packages/{package}/danger', [TrainingPackageController::class, 'delete']);
+Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
     Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
     Route::get('/trainingSessions/create', [TrainingSessionController::class, 'create'])->name('trainingSessions.create');
     Route::post('/trainingSessions', [TrainingSessionController::class, 'store'])->name('trainingSessions.store');

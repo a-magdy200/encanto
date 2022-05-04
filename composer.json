@@ -11,6 +11,7 @@
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "infyomlabs/laravel-ui-adminlte": "^4.0",
+        "laravel/cashier": "^13.10",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",

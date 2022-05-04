@@ -29,4 +29,8 @@ class Gym extends Model
     {
         return $this->hasMany(TrainingSession::class);
     }
+    public function packages(): HasMany
+    {
+        return $this->hasMany(TrainingPackage::class);
+    }
 }

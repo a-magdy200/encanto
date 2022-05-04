@@ -24,8 +24,8 @@
                 <div class="card card-primary card-outline ">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
-                                alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle" src="{{ asset('public/images/'.$user->avatar) }}"
+                                >
                         </div>
 
                         <h3 class="profile-username text-center">{{ $user->name}}</h3>
@@ -41,19 +41,10 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                            <p class="text-muted">{{ $user->manager->city}}</p>
+                            <p class="text-muted">{{ $user->manager->city->name}}</p>
 
                         </div>
-                        <div class="row mb-2 justify-content-center ">
-                            <div class="col-3">
-                                <a href="#" class="btn btn-primary btn-block "><b>Edit</b></a>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center ">
-                          <div class="col-3 ">
-                            <a href="#" class="btn btn-danger btn-block"><b>Delete</b></a>
-                          </div>
-                        </div>
+        
                         
                         
                     </div>

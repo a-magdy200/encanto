@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrainingPackage;
+use App\Models\User;
+use App\Models\Gym;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
+use App\Http\Requests\OrderPackageRequest;
 
 class TrainingPackageController extends Controller
 {
     public function index()
     {
         $packages = TrainingPackage::all();
-        //$packages[0]['price']/100;
         return view('packages.index', [
             'items' => $packages,
             'title' => 'Training Packages',
@@ -63,18 +66,34 @@ class TrainingPackageController extends Controller
         return to_route('packages.index');
     }
 
-    public function delete($packageId)
+    public function delete($package)
     {
-        $packages = TrainingPackage::find($packageId);
-        return view('packages.delete', [
+        TrainingPackage::find($package)->delete();
+        return response()->json([],200);
+    }
+
+    public function purchase()
+    {
+        $packages = TrainingPackage::all();
+        $clients= User::where('role_id',5)->get();
+        $gyms = Gym::all();
+        return view('packages.purchase', [
             'packages' => $packages,
+            'clients' => $clients,
+            'gyms' => $gyms,
         ]);
     }
 
-    public function destroy($packageId)
+    public function order(OrderPackageRequest $request)
     {
-        $package = TrainingPackage::find($packageId);
-        $package->delete();
+        $package = TrainingPackage::find($request->get('package_id'));
+        Order::create([
+            'user_id' => $request->get('user_id'),
+            'package_id' => $request->get('package_id'),
+            'number_of_sessions'=>$package->number_of_sessions,
+            'price' => $package->price,
+        ]);
+
         return to_route('packages.index');
     }
 }

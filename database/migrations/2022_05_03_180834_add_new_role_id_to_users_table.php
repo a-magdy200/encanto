@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('training_sessions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->date("day");
-            $table->time('start_time');
-            $table->time('finish_time');
-            $table->foreignId('gym_id')->references('id')->on('gyms');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('role_id')->default(5)->references("id")->on("roles");
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-       Schema::dropIfExists('training_sessions');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
