@@ -25,12 +25,18 @@ use App\Http\Controllers\ProfileController;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('welcome');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/table', [HomeController::class, 'table'])->name('home');
-Route::delete('/users/{gymId}/delete', [HomeController::class, 'sampleDelete'])->name('delete.sample');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+// Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
+Route::get('/gymmanagers/create/', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymmanagers.create')->middleware('auth');
+Route::get('/gymmanagers/{gymmanagerid}/edit', [App\Http\Controllers\GymManagerController::class, 'edit'])->name('gymmanagers.edit')->middleware('auth');
+Route::get('/gymmanagers/{gymmanagerid}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('gymmanagers.show')->middleware('auth');
+Route::put('/gymmanagers/{gymmanagerid}', [App\Http\Controllers\GymManagerController::class, 'update'])->name('gymmanagers.update')->middleware('auth');
+Route::post('gymmanagers/create', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymmanagers.store')->middleware('auth');
+Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymmanagers.index');
+Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
@@ -41,8 +47,6 @@ Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orde
 
 Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendace.index');
 
-Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymmanagers.index');
-Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.info');
