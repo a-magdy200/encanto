@@ -71,5 +71,11 @@
                 console.error(err);
             }
         });
+    });
+    $('.custom-file-input').on('change',function(){
+        //get the file name
+        const fileName = this.files[0].name;
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
     })
 })(jQuery);
