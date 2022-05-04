@@ -24,7 +24,7 @@ class OrderPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>['required'],
+            'client_id'=>['required'],
             'package_id'=>['required'],
             'gym_id'=>['required'],
         ];
