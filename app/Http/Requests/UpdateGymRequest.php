@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreGymRequest extends FormRequest
+class UpdateGymRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +25,8 @@ class StoreGymRequest extends FormRequest
     {
         return [
             'gymName'=>['required','min:3'],
-            'gymCoverImg' => ['required','image','mimes:jpg,png'],
+            'gymCoverImg' => ['image','mimes:jpg,png'],
             'gym_city'=>['required','exists:cities,id']
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'gymName.required'=>'Gym name field is required',
-            'gymCoverImg.required'=>'Image is required',
-            'gymCoverImg.mimes'=>'The image must be jpg or png file only'
         ];
     }
 }

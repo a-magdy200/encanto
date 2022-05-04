@@ -21,12 +21,23 @@
                   <label>Gym Cover Image</label>
                   <div class="input-group">
                     <div class="custom-file">
+                      <img style="width:100px;height:100px;" src="{{ asset($Gym['cover_image']) }}" alt="Gym cover image" title="Gym cover image">
+                      <input type="file" class="custom-file-input" name="gymCoverImg" id="exampleInputFile1" >
                       <label class="custom-file-label" for="exampleInputFile1">Choose file</label>
-                      <input type="file" class="custom-file-input" name="gymCoverImg" id="exampleInputFile1">
-                      <img style="width:100px;height:100px;" src="{{ asset('storage/GymImages/'.$Gym['cover_image']) }}" alt="Gym cover image" title="Gym cover image">
+
                     </div>
                   </div>
                 </div>
+
+                <div class="form-group">
+                    <label>City Name</label>
+                    <select class="form-control" style="width: 100%;" name="gym_city">
+
+                      @foreach ($cities as $city)
+                        <option @if($Gym->city->id == $city->id) selected @endif value="{{ $city['id'] }}">{{ $city['name'] }}</option>
+                      @endforeach
+                    </select>
+                  </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Update</button>
               </div>

@@ -17,11 +17,7 @@
                   <label for="cityName">City</label>
                   <input type="text" id="cityName" class="form-control" name="cityName" placeholder="Enter ...">
                 </div>
-                <div class="form-group">
-                    <label for="cityManager">City Manager</label>
-                    <input type="text" id="cityManager" class="form-control" name="cityManager" placeholder="Enter ...">
-                </div>
-
+              
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add City</button>
               </div>

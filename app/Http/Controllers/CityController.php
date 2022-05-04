@@ -18,11 +18,8 @@ class CityController extends Controller
 
     public function createCity(StoreCityRequest $request){
             $cityName=$request->input('cityName');
-            $cityManager=$request->input('cityManager');
-
             $result=City::create([
                 'name'=>$cityName,
-                'manager_id'=>$cityManager
             ]);
             if($result){
                 return redirect()->back()->with(["success"=>"City is added successfully"]);
@@ -47,21 +44,14 @@ class CityController extends Controller
     public function updateCity(StoreCityRequest $request,$cityId){
         $city=City::find($cityId);
         $cityName=$request->input('cityName');
-        $cityManager=$request->input('cityManager');
-        // if(request()->all()===null){
             $result=$city->update([
                 'name'=>$cityName,
-                'manager_id'=>$cityManager
             ]);
             if ($result) {
                 return redirect()->back()->with(['success'=>'City is Updated Successfully']);
             } else {
                 return redirect()->back()->with(['error'=>'Failed to update this city']);
             }
-        // }else{
-        //     $city->update($request->input());
-        //     return redirect()->back()->with(['success'=>'City is Updated Successfully']);
-        // }
     }
     public function deleteCity($cityId){
         $city=City::find($cityId);

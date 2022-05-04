@@ -14,14 +14,17 @@
               <tr>
                 <th>Cover Image</th>
                 <th>Gym Name</th>
+                <th>City Name</th>
                 <th>Options</th>
               </tr>
               </thead>
               <tbody>
               @foreach ($gyms as $gym)
               <tr>
+
+                <td><img src="{{ asset($gym->cover_image) }}" style="width:100px;height:100px;" alt="gym cover image"/></td>
                 <td>{{ $gym->name }}</td>
-                <td><img src="{{ asset('storage/GymImages/'.$gym->cover_image) }}" style="width:100px;height:100px;" alt="gym cover image"/></td>
+                <td>{{ $gym->city->name }}</td>
                 <td class="d-flex justify-content-center">
                   <a href="{{ route('show.singleGym',['gymId'=>$gym['id']]) }}" class="m-3">
                     <i class="fa fa-eye"></i>
