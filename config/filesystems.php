@@ -71,11 +71,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-<<<<<<< HEAD
         public_path('images') => storage_path('app/images'),
-=======
         public_path('avatars') => storage_path('app/avatars'),
->>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
     ],
 
 ];

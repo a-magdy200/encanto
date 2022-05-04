@@ -27,22 +27,7 @@
 Route::get('/', function () {
     return view('layouts.app');
 });
-Route::get('/test', [\App\Http\Controllers\HomeController::class, 'test'])->name('test');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-<<<<<<< HEAD
-Route::get('/home/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
-Route::get('/home/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
-Route::post('/home/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
-Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
-Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
-Route::get('/home/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
-Route::put('/home/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
-Route::delete('/home/citymanagers/{citymanager}',[CityManagerController::class,'destroy'])->name('citymanagers.destroy');
-Route::get('/home/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
-=======
-Route::get('/table',  [App\Http\Controllers\HomeController::class, 'table'])->name('home');
-Route::get('/gymmanagers', [App\Http\Controllers\GymManagerController::class, 'table'])->name('gymmanagers.index');
-Route::delete('/gymmanagers/{gymmanagerid}/delete', [App\Http\Controllers\GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+Route::group(['middleware' => ['web']], function () {
 Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance.index');
 Route::get('/attendance/create', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendance.create');
 Route::post('/attendance/store', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendance.store');
@@ -63,7 +48,6 @@ Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientController::cla
 Route::get('/clients/{client}/show', [App\Http\Controllers\ClientController::class, 'show'])->name('clients.show');
 Route::put('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'update'])->name('clients.update');
 Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'delete'])->name('clients.delete');
-Route::group(['middleware' => ['web']], function () {
     // Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
     Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create')->middleware('auth');
     Route::get('/gymmanagers/{gymmanagerid}/edit', [GymManagerController::class, 'edit'])->name('gymmanagers.edit')->middleware('auth');
@@ -72,7 +56,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store')->middleware('auth');
     Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index');
     Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
->>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
