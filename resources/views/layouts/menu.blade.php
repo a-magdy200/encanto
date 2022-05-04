@@ -51,6 +51,27 @@
 </li>
 
 <li class="nav-item">
+    <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Attendance</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('coaches.index') }}" class="nav-link {{ Request::is('coaches') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Coaches</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
+        <p>Clients</p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href="{{ route('packages.index') }}" class="nav-link {{ Request::is('packages') ? 'active' : '' }}">
         <i class="nav-icon fas fa-street"></i>
         <p>Training Packages</p>
