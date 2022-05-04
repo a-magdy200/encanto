@@ -5,17 +5,17 @@
 
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="POST" action="{{ route('clients.update',['client'=>$client->id]) }}">
+        <form method="POST" action="{{ route('coaches.update',['coach'=>$coach->id]) }}"  enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">User Name</label>
-                    <input type="text"  value ="{{$client->name}}"name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <input type="text"  value ="{{$coach->name}}"name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email"   value ="{{$client->email}}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <input type="email"   value ="{{$coach->email}}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>

@@ -24,10 +24,12 @@
                             <label for="exampleInputFile">image file</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file"  name="avatar" class="form-control" id="exampleInputFile">
-
+                                    <input type="file"  name="avatar" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
-
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
                             </div>
                         </div>
 

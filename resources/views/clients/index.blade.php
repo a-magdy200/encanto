@@ -26,6 +26,9 @@
                         <td>{{$client->user->name}}</td>
 
                         <td>{{$client->user->email}}</td>
+                        <td>{{$client->date_of_birth}}</td>
+                        <td>{{$client->gender}}</td>
+
 
 
                         <td class="d-flex align-items-center">
@@ -38,6 +41,6 @@
                 @endforeach
             </x-table-component>
             <div class="text-center">
-                <a href="{{route('clients.create')}}" class="mt-4 btn btn-primary">add coach</a>
+                <a href="{{route('clients.create')}}" class="mt-4 btn btn-primary">add client</a>
             </div>
 @endsection

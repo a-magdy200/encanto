@@ -37,7 +37,7 @@ class ClientController extends Controller
 
         ]);
         Client::create([
-         'birth_date'=> $data['date'],
+         'date_of_birth'=> $data['date'],
          'gender' =>$data['gender'] ,
             'user_id'=>$user->id,
 
@@ -67,9 +67,9 @@ class ClientController extends Controller
             'avatar'=>$path,
         ]);
         Client::where('id', $clientId)->update([
-            'birth_date'=> $data['date'],
+            'date_of_birth'=> $data['date'],
             'gender' =>$data['gender'] ,
-            'user_id'=>$user->id,
+
 
         ]);
         return to_route('clients.index');
@@ -77,7 +77,9 @@ class ClientController extends Controller
 
     public function delete($clientId)
     {
-     $client= Client ::find($clientId)->delete();
+     $client= Client ::find($clientId);
+        $client->delete();
+
        User ::find($client->user_id)->delete();
         return response()->json([], 200);
 
@@ -85,7 +87,7 @@ class ClientController extends Controller
 
     public function show($clientId)
     {  $client = Client::find($clientId);
-        return view('coaches.show',['client'=>$client]);
+        return view('clients.show',['client'=>$client]);
 
 
     }

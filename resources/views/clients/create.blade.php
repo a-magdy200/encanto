@@ -27,11 +27,11 @@
 
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" id="customRadio1" name="gender">
+                                <input class="custom-control-input" type="radio" value="male" id="customRadio1" name="gender">
                                 <label for="customRadio1" class="custom-control-label">male</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" id="customRadio2" name="gender" checked>
+                                <input class="custom-control-input" type="radio" id="customRadio2"  value="female" name="gender" checked>
                                 <label for="customRadio2" class="custom-control-label">female</label>
                             </div>
 

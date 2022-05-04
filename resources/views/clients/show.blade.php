@@ -31,6 +31,8 @@
                             <p class="profile-username text-center"><strong>Name: </strong>{{ $client->user->name}}</p>
 
                             <p class="profile-username text-center"> <strong>Email: </strong>{{ $client->user->email }}</p>
+                            <p class="profile-username text-center"> <strong>gender: </strong>{{ $client->gender }}</p>
+                            <p class="profile-username text-center"> <strong>date of birth: </strong>{{ $client->date_of_birth }}</p>
 
 
 

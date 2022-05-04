@@ -65,7 +65,7 @@ class CoachController extends Controller
     }
 
     public function delete($coach)
-    {  dd('jdndcbdnc');
+    {
         User::find($coach)->delete();
         return response()->json([], 200);
 

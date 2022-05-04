@@ -33,7 +33,7 @@ class AttendanceController extends Controller
         'training_session_id' =>$data['training_session_id'],
             'user_id'=>$data['user_id'],
         'attended_at'=>$data['date'],
-            'added_by' =>1 ,
+            'added_by' =>2 ,
             ]);
      return to_route('attendance.index');
  }
@@ -55,7 +55,7 @@ class AttendanceController extends Controller
                 'training_session_id' =>$data['training_session_id'],
                 'user_id'=>$data['user_id'],
                 'attended_at'=>$data['date'],
-                'added_by' =>1 ,
+                'added_by' =>2 ,
                 ]);
         return to_route('attendance.index');
 
