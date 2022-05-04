@@ -18,6 +18,9 @@
     @endsection
     @section('content')
 
-            <x-table-component resource="citymanagers" :bannable="false" :actions="true" title="{{ $title }}"
+                <x-table-component resource="citymanagers" :bannable="false" :actions="true" title="{{ $title }}"
+                :headings="$headings" :items="$items" />
+
+                <x-table-component resource="GymPages" :bannable="false" :actions="true" title="{{ $title }}"
                 :headings="$headings" :items="$items" />
         @endsection
