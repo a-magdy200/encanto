@@ -47,8 +47,18 @@ class TrainingSessionController extends Controller
                 'gym_id' => $request->get('gymid'),
             ]);
             $session->coaches()->sync($request->get('users'));
+            return to_route('trainingSessions.index');
+        } else {
+            return Redirect()->back()->with([
+                'error' => 'invalid session time',
+                'name' => $request->get('SessionName'),
+                'day' => $request->get('day'),
+                'start_time' => $request->get('starttime'),
+                'finish_time' => $request->get('endtime'),
+                'gym_id' => $request->get('gymid'),
+        ]);
+                
         }
-        return to_route('trainingSessions.index');
     }
     public function show($id)
     {
@@ -73,6 +83,10 @@ class TrainingSessionController extends Controller
             $Session->start_time = $request->get('starttime');
             $Session->finish_time = $request->get('finishtime');
             $Session->update();
+        } else {
+            return redirect()->back()->with([
+                'error' => 'invalid session time',
+            ]);
         }
 
         return to_route("trainingSessions.index");

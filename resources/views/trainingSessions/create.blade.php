@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Session::has('error'))
+<h4>{{ Session::get('error') }}</h4>
+@endif
+
 <form method="post" action="{{ route('trainingSessions.store')}}">
     @csrf
     <div class="form-group">
         <label>Session Name</label>
-        <input type="text" class="form-control" name="SessionName">
+        <input type="text" class="form-control" name="SessionName" @if(Session::has('name')) value="{{Session::get('name')}}" @endif>
     </div>
 
     <div class="form-group">
