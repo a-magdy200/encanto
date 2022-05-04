@@ -77,10 +77,6 @@ class ClientController extends Controller
 
     public function delete($clientId)
     {
-     $client= Client ::find($clientId);
-        $client->delete();
-
-       User ::find($client->user_id)->delete();
         return response()->json([], 200);
 
     }

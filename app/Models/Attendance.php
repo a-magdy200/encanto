@@ -15,9 +15,9 @@ class Attendance extends Model
         'attended_at',
         'added_by',
     ];
-    public function user(): BelongsTo
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
     }
     public function training_session(): BelongsTo
     {

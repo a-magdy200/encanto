@@ -23,9 +23,9 @@
                     <tr>
 
 
-                                <td>{{$attendance->user->name}}</td>
+                                <td>{{$attendance->client->user->name}}</td>
 
-                        <td>{{$attendance->user->email}}</td>
+                        <td>{{$attendance->client->user->email}}</td>
 
                         <td>{{ \Illuminate\Support\Carbon::parse( $attendance->attended_at)->format('Y-m-d')}}</td>
                         <td>{{ \Illuminate\Support\Carbon::parse( $attendance->attended_at)->format('H:i:s')}}</td>

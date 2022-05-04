@@ -34,8 +34,7 @@
                         <td class="d-flex align-items-center">
                             <a href="{{route('clients.show',['client'=>$client->id])}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                             <a href="{{route('clients.edit',['client'=>$client->id])}}" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                            <a href="{{route('clients.delete',['client'=>$client->id])}}" class="btn btn-danger delete-btn" data-toggle="modal"
-                               data-target="#delete-modal"><i class="fa fa-times"></i></a>
+
                         </td>
                     </tr>
                 @endforeach

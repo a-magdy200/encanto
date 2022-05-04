@@ -31,9 +31,9 @@ class AttendanceController extends Controller
     $data=request()->all();
     Attendance::create([
         'training_session_id' =>$data['training_session_id'],
-            'user_id'=>$data['user_id'],
+            'client_id'=>$data['client_id'],
         'attended_at'=>$data['date'],
-            'added_by' =>2 ,
+
             ]);
      return to_route('attendance.index');
  }
@@ -53,9 +53,8 @@ class AttendanceController extends Controller
         $data=request()->all();
         Attendance::where('id', $attendanceId)->update([
                 'training_session_id' =>$data['training_session_id'],
-                'user_id'=>$data['user_id'],
+                'client_id'=>$data['client_id'],
                 'attended_at'=>$data['date'],
-                'added_by' =>2 ,
                 ]);
         return to_route('attendance.index');
 
