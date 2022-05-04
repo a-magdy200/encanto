@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrainingSession;
+use App\Models\Attendance;
 use App\Models\TrainingSessionCoach;
 use App\Http\Requests\StoreSessionRequest;
+use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
 
@@ -58,20 +60,27 @@ class TrainingSessionController extends Controller
             'trainingSession' => $trainingSession, 'coaches' => $coaches, 'gyms' => $gyms
         ]);
     }
-    public function update(StoreSessionRequest $request, $sessionid)
+    public function update(UpdateSessionRequest $request, $sessionid)
     {
         $Session = TrainingSession::find($sessionid);
-        $Session->name = $request->get('SessionName');
         $Session->day = $request->get('day');
         $Session->start_time = $request->get('starttime');
         $Session->finish_time = $request->get('finishtime');
-        $Session->gym_id = $request->get('gymid');
         $Session->update();
         return to_route("trainingSessions.index");
     }
-    public function delete($sessionid)
+    public function delete($id)
     {
-        TrainingSession::find($sessionid);
-        return response()->json([], status: 200);
+       $session=TrainingSession::find($id);
+       $findSession=Attendance::where('training_session_id','=',$id)->count();
+       //dd($findSession);
+      if($findSession==0)
+       {
+           $session->delete();
+           return response()->json([], status: 200);
+       }
+       else
+       return response()->json(['error'=>"can't delete session"], status: 200);
+
     }
 }

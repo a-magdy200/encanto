@@ -56,7 +56,7 @@ class OrderController extends Controller
             'order' => $Order, 'users' => $Users, 'packages' => $Packages
         ]);
     }
-    public function update(Request $request,$orderid)
+    public function update(Request $request, $orderid)
     {
         $Order = Order::find($orderid);
         $Order->user_id = $request->get('user_id');
@@ -66,10 +66,10 @@ class OrderController extends Controller
         $Order->update();
         return to_route("orders.index");
     }
-    public function delete($orderid)
+    public function delete($id)
     {
-        Order::find($orderid);
-        return response()->json([],status:200);
+        $order = Order::find($id);
+        $order->delete();
+        return response()->json([], status: 200);
     }
 }
-
