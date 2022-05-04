@@ -13,7 +13,6 @@
               <thead>
               <tr>
                 <th>City</th>
-                <th>City Manager</th>
                 <th>Options</th>
               </tr>
               </thead>
@@ -21,7 +20,6 @@
               @foreach ($cities as $city)
               <tr>
                 <td>{{ $city->name }}</td>
-                <td>{{ $city->manager_id }}</td>
                 <td class="d-flex justify-content-center">
                   <a href="{{ route('show.singleCity',['cityId'=>$city['id']]) }}" class="m-3 ">
                     <i class="fa fa-eye "></i>

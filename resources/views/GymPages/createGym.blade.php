@@ -23,12 +23,21 @@
                   <label>Gym Cover Image</label>
                   <div class="input-group">
                     <div class="custom-file">
-                      <label class="custom-file-label" for="exampleInputFile1">Choose file</label>
                       <input type="file" class="custom-file-input" name="gymCoverImg" id="exampleInputFile1">
+                      <label class="custom-file-label" for="exampleInputFile1">Choose file</label>
+
                     </div>
                   </div>
                 </div>
 
+                <div class="form-group">
+                    <label>City Name</label>
+                    <select class="form-control" style="width: 100%;" name="gym_city">
+                      @foreach ($cities as $city)
+                        <option value="{{ $city['id'] }}" class="form-control">{{ $city['name'] }}</option>
+                      @endforeach
+                    </select>
+                  </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add</button>
               </div>

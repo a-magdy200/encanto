@@ -13,7 +13,7 @@ class StoreCityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,6 @@ class StoreCityRequest extends FormRequest
     {
         return [
             'cityName'=>['required','min:3'],
-            'cityManager' => ['required'],
         ];
     }
 
@@ -33,6 +32,7 @@ class StoreCityRequest extends FormRequest
     {
         return [
             'cityName.required'=>'City name field is required',
+
         ];
     }
 }

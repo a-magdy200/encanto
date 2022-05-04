@@ -17,10 +17,7 @@
                   <label for="cityName">City</label>
                   <input type="text" id="cityName" class="form-control" name="cityName" value="{{ $city['name'] }}" placeholder="Enter ...">
                 </div>
-                <div class="form-group">
-                    <label for="cityManager">City Manager</label>
-                    <input type="text" id="cityManager" class="form-control" name="cityManager" value="{{ $city['manager_id'] }}" placeholder="Enter ...">
-                </div>
+
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Update</button>
               </div>
