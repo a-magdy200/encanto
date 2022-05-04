@@ -10,7 +10,9 @@ class CityController extends Controller
 {
     public function showCities(){
         $cities=City::all();
-        return view('CityPages.cities',['cities'=>$cities]);
+        $headings=['City Name'];
+        $title="Cities";
+        return view('CityPages.showAllCities',['cities'=>$cities,"headings"=>$headings,"title"=>$title]);
     }
     public function showCreateCity(){
         return view('CityPages.createCity');
@@ -57,10 +59,10 @@ class CityController extends Controller
         $city=City::find($cityId);
         $result=$city->delete();
         if($result){
-            return redirect()->back()->with(['success'=>'City is delete Successfully']);
+            return response()->json([], 200);
 
         }else{
-            return redirect()->back()->with(['failed'=>'City failed to delete']);
+            return response()->json([], 400);
 
         }
     }
