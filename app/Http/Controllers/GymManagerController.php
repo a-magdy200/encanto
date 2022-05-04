@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class GymManagerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
     public function table() {
         $gymmanagers=GymManager::all();
         //dd($gymmanagers);

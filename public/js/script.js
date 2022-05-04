@@ -46,7 +46,9 @@
         // in case of success, shows toast of success, and remove the row from html
         // in case of error, shows toast of error
         e.preventDefault();
+        console.log('delete');
         const path = $(e.target).attr('action');
+        console.log(path);
         $.ajax({
             url: path,
             type: 'DELETE',

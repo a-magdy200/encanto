@@ -11,6 +11,8 @@ use App\Http\Controllers\TrainingPackageController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageContent\CityController;
 use App\Http\Controllers\PageContent\GymController;
+use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +45,7 @@ Route::get('/gymmanagers', [GymManagerController::class, 'table'])->name('gymman
 Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.info');
 
 Route::get('/gyms', [GymController::class, 'showGyms'])->name('show.AllGyms');
 Route::get('/gyms/show', [GymController::class, 'showGymForm'])->name('show.gymForm');
@@ -94,4 +97,6 @@ Route::post('/trainingSessions', [TrainingSessionController::class, 'store'])->n
 Route::put('/trainingSessions/update/{id}', [TrainingSessionController::class, 'update'])->name('trainingSessions.update');
 Route::get('/trainingSessions/{id}', [TrainingSessionController::class, 'show'])->name('trainingSessions.show');
 Route::get('/trainingSessions/{id}/edit', [TrainingSessionController::class, 'edit'])->name('trainingSessions.edit');
+Route::delete('/trainingSessions/{id}/delete', [TrainingSessionsController::class, 'delete'])->name('trainingSessions.delete');
+
 Auth::routes();
