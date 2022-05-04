@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CityManager extends Model
 {
+    public $timestamps = false;
+
     use HasFactory;
     protected $fillable = [
         'national_id',

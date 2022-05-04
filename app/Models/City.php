@@ -12,7 +12,6 @@ class City extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'manager_id',
     ];
     public function manager(): HasOne
     {
