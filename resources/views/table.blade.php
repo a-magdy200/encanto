@@ -18,6 +18,8 @@
 @endsection
 @section('content')
 
+<<<<<<< HEAD
+=======
             <div class="form-group">
                 <label>Multiple (.select2-purple)</label>
                 <div class="select2-purple">
@@ -32,6 +34,7 @@
                     </select>
                 </div>
             </div>
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
       <x-table-component  :actions="true" title="{{$title}}" :headings="$headings" >
           @foreach($items as $item)
               <tr>
@@ -56,6 +59,8 @@
               </tr>
           @endforeach
       </x-table-component>
+<<<<<<< HEAD
+=======
             <form action="">
                 <div class="form-group">
                     <label for="exampleInputFile">File input</label>
@@ -70,4 +75,5 @@
                     </div>
                 </div>
             </form>
+>>>>>>> b84fb959f6aa3081323b4ee09f5a3ded89b62853
 @endsection
