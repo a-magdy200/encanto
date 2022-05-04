@@ -16,7 +16,7 @@ class City extends Model
         'manager_id',
     ];
     
-    public function manager(): BelongsTo
+    public function manager(): HasOne
     {
         return $this->hasOne(CityManager::class);
     }

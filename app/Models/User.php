@@ -61,4 +61,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+    public function manager():HasOne
+    {
+        return $this->hasOne(CityManager::class);
+    }
 }

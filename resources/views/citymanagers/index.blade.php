@@ -17,9 +17,31 @@
         </div><!-- /.container-fluid -->
     @endsection
     @section('content')
-    
-            <x-table-component resource="citymanagers" :bannable="false" :actions="true" title="{{ $title }}"
-                :headings="$headings" :items="$items" />
-              
+        <form action="{{ route('citymanagers.create') }}" class="get">
+            <div class="text-center mb-3">
+                <button type="submit" class="btn btn-primary">
+                    Add City Manager
+                </button>
+            </div>
+        </form>
 
-        @endsection
+        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+            
+                @foreach ( $cityManagers as $cityManager)       
+                  <tr>
+                    <td>{{ $cityManager['id'] }}</th>
+                    <td>{{$cityManager['name']  }}</td>
+                    <td>{{$cityManager->manager->city->name }}</td>
+                    <td class="d-flex align-items-center">
+                        <a href="citymanagers/{{ $cityManager['id'] }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="citymanagers/{{ $cityManager['id'] }}/edit" class="btn btn-warning mx-2"><i
+                                class="fa fa-edit"></i></a>
+                        <a href="citymanagers/{{ $cityManager['id'] }}/delete" class="btn btn-danger delete-btn" data-toggle="modal"
+                            data-target="#delete-modal"><i class="fa fa-times"></i></a>
+                    </td>
+                  </tr>
+                  @endforeach
+    
+                
+        </x-table-component>
+    @endsection
