@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\TrainingPackage;
+use App\Http\Requests\StoreOrderRequest;
 
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class OrderController extends Controller
             'users' => $users, 'packages' => $packages
         ]);
     }
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
         $Package_id = $request->get('package_id');
         $Order_Package = TrainingPackage::find($Package_id);
