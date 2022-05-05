@@ -25,7 +25,7 @@
             </div>
         </form>
 
-        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+        <x-table-component :actions="false" title="{{ $title }}" :headings="$headings">
 
                 @foreach ( $cityManagers as $cityManager)
                   <tr>
@@ -39,6 +39,13 @@
                         <a href="citymanagers/{{ $cityManager['id'] }}/delete" class="btn btn-danger delete-btn" data-toggle="modal"
                             data-target="#delete-modal"><i class="fa fa-times"></i></a>
                     </td>
+                    <td>
+                @if($cityManager->manager->is_approved)
+                <a href="citymanagers/{{$cityManager['id']}}/approve" class="btn btn-success ml-2"><i class="fa fa-check"></i></a>
+                @else
+                <a href="citymanagers/{{$cityManager['id']}}/approve" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
+                @endif
+            </td>
                   </tr>
                   @endforeach
 
