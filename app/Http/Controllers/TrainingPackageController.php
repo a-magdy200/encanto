@@ -15,19 +15,20 @@ class TrainingPackageController extends Controller
 {
     public function index()
     {
-        $packages = TrainingPackage::all();
+        $packages = TrainingPackage::with('gym')->get();
+        // $pacage-gym-Mname
         return view('packages.index', [
             'items' => $packages,
             'title' => 'Training Packages',
-            'headings' => ['Package ID','Package Name','Sessions Number','Price','Created At','Updated At']
+            'headings' => ['Package ID','Package Name','Sessions Number','Gym','Price','Created At','Updated At']
         ]);
     }
 
     public function create()
     {
-        $packages = TrainingPackage::all();
+        $gyms = Gym::all();
         return view('packages.create', [
-            'packages' => $packages,
+            'gyms' => $gyms,
         ]);
     }
 
@@ -38,6 +39,7 @@ class TrainingPackageController extends Controller
             'package_name' => $request['package_name'],
             'number_of_sessions' => $request['number_of_sessions'],
             'price' => $request['price'],
+            'gym_id' => $request['gym_id'],
         ]);
 
         return to_route('packages.index');
@@ -52,9 +54,11 @@ class TrainingPackageController extends Controller
     }
     public function edit($packageId)
     {
+        $gyms = Gym::all();
         $packages = TrainingPackage::find($packageId);
         return view('packages.edit', [
             'packages' => $packages,
+            'gyms' => $gyms,
         ]);
     }
 
