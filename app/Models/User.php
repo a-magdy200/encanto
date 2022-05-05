@@ -61,13 +61,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-    public function manager(): HasOne
+    public function manager()
     {
-        return $this->hasOne(CityManager::class,'user_id');
+        if ($this->role_id === 3) {
+            return $this->hasOne(GymManager::class);
+        }
+        return $this->hasOne(CityManager::class);
     }
     public function gymManager(): HasOne
     {
-        return $this->hasOne(GymManager::class,'user_id');
+        return $this->hasOne(GymManager::class);
     }
     public function client(): HasOne
     {

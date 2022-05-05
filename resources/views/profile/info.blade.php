@@ -17,7 +17,7 @@
             <li class="list-group-item">
                 <b>Email</b> <a class="float-right">{{auth()->user()->email}}</a>
             </li>
-            @if(Auth::user()->role_id ==2) 
+            @if(Auth::user()->role_id ==2)
             <li class="list-group-item">
                 <b>National Id</b> <a class="float-right">{{auth()->user()->manager->national_id}}</a>
             </li>

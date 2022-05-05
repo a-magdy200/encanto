@@ -55,7 +55,7 @@ class ProfileController extends Controller
             $client->date_of_birth=$request->get('dateofbirth');
             $client->update();
         }
-      
+
 
         return view('profile.info');
     }

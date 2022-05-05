@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label> Password</label>
-        <input type="password" class="form-control" name="userPassword" value="{{auth()->user()->password}}">
+        <input type="password" class="form-control" name="userPassword">
     </div>
     @if(Auth::user()->role_id ==2)
     <div class="form-group">
