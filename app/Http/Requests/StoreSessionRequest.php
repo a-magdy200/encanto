@@ -29,8 +29,9 @@ class StoreSessionRequest extends FormRequest
             'day'=>['required'],
             'starttime'=>['required'],
             'endtime'=>'required|after:starttime',
-            'users'=>['require','exists:users,id'],
-            'gymid'=>['require','exists:gyms,id'],
+            'users' => 'required|array',
+            'users.*' => 'exists:users,id', 
+            'gymid'=>['required','exists:gyms,id'],
 
         ];
     } 

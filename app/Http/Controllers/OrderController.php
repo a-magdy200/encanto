@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\TrainingPackage;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 
 use Illuminate\Http\Request;
 
@@ -53,7 +54,7 @@ class OrderController extends Controller
             'order' => $Order, 'users' => $Users, 'packages' => $Packages
         ]);
     }
-    public function update(Request $request, $orderid)
+    public function update(UpdateOrderRequest $request, $orderid)
     {
         $Order = Order::find($orderid);
         $Order->user_id = $request->get('user_id');

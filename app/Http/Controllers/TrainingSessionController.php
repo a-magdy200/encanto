@@ -83,7 +83,7 @@ class TrainingSessionController extends Controller
             $Session->finish_time = $request->get('finishtime');
             $Session->update();
         } else {
-            return redirect()->back()->with([
+            return redirect()->back()->withErrors([
                 'error' => 'invalid session time',
                 'day' => $request->get('day'),
                 'start_time' => $request->get('starttime'),

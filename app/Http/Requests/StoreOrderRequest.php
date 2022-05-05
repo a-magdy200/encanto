@@ -24,8 +24,8 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>['require','exists:users,id'],
-            'package_id'=>['require','exists:training_packages,id'],
+            'user_id'=>['required','exists:users,id'],
+            'package_id'=>['required','exists:training_packages,id'],
         ];
     }
 }

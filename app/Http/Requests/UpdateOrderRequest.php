@@ -24,7 +24,11 @@ class UpdateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id'=>['required','exists:users,id'],
+            'package_id'=>['required','exists:training_packages,id'],
+            'number_of_sessions'=>['required'],
+            'order_price'=>['required']
+
         ];
     }
 }
