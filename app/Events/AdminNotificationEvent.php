@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AppNotificationEvent implements ShouldBroadcastNow
+class AdminNotificationEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -36,6 +36,6 @@ class AppNotificationEvent implements ShouldBroadcastNow
     }
     public function broadcastAs(): string
     {
-        return "app-notification";
+        return "admin-notification";
     }
 }
