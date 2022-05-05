@@ -175,6 +175,8 @@
 <script src="{{asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
 <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
 <script src="{{asset('/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/js/script.js')}}"></script>

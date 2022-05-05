@@ -76,4 +76,15 @@
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
     })
+
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('44fa6c6e3c8fd13e074f', {
+        cluster: 'eu'
+    });
+
+    const channel = pusher.subscribe('notifications-channel');
+    channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+    });
 })(jQuery);
