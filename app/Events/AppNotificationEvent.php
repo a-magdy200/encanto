@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AppNotificationEvent
+class AppNotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,10 +27,14 @@ class AppNotificationEvent
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
-    public function broadcastOn()
+    public function broadcastOn(): array|Channel
     {
-        return new PrivateChannel('notifications-channel');
+        return ['notifications-channel'];
+    }
+    public function broadcastAs(): string
+    {
+        return "app-notification";
     }
 }

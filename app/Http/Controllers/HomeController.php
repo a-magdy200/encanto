@@ -25,14 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new AppNotificationEvent("hi"));
         return view('home');
     }
+
     public function table() {
-        $items = [['id' => 1, 'test'=>'hi', 'is_banned' => true],['id' => 2, 'test'=>'hi', 'is_banned' => false],['id' => 3, 'test'=>'hi', 'is_banned' => false],['id' => 4, 'test'=>'hi', 'is_banned' => false],['id' => 5, 'test'=>'hi', 'is_banned' => false],['id' => 6, 'test'=>'hi', 'is_banned' => false],['id' => 7, 'test'=>'hi', 'is_banned' => false],['id' => 8, 'test'=>'hi', 'is_banned' => false],['id' => 9, 'test'=>'hi', 'is_banned' => false],['id' => 10, 'test'=>'hi', 'is_banned' => false]];
-        $headings = ['id', 'name', 'is banned'];
-        $title='test';
-        return view('table')->with(['items'=> $items, 'title'=>$title, 'headings' => $headings]);
+        broadcast(new AppNotificationEvent("hi"));
+        return 1;
     }
     public function sampleDelete($gymId) {
         Gym::find($gymId)->delete();

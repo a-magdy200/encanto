@@ -93,7 +93,18 @@
     });
 
     const channel = pusher.subscribe('notifications-channel');
-    channel.bind('my-event', function(data) {
-        console.log('received data', data);
+    channel.bind('app-notification', function(data) {
+        Toast.fire({
+            icon: 'info',
+            title: 'A new notification.',
+            text: 'h'
+        });
+        const currentCount = parseInt($('.notifications-count').eq(0).text(), 10);
+        $(".notifications-count").text(currentCount + 1);
+        $('.dropdown-header').after("<div class=\"dropdown-divider\"></div>\n" +
+            "            <a href=\"#\" class=\"dropdown-item\">\n" +
+            "              <i class=\"fas fa-envelope mr-2\"></i> 4 new messages\n" +
+            "              <span class=\"float-right text-muted text-sm\">3 mins</span>\n" +
+            "            </a>")
     });
 })(jQuery);

@@ -52,10 +52,10 @@
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
+            <span class="notifications-count badge badge-warning navbar-badge">15</span>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-header">15 Notifications</span>
+            <span class="dropdown-header"><span class="notifications-count">15</span> Notifications</span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="fas fa-envelope mr-2"></i> 4 new messages
@@ -86,6 +86,7 @@
 
                     <li class="user-header bg-primary">
                         <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
+{{--                        <img src="{{auth()->user()->avatar}}"--}}
                              class="img-circle elevation-2"
                              alt="User Image">
 

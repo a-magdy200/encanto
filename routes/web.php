@@ -31,6 +31,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/table', [HomeController::class, 'table'])->name('table');
 Route::group(['middleware' => ['web']], function () {
     // Route::get('/table', [HomeController::class, 'table'])->name('home');
     Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create');
