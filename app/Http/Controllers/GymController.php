@@ -7,15 +7,48 @@ use App\Http\Requests\UpdateGymRequest;
 use App\Models\City;
 use App\Models\Gym;
 use Illuminate\Support\Facades\Storage;
+use DataTables;
+use Illuminate\Http\Request;
+
 
 class GymController extends Controller
 {
-    public function showGyms(){
-        $gyms=Gym::all();
+    public function showGyms(Request $request){
+        if ($request->ajax()) {
+            $data = Gym::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('City Name',function($row){
+                        $cityName=$row->city->name;
+                        return $cityName;
+                    })
+                    ->addColumn('cover_image',function($row){
+                        $image=$row->cover_image;
+                        $imageUrl=asset($image);
+                        // $cover_image='<img src=\"" + $imageUrl + "\" height=\"100px\" width=\"100px\" alt=\"gym_cover_image\"/>';
+                        $cover_image='<img src='.$imageUrl.' style="width:100px;height:100px;" alt="gym_cover_image"/>';
+                        return $cover_image;
+                    })
+                    ->addColumn('action', function($row){
+                        $showUrl = route('show.singleGym', ['gymId'=>$row->id]);
+                        $editUrl = route('edit.gymForm', ['gymId'=>$row->id]);
+                        $deleteUrl = route('delete.gym', ['gymId'=>$row->id]);
+                           $btn ="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                           <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                           <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+
+                            return $btn;
+                    })
+
+                    ->rawColumns(['cover_image','City Name','action'])
+                    ->make(true);
+        }
         $headings=['Gym Name','Cover Image','City Name'];
         $title="Gyms";
-        return view('GymPages.showAllGyms',["gyms"=>$gyms,"headings"=>$headings,"title"=>$title]);
-    }
+        return view('GymPages.showAllGyms',["headings"=>$headings,"title"=>$title]);
+     }
+
+    
     public function showGymForm(){
         $cities=City::all();
         return view('GymPages.createGym',["cities"=>$cities]);
@@ -25,11 +58,12 @@ class GymController extends Controller
         if ($request->hasFile('gymCoverImg')) {
             $image=$request->file('gymCoverImg');
             $imageName = $image->getClientOriginalName();
-            $request->file('gymCoverImg')->storeAs('public/GymImages/',$imageName);
+            $image = str_replace(' ', '_', $imageName);
+            $request->file('gymCoverImg')->storeAs('public/GymImages/',$image);
             $gymName=$request->input('gymName');
             $result=Gym::create([
                 'name'=>$gymName,
-                'cover_image'=>'storage/GymImages/'.$imageName,
+                'cover_image'=>'storage/GymImages/'.$image,
                 'city_id'=>$request->input('gym_city')
             ]);
             if($result){
@@ -59,11 +93,12 @@ class GymController extends Controller
             Storage::disk('public')->delete('GymImages/'.$gym['cover_image']);
             $image=$request->file('gymCoverImg');
             $imageName = $image->getClientOriginalName();
-            $request->file('gymCoverImg')->storeAs('public/GymImages/',$imageName);
+            $image = str_replace(' ', '_', $imageName);
+            $request->file('gymCoverImg')->storeAs('public/GymImages/',$image);
             $gymName=$request->input('gymName');
             $result=$gym->update([
                 'name'=>$gymName,
-                'cover_image'=>'storage/GymImages/'.$imageName,
+                'cover_image'=>'storage/GymImages/'.$image,
                 'city_id'=>$request->input('gym_city')
             ]);
             if ($result) {
@@ -81,8 +116,8 @@ class GymController extends Controller
 
     public function deleteGym($gymId){
         $gym=Gym::find($gymId);
-        $sessions=$gym->sessions->count();
-        if($sessions == 0){
+        $sessions=$gym->sessions;
+        if($sessions){
             $gym->delete();
             Storage::disk('public')->delete('GymImages/'.$gym['cover_image']);
             return response()->json([], 200);

@@ -21,26 +21,35 @@
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     })
-    $(".datatable").DataTable({
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "responsive": true,
-        "dom": 'Bfrtip',
-        "pageLength": 10,
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": false,
-        "autoWidth": false,
-    });
-    $('.delete-btn').click(function () {
+    // $(".datatable").DataTable({
+    //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    //     "responsive": true,
+    //     "dom": 'Bfrtip',
+    //     "pageLength": 10,
+    //     "paging": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "ordering": true,
+    //     "info": false,
+    //     "autoWidth": false,
+    // });
+    $('body').on('click', function (e) {
         // Dynamically changes the form action path
         // Reads href attribute from the button
         // Assigns the href value to form action
-        const path = $(this).attr('href');
-        $("#delete-modal form").attr('action', path);
+        let target;
+        if ($(e.target).hasClass('delete-btn')) {
+            target = $(e.target);
+        } else if ($(e.target).parent().hasClass('delete-btn')) {
+            target = $(e.target).parent();
+        }
+        if (target) {
+            const path = target.attr('href');
+            console.log(path);
+            $("#delete-modal form").attr('action', path);
+        }
     });
-    $("#delete-modal form").submit(e  => {
+    $("#delete-modal form").on('submit',e  => {
         // Submits the form by ajax
         // prevents normal submission
         // in case of success, shows toast of success, and remove the row from html
@@ -75,5 +84,7 @@
         const fileName = this.files[0].name;
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
-    })
+    });
+
+
 })(jQuery);

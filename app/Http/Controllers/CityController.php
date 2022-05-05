@@ -4,15 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCityRequest;
 use App\Models\City;
-
+use Illuminate\Http\Request;
+use DataTables;
 
 class CityController extends Controller
 {
-    public function showCities(){
-        $cities=City::all();
+    public function showCities(Request $request){
+
         $headings=['City Name'];
         $title="Cities";
-        return view('CityPages.showAllCities',['cities'=>$cities,"headings"=>$headings,"title"=>$title]);
+        if ($request->ajax()) {
+            $data = City::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $showUrl = route('show.singleCity',['cityId'=>$row->id]);
+                        $editUrl = route('edit.city',['cityId'=>$row->id]);
+                        $deleteUrl = route('delete.city',['cityId'=>$row->id ]);
+                           $btn ="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                           <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                           <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+
+                            return $btn;
+                    })
+
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        return view('CityPages.showAllCities',["headings"=>$headings,"title"=>$title]);
+
     }
     public function showCreateCity(){
         return view('CityPages.createCity');
