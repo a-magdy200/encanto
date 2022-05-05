@@ -59,7 +59,8 @@ class ClientController extends Controller
     {
         $data = request()->all();
         $path = Storage::putFile('avatars/clients', $request->file('avatar'));
-      $user =User::where('id', $clientId)->update([
+        $client=Client::find($clientId);
+      $user =User::where('id', $client->user_id)->update([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
