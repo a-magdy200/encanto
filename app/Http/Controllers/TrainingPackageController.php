@@ -10,13 +10,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Requests\OrderPackageRequest;
+use Stripe;
+use Session;
 
 class TrainingPackageController extends Controller
 {
     public function index()
     {
         $packages = TrainingPackage::with('gym')->get();
-        // $pacage-gym-Mname
+        // $package-gym->name
         return view('packages.index', [
             'items' => $packages,
             'title' => 'Training Packages',
@@ -80,25 +82,35 @@ class TrainingPackageController extends Controller
     {
         $packages = TrainingPackage::all();
         $clients= User::where('role_id',5)->get();
-        $gyms = Gym::all();
         return view('packages.purchase', [
             'packages' => $packages,
             'clients' => $clients,
-            'gyms' => $gyms,
         ]);
     }
 
     public function order(OrderPackageRequest $request)
     {
-        //dd($request->all());
-        $package = TrainingPackage::find($request->get('package_id'));
-        Order::create([
-            'client_id' => $request->get('client_id'),
-            'package_id' => $request->get('package_id'),
-            'number_of_sessions'=>$package->number_of_sessions,
-            'price' => $package->price,
-        ]);
-
+        try {
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe\Charge::create ([
+                    "amount" => 100 * 150,
+                    "currency" => "inr",
+                    "source" => $request->stripeToken,
+                    "description" => "Making test payment." 
+            ]);
+            
+            $package = TrainingPackage::find($request->get('package_id'));
+            Order::create([
+                'client_id' => $request->get('client_id'),
+                'package_id' => $request->get('package_id'),
+                'number_of_sessions'=>$package->number_of_sessions,
+                'price' => $package->price,
+            ]);
+            Session::flash('success', 'Payment has been successfully processed.');
         return to_route('packages.index');
+           } catch (\Throwable $th) {
+            Session::flash('fail', 'Payment has been failed.');
+            return back();
+           }
     }
 }
