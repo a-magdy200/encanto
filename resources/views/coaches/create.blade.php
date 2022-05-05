@@ -10,7 +10,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">User Name</label>
-                            <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1" placeholder="Enter email">
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>

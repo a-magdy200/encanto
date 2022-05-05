@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCoachRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\TrainingSession;
@@ -25,7 +26,7 @@ class CoachController extends Controller
         return view('coaches.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreCoachRequest $request)
     {
         $data = request()->all();
         $path = Storage::putFile('avatars/coaches', $request->file('avatar'));
@@ -50,7 +51,7 @@ class CoachController extends Controller
             "coach" => $coach]);
     }
 
-    public function update($coachId,Request $request)
+    public function update($coachId,StoreCoachRequest $request)
     {
         $data = request()->all();
         $path = Storage::putFile('avatars/coaches', $request->file('avatar'));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClientRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\User;
@@ -24,7 +25,7 @@ class ClientController extends Controller
         return view('clients.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
         $data = request()->all();
         $path = Storage::putFile('avatars/clients', $request->file('avatar'));
@@ -55,7 +56,7 @@ class ClientController extends Controller
             "client" => $client]);
     }
 
-    public function update($clientId,Request $request)
+    public function update($clientId,StoreClientRequest $request)
     {
         $data = request()->all();
         $path = Storage::putFile('avatars/clients', $request->file('avatar'));

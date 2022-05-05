@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">user name</label>
-                <select  name="user_id" class="form-control">
+                <select  name="client_id" class="form-control">
                     @foreach ($clients as $client)
                         <option value="{{$client->id}}">{{$client->user->name}}</option>
                     @endforeach
