@@ -104,12 +104,13 @@ Route::group(['middleware' => ['web']], function () {
 
 
     Route::get('/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
-    Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
     Route::get('/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
     Route::post('/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
     Route::get('/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
     Route::put('/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
     Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
+    Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
+
 
     Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
     Route::get('/packages/purchase', [TrainingPackageController::class, 'purchase'])->name('packages.purchase');

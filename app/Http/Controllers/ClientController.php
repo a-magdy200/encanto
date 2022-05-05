@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClientRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\User;
@@ -24,10 +25,13 @@ class ClientController extends Controller
         return view('clients.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
         $data = request()->all();
-        $path = Storage::putFile('avatars/clients', $request->file('avatar'));
+        if($request->file('avatar'))
+        {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
+        else
+            $path=env('DEFAULTIMAGE');
        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -55,10 +59,13 @@ class ClientController extends Controller
             "client" => $client]);
     }
 
-    public function update($clientId,Request $request)
+    public function update($clientId,StoreClientRequest $request)
     {
         $data = request()->all();
-        $path = Storage::putFile('avatars/clients', $request->file('avatar'));
+        if($request->file('avatar'))
+        {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
+        else
+            $path=env('DEFAULTIMAGE');
         $client=Client::find($clientId);
       $user =User::where('id', $client->user_id)->update([
             'name' => $data['name'],

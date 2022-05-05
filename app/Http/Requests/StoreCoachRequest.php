@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCoachRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreCoachRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,11 @@ class StoreCoachRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
+            'email' =>['required','email',Rule::unique('users')->ignore($this->coach)],
+            'password'=>['required','string','min:8'],
+            'avatar'=>['image','mimes:jpg,png'],
+
         ];
     }
 }

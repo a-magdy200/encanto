@@ -13,7 +13,7 @@ class StoreAttendanceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreAttendanceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+          'client_id'=>['required','exists:clients,id'],
+           'training_session_id'=>['required','exists:training_sessions,id'],
+            'date'=>['required','date'],
         ];
     }
 }

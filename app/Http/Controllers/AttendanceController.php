@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\StoreCoachRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\TrainingSession;
@@ -26,7 +28,7 @@ class AttendanceController extends Controller
         return view('attendance.create',["clients"=>$clients,
             "trainingSessions"=>$trainingSessions]);
     }
- public function store()
+ public function store(StoreAttendanceRequest $request)
  {
     $data=request()->all();
     Attendance::create([
@@ -48,7 +50,7 @@ class AttendanceController extends Controller
             "trainingSessions"=>$trainingSessions,
             "attendance"=>$attendance]);
     }
-    public function update($attendanceId)
+    public function update($attendanceId,StoreAttendanceRequest $request)
     {
         $data=request()->all();
         Attendance::where('id', $attendanceId)->update([
