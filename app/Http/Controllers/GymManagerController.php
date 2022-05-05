@@ -20,7 +20,7 @@ class GymManagerController extends Controller
     public function index()
     {
         $items = GymManager::all();   
-        $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned', 'id'];
+        $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned', 'id','actions','is_approved'];
         $title = 'gymmanager';
         return view('gymmanagers.index')->with(['items' => $items, 'title' => $title, 'headings' => $headings]);
     }
@@ -108,5 +108,23 @@ class GymManagerController extends Controller
 
         ]);
         return to_route('gymmanagers.index');
+    }
+    public function ban($id)
+    {
+        $gymmanager = GymManager::find($id);
+        $gymmanager->is_banned=!$gymmanager->is_banned;
+       // dd($gymmanager->is_banned);
+       $gymmanager->update();
+       return to_route('gymmanagers.index');
+
+    }
+    public function approve($id)
+    {
+        $gymmanager = GymManager::find($id);
+        $gymmanager->is_approved='1';
+       // dd($gymmanager->is_banned);
+       $gymmanager->update();
+       return to_route('gymmanagers.index');
+
     }
 }

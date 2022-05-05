@@ -18,10 +18,12 @@ class CityManagerController extends Controller
     public function index()
     {
         $roleId = Role::where('name', '=', 'city_manager')->value('id');
-        $cityManagers = User::where('role_id', '=', $roleId)->get();
-        $headings = ['id', 'name', 'city'];
+        $cityManagers = User::where('role_id', $roleId)->with('manager')->get();
+ 
+       // dd($cityManagers);
+        $headings = ['id', 'name', 'city','actions','is_approved'];
         $title = 'City Managers';
-
+       
         return view('citymanagers.index', [
             'cityManagers' => $cityManagers,
             'title' => $title,
@@ -120,5 +122,15 @@ class CityManagerController extends Controller
         $user = User::find($managerId);
         $user->delete();
         return redirect()->route('citymanagers.index');
+    }
+    public function approve($id)
+    {
+        $citymanager = CityManager::find($id);
+       // dd($citymanager);
+        $citymanager->is_approved=1;
+      // dd($citymanager->is_approved);
+       $citymanager->update();
+       return to_route('citymanagers.index');
+
     }
 }

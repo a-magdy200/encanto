@@ -15,7 +15,8 @@ class GymManager extends Model
         'national_id',
         'is_banned',
         'user_id',
-        'gym_id'
+        'gym_id',
+        
     ];
     public function gym(): BelongsTo
     {
