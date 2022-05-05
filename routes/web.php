@@ -10,6 +10,7 @@
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\TrainingPackageController;
     use App\Http\Controllers\TrainingSessionController;
+    use App\Http\Controllers\RevenueController;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,11 @@ Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientController::cla
 Route::get('/clients/{client}/show', [App\Http\Controllers\ClientController::class, 'show'])->name('clients.show');
 Route::put('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'update'])->name('clients.update');
 Route::delete('/clients/{client}/', [App\Http\Controllers\ClientController::class, 'delete'])->name('clients.delete');
+Route::get('/revenues', [App\Http\Controllers\RevenueController::class, 'index'])->name('revenues.admin');
+
+
+
+
 Route::group(['middleware' => ['web']], function () {
     // Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('home');
     Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create')->middleware('auth');
@@ -92,12 +98,13 @@ Route::group(['middleware' => ['web']], function () {
 
 
     Route::get('/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
-    Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
     Route::get('/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
     Route::post('/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
     Route::get('/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
     Route::put('/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
     Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
+    Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
+
 
     Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');
     Route::get('/packages', [TrainingPackageController::class, 'index'])->name('packages.index');
@@ -115,5 +122,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/trainingSessions/{id}', [TrainingSessionController::class, 'show'])->name('trainingSessions.show');
     Route::get('/trainingSessions/{id}/edit', [TrainingSessionController::class, 'edit'])->name('trainingSessions.edit');
     Route::delete('/trainingSessions/{id}/delete', [TrainingSessionController::class, 'delete'])->name('trainingSessions.delete');
+
+
 });
 Auth::routes();

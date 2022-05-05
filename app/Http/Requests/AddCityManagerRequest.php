@@ -26,7 +26,7 @@ class AddCityManagerRequest extends FormRequest
         return [
             'name' => ['required'],
             'email'=> ['required','unique:users,email'],
-            'national_id'=>['required','unique:city_managers,national_id','min:10','max:10'],
+            'national_id'=>['required','unique:city_managers,national_id','min:16','max:16'],
             'password'=>['required','min:6'],
             'confirm_password' => ['required_with:password','same:password'],
             'city'=>['required','unique:city_managers,city_id'],

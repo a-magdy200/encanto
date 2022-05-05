@@ -95,5 +95,13 @@
         <i class="nav-icon fas fa-street"></i>
         <p>profile info</p>
     </a>
-</li>
+</li><li class="nav-item">
+    <a href="{{ route('revenues.admin') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Revenues
+        </p>
+    </a>
+
+
 

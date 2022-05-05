@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Gym extends Model
@@ -31,6 +32,8 @@ class Gym extends Model
     }
     public function packages(): HasMany
     {
-        return $this->hasMany(TrainingPackage::class);
+        return $this->hasMany(TrainingPackage::class)->with('orders');
     }
+
+
 }

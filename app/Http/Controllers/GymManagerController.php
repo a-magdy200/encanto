@@ -9,6 +9,8 @@ use App\Models\Gym;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+
 
 class GymManagerController extends Controller
 {
@@ -87,7 +89,7 @@ class GymManagerController extends Controller
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
             'role_id'=>'3',
             // 'avatar'=>$path,
         ]);
