@@ -1,25 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Session::has('error'))
+<h4>{{ Session::get('error') }}</h4>
+@endif
+
 <form method="post" action="{{ route('trainingSessions.store')}}">
     @csrf
     <div class="form-group">
         <label>Session Name</label>
-        <input type="text" class="form-control" name="SessionName">
+        <input type="text" class="form-control" name="SessionName" value="{{ Session::get('name') }}" >
     </div>
 
     <div class="form-group">
         <label>Session Day</label>
-        <input type="date" class="form-control" name="day">
+        <input type="date" class="form-control" name="day" value="{{Session::get('day') }}">
     </div>
 
     <div class="form-group">
         <label>Session Start Time</label>
-        <input type="time" class="form-control" name="starttime">
+        <input type="time" class="form-control" name="starttime"value="{{Session::get('start_time') }}">
     </div>
     <div class="form-group">
         <label>Session End Time</label>
-        <input type="time" class="form-control" name="endtime">
+        <input type="time" class="form-control" name="endtime" value="{{Session::get('finish_time') }}">
     </div>
 
     <div class="form-group">
@@ -27,7 +31,7 @@
             <label>Coach Name</label>
             <select id="userid" name="users[]" class="select2" multiple="multiple" data-placeholder="select coach" data-dropdown-css-class="select2-purple" style="width: 100%"; >
                 @foreach($users as $user)
-                <option value="{{$user->id}}">{{$user->name}}</option>
+                <option value= "{{$user->id}}" >{{$user->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -36,7 +40,7 @@
         <label>Gym Name</label>
         <select class="form-control" name="gymid">
             @foreach($gyms as $gym)
-            <option  value="{{$gym->id}}">{{$gym->name}}</option>
+            <option @if($gym->id == {{Session::get('gym_id') }}) selected @endif  value="{{$gym->id}}">{{$gym->name}}</option>
             @endforeach
         </select>
     </div>
