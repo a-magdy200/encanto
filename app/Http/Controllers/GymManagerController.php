@@ -77,7 +77,6 @@ class GymManagerController extends Controller
             ]);
         GymManager::where('user_id', $gymmanagerid)
             ->update([
-                'is_banned' => '0',
                 'gym_id' => $gym->id,
             ]);
 
