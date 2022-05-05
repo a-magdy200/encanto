@@ -9,6 +9,11 @@ use App\Models\Gym;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateGymManagerRequest;
+
+
+
 
 class GymManagerController extends Controller
 {
@@ -32,8 +37,10 @@ class GymManagerController extends Controller
 
     public function show($gymmanagerid)
     {
-        $user = User::where('id', $gymmanagerid)->first();
-        $gymmanager = GymManager::where('user_id', $gymmanagerid)->first();
+        $gymmanager = GymManager::find($gymmanagerid);
+        $user_id=$gymmanager->user_id;     
+        $user = User::where('id', $user_id)->first();
+        $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gym = Gym::where('id', $gymmanager->gym_id)->first();
         $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned',];
         $title = 'gymmanager';
@@ -46,8 +53,10 @@ class GymManagerController extends Controller
 
     public function edit($gymmanagerid)
     {
-        $user = User::where('id', $gymmanagerid)->first();
-        $gymmanager = GymManager::where('user_id', $gymmanagerid)->first();
+        $gymmanager = GymManager::find($gymmanagerid);
+        $user_id=$gymmanager->user_id;     
+        $user = User::where('id', $user_id)->first();
+        $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gyms = Gym::all();
         return view('gymmanagers.edit', [
             'gymmanager' => $gymmanager,
@@ -55,10 +64,10 @@ class GymManagerController extends Controller
             'gyms' => $gyms,
         ]);
     }
-    public function update(Request $request , $gymmanagerid)
+    public function update(UpdateGymManagerRequest $request , $gymmanagerid)
     {
         $data = request()->all();
-        $path=Storage::putFile('avatars/gym_managers',$request->file('image'));
+        $path=Storage::putFile('avatars',$request->file('image'));
         $gym = Gym::where('name', $data['gym'])->first();
         User::where('id', $gymmanagerid)
             ->update([
@@ -81,11 +90,10 @@ class GymManagerController extends Controller
             'gyms' => $gyms,
         ]);
     }
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $data = request()->all();
-        // dd($data);
-        $path=Storage::putFile('avatars/gym_managers',$request->file('image'));
+        $path=Storage::putFile('avatars',$request->file('image'));
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
