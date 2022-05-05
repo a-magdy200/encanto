@@ -10,15 +10,38 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
+use DataTables;
 
 class TrainingSessionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $trainingSessions = TrainingSession::all();
-        $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
-        $Title = 'TrainingSessions';
-        return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);
+        $TrainingSessions = TrainingSession::select('*');
+        $headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
+        $title="Training Sessions";
+        if ($request->ajax()) {
+            return DataTables::of($TrainingSessions)
+                ->addIndexColumn()
+                ->addColumn('Gym Name', function ($row) {
+                    $gymName=$row->gym->name;
+                    return $gymName;
+                })
+                
+                ->addColumn('action', function ($row) {
+                    $show=route('trainingSessions.show',['id'=>$row->id]);
+                    $edit=route('trainingSessions.edit',['id'=>$row->id]);
+                    $delete=route('trainingSessions.delete',['id'=>$row->id]);
+
+                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+                    return $btn;
+                })
+                ->rawColumns(['Gym Name','action'])
+                ->make(true);
+        }
+
+        return view('trainingSessions.index')->with(['title' => $title, 'headings' => $headings]);
     }
     public function create()
     {
@@ -83,7 +106,7 @@ class TrainingSessionController extends Controller
             $Session->finish_time = $request->get('finishtime');
             $Session->update();
         } else {
-            return redirect()->back()->with([
+            return redirect()->back()->withErrors([
                 'error' => 'invalid session time',
                 'day' => $request->get('day'),
                 'start_time' => $request->get('starttime'),

@@ -10,6 +10,9 @@ use App\Models\User;
 use App\Models\CityManager;
 use App\Models\GymManager;
 use App\Models\Client;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+
 
 class ProfileController extends Controller
 {
@@ -19,6 +22,7 @@ class ProfileController extends Controller
     }
     public function edit()
     {
+        
         if (Auth::user()->role_id == 2) {
             $cities = City::all();
             return view('profile.edit', ['cities' => $cities]);
@@ -29,14 +33,13 @@ class ProfileController extends Controller
             return view('profile.edit');
         }
     }
-    public function update(Request $request)
+    public function update(UpdateProfileRequest $request)
     {
         $userid=Auth::user()->id;
 
         $user = User::find($userid);
         $user->name = $request->get('userName');
         $user->email = $request->get('userEmail');
-        $user->password = $request->get('userPassword');
         $user->update();
 
         if ($userid == 2) {
@@ -58,5 +61,17 @@ class ProfileController extends Controller
 
 
         return view('profile.info');
+    }
+    public function editpass()
+    {
+       return view('profile.editpass');
+    }
+    public function updatepass(UpdatePasswordRequest $request)
+    {
+        $userid=Auth::user()->id;
+        $user = User::find($userid);
+        $user->password = $request->get('password');
+        $user->update();
+        return to_route('profile.edit');
     }
 }

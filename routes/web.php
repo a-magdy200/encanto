@@ -81,7 +81,9 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.info');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/editpass', [ProfileController::class, 'editpass'])->name('profile.editpass');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/updatepass', [ProfileController::class, 'updatepass'])->name('profile.updatepass');
 
 
     Route::get('/gyms', [GymController::class, 'showGyms'])->name('show.AllGyms');
