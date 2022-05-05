@@ -20,6 +20,6 @@ class City extends Model
     }
     public function gyms(): HasMany
     {
-        return $this->hasMany(Gym::class);
+        return $this->hasMany(Gym::class)->with('packages');
     }
 }

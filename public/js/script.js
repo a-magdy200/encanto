@@ -21,19 +21,19 @@
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     })
-    $(".datatable").DataTable({
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "responsive": true,
-        "dom": 'Bfrtip',
-        "pageLength": 10,
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": false,
-        "autoWidth": false,
-    });
-    $('body').on('click', function (e) {
+    // $(".datatable").DataTable({
+    //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    //     "responsive": true,
+    //     "dom": 'Bfrtip',
+    //     "pageLength": 10,
+    //     "paging": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "ordering": true,
+    //     "info": false,
+    //     "autoWidth": false,
+    // });
+    $('.delete-btn').click(function () {
         // Dynamically changes the form action path
         // Reads href attribute from the button
         // Assigns the href value to form action

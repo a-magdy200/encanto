@@ -9,17 +9,12 @@ use App\Models\Gym;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateGymManagerRequest;
-
-
-
 
 class GymManagerController extends Controller
 {
     public function index()
     {
-        $items = GymManager::all();   
+        $items = GymManager::all();
         $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned', 'id','actions','is_approved'];
         $title = 'gymmanager';
         return view('gymmanagers.index')->with(['items' => $items, 'title' => $title, 'headings' => $headings]);
@@ -38,7 +33,7 @@ class GymManagerController extends Controller
     public function show($gymmanagerid)
     {
         $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;     
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gym = Gym::where('id', $gymmanager->gym_id)->first();
@@ -54,7 +49,7 @@ class GymManagerController extends Controller
     public function edit($gymmanagerid)
     {
         $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;     
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gyms = Gym::all();
@@ -77,6 +72,7 @@ class GymManagerController extends Controller
             ]);
         GymManager::where('user_id', $gymmanagerid)
             ->update([
+                'is_banned' => '0',
                 'gym_id' => $gym->id,
             ]);
 
@@ -96,7 +92,7 @@ class GymManagerController extends Controller
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
             'role_id'=>'3',
             'avatar'=>$path,
         ]);

@@ -24,11 +24,11 @@
                 <div class="card card-primary card-outline ">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/imaages' .$user->avatar)}}"
-                                alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle"
+                                src="{{ asset('storage/images/' . $user->avatar) }}">
                         </div>
 
-                        <h3 class="profile-username text-center">{{ $user->name}}</h3>
+                        <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
                         <p class="text-muted text-center">{{ $user->email }}</p>
 
@@ -41,15 +41,15 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                            <p class="text-muted">{{ $user->manager->city->name}}</p>
+                            <p class="text-muted">{{ $user->manager->city->name }}</p>
 
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-3">
-                                <a href="{{ route('citymanagers.index') }}" class="btn btn-primary btn-block"><b>Back</b></a>
+                                <a href="{{ route('citymanagers.index') }}"
+                                    class="btn btn-primary btn-block"><b>Back</b></a>
 
                             </div>
-
                         </div>
 
                     </div>

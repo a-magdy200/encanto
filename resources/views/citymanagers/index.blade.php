@@ -25,30 +25,52 @@
             </div>
         </form>
 
-        <x-table-component :actions="false" title="{{ $title }}" :headings="$headings">
+        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
 
-                @foreach ( $cityManagers as $cityManager)
-                  <tr>
-                    <td>{{ $cityManager['id'] }}</th>
-                    <td>{{$cityManager['name']  }}</td>
-                    <td>{{$cityManager->manager->city->name }}</td>
-                    <td class="d-flex align-items-center">
-                        <a href="citymanagers/{{ $cityManager['id'] }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                        <a href="citymanagers/{{ $cityManager['id'] }}/edit" class="btn btn-warning mx-2"><i
-                                class="fa fa-edit"></i></a>
-                        <a href="citymanagers/{{ $cityManager['id'] }}/delete" class="btn btn-danger delete-btn" data-toggle="modal"
-                            data-target="#delete-modal"><i class="fa fa-times"></i></a>
-                    </td>
-                    <td>
-                @if($cityManager->manager->is_approved)
-                <a href="citymanagers/{{$cityManager['id']}}/approve" class="btn btn-success ml-2"><i class="fa fa-check"></i></a>
-                @else
-                <a href="citymanagers/{{$cityManager['id']}}/approve" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
-                @endif
-            </td>
-                  </tr>
-                  @endforeach
 
 
         </x-table-component>
     @endsection
+    @push('page_scripts');
+        <script type="text/javascript">
+            $(function() {
+                var table = $('.datatable').DataTable({
+
+                    processing: true,
+                    serverSide: true,
+
+                    ajax: "{{ route('citymanagers.index') }}",
+
+                    columns: [
+
+                        {
+                            data: 'id',
+                            name: 'id'
+                        },
+
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+
+                        {
+                            data: 'city',
+                            name: 'city'
+                        },
+
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+
+                    ]
+
+                });
+
+
+
+            });
+        </script>
+@endpush
