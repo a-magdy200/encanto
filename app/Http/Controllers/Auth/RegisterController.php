@@ -87,15 +87,21 @@ class RegisterController extends Controller
                     'user_id'=>$user->id,
                     'national_id' => $data['national_id']
                 ]);
+                $user->assignRole('city_manager');
+
                 break;
             case 3:
                 GymManager::create([
                     'user_id'=>$user->id,
                     'national_id' => $data['national_id']
                 ]);
+                $user->assignRole('gym_manager');
+
                 break;
             case 4:
                 // Coach
+                $user->assignRole('coach');
+
                 break;
             case 5:
                 $avatarUrl = $data['avatar']->store();
@@ -105,6 +111,8 @@ class RegisterController extends Controller
                     'date_of_birth' => $data['date_of_birth'],
                     'avatar' => $avatarUrl
                 ]);
+                $user->assignRole('client');
+
                 break;
             default:
                 break;

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Database\Seeders\RoleSeeder;
 
 use App\Models\GymManager;
 use App\Models\User;
@@ -19,7 +19,11 @@ class GymManagerController extends Controller
 {
     public function index()
     {
-        $items = GymManager::all();   
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['city_manager','admin'])) {
+            return view('errors.401');
+        }
+        $items=GymManager::all();
         $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned', 'id'];
         $title = 'gymmanager';
         return view('gymmanagers.index')->with(['items' => $items, 'title' => $title, 'headings' => $headings]);
@@ -38,7 +42,7 @@ class GymManagerController extends Controller
     public function show($gymmanagerid)
     {
         $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;     
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gym = Gym::where('id', $gymmanager->gym_id)->first();
@@ -54,7 +58,7 @@ class GymManagerController extends Controller
     public function edit($gymmanagerid)
     {
         $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;     
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gyms = Gym::all();
@@ -92,15 +96,18 @@ class GymManagerController extends Controller
     }
     public function store(StoreUserRequest $request)
     {
+
         $data = request()->all();
         $path=Storage::putFile('avatars',$request->file('image'));
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id'=>'3',
+           'role_id'=>'3',
             'avatar'=>$path,
         ]);
+        $user->assignRole('gym_manager');
+
         $gymmanager=GymManager::create([
             'national_id' => $data['nationalid'],
             'is_banned' => '0',

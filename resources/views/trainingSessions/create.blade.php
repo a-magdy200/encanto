@@ -40,7 +40,7 @@
         <label>Gym Name</label>
         <select class="form-control" name="gymid">
             @foreach($gyms as $gym)
-            <option @if($gym->id == {{Session::get('gym_id') }}) selected @endif  value="{{$gym->id}}">{{$gym->name}}</option>
+            <option  value="{{$gym->id}}">{{$gym->name}}></option>
             @endforeach
         </select>
     </div>

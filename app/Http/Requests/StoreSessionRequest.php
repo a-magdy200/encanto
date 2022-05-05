@@ -13,7 +13,12 @@ class StoreSessionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['city_manager','admin'])) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**

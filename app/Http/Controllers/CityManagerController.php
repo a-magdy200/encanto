@@ -94,13 +94,15 @@ class CityManagerController extends Controller
             $avatar_name = 'default_avatar.jpg';
         }
 
-        User::create([
+        $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'avatar' => $avatar_name,
-            'role_id' => 2
+            // 'role_id' => 2
         ]);
+        $user->assignRole('city_manager');
+
 
         $userId = User::where('email', '=', $data['email'])->value('id');
 

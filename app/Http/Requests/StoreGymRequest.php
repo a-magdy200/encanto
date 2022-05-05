@@ -14,6 +14,10 @@ class StoreGymRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = auth()->user();
+        if (!$user->hasRole('city_manager')) {
+            return false;
+        }
         return true;
     }
 

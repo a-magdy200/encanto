@@ -15,6 +15,10 @@ class UpdateGymManagerRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['city_manager','admin'])) {
+            return false;
+        }
         return true;
     }
 
