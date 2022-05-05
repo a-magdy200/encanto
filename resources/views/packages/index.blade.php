@@ -28,6 +28,7 @@
       <td>{{$item['id']}}</td>
       <td>{{$item['package_name']}}</td>
       <td>{{$item['number_of_sessions']}}</td>
+      <td>{{$item->gym->name}}</td>
       <td>{{$item['price']/100}}</td>
       <td>{{$item['created_at']}}</td>
       <td>{{$item['updated_at']}}</td>

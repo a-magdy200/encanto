@@ -108,8 +108,8 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('profiles.info') }}" class="nav-link {{ Request::is('profiles') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-profile"></i>
+    <a href="{{ route('profile.info') }}" class="nav-link {{ Request::is('profile') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-street"></i>
         <p>profile info</p>
     </a>
 </li>

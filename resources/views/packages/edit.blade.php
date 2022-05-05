@@ -14,6 +14,13 @@
         <input name="number_of_sessions" class="form-control" id="exampleFormControlTextarea1" value="{{ $packages->number_of_sessions}}">
     </div>
     <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Gym</label><select name="gym_id" class="form-control">
+                @foreach ($gyms as $gym)
+                <option value="{{$gym->id}}">{{$gym->name}}</option>
+                @endforeach
+        </select>
+    </div>
+    <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Price in cents</label>
         <input name="price" type="text" class="form-control" id="exampleFormControlTextarea1" value="{{ $packages->price}}">
     </div>
