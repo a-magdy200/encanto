@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\AppNotificationEvent;
 use App\Models\Gym;
-use http\Env\Request;
 
 class HomeController extends Controller
 {
@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only('index');
+//        $this->middleware('auth')->only('index');
     }
 
     /**
@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        event(new AppNotificationEvent("hi"));
         return view('home');
     }
     public function table() {

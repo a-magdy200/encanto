@@ -94,6 +94,6 @@
 
     const channel = pusher.subscribe('notifications-channel');
     channel.bind('my-event', function(data) {
-        alert(JSON.stringify(data));
+        console.log('received data', data);
     });
 })(jQuery);
