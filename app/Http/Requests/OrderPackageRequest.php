@@ -24,9 +24,8 @@ class OrderPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'=>['required'],
-            'package_id'=>['required'],
-            'gym_id'=>['required'],
+            'client_id'=>['required','exists:users,id'],
+            'package_id'=>['required','exists:training_packages,id'],
         ];
     }
 }
