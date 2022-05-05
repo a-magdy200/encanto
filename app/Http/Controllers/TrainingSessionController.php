@@ -28,9 +28,13 @@ class TrainingSessionController extends Controller
                 })
                 
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                    <a href="#" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>';
+                    $show=route('trainingSessions.show',['id'=>$row->id]);
+                    $edit=route('trainingSessions.edit',['id'=>$row->id]);
+                    $delete=route('trainingSessions.delete',['id'=>$row->id]);
+
+                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
                     return $btn;
                 })
                 ->rawColumns(['Gym Name','action'])

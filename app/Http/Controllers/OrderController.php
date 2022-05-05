@@ -29,9 +29,13 @@ class OrderController extends Controller
                     return $PackageName;
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                    <a href="#" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>';
+                    $show=route('orders.show',['order'=>$row->id]);
+                    $edit=route('orders.edit',['order'=>$row->id]);
+                    $delete=route('orders.delete',['id'=>$row->id]);
+
+                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
                     return $btn;
                 })
                 ->rawColumns(['Client Name','action'])
