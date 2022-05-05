@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
-class GymManager extends Model
+use Cog\Contracts\Ban\Bannable as BannableContract;
+use Cog\Laravel\Ban\Traits\Bannable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class GymManager extends Authenticatable implements BannableContract
 {
     public $timestamps = false;
 
     use HasFactory;
+    use Bannable;
     protected $fillable = [
         'national_id',
         'is_banned',

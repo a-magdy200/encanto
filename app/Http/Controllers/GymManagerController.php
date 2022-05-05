@@ -109,6 +109,7 @@ class GymManagerController extends Controller
     {
         $gymmanager = GymManager::find($id);
         $gymmanager->is_banned=!$gymmanager->is_banned;
+        $gymmanager->ban();
        // dd($gymmanager->is_banned);
        $gymmanager->update();
        return to_route('gymmanagers.index');
@@ -118,7 +119,6 @@ class GymManagerController extends Controller
     {
         $gymmanager = GymManager::find($id);
         $gymmanager->is_approved='1';
-       // dd($gymmanager->is_banned);
        $gymmanager->update();
        return to_route('gymmanagers.index');
 
