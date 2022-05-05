@@ -5,9 +5,9 @@
 <div class="card card-primary card-outline w-50">
   <div class="card-body box-profile ">
     <div class="text-center">
-        
+
       <img class="profile-user-img img-fluid img-circle"
-           src="{{ asset('storage/GymImages/'.$Gym['cover_image']) }}"
+           src="{{ asset($Gym['cover_image']) }}"
            alt="Gym Cover Image">
     </div>
 
