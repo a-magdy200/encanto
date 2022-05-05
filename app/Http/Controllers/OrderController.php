@@ -14,15 +14,31 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
+        $headings = ['id', 'Client Name', 'Package Name', 'number_of_sessions', 'price'];
+        $title = 'orders';
         if ($request->ajax()) {
-            $Orders = Order::all();
-            $Headings = ['id', 'user_name', 'package_name', 'number_of_sessions', 'price'];
-            $Title = 'orders';
-            return Datatables::of($Orders)
-            ->make(true);
+            $Orders = Order::select('*');
+            return DataTables::of($Orders)
+                ->addIndexColumn()
+                ->addColumn('Client Name', function ($row) {
+                    $clientName=$row->client->user->name;
+                    return $clientName;
+                })
+                ->addColumn('Package Name', function ($row) {
+                    $PackageName=$row->package->package_name;
+                    return $PackageName;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = ' <a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                    <a href="#" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
+                    <a href="#" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['Client Name','action'])
+                ->make(true);
         }
-        return view('orders.index')->with(['items' => $Orders, 'title' => $Title, 'headings' => $Headings]);
 
+        return view('orders.index')->with(['title' => $title, 'headings' => $headings]);
     }
     public function create()
     {
