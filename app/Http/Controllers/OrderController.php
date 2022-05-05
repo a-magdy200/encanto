@@ -7,17 +7,22 @@ use App\Models\User;
 use App\Models\TrainingPackage;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-
+use DataTables;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $Orders = Order::all();
-        $Headings = ['id', 'user_name', 'package_name', 'number_of_sessions', 'price'];
-        $Title = 'orders';
+        if ($request->ajax()) {
+            $Orders = Order::all();
+            $Headings = ['id', 'user_name', 'package_name', 'number_of_sessions', 'price'];
+            $Title = 'orders';
+            return Datatables::of($Orders)
+            ->make(true);
+        }
         return view('orders.index')->with(['items' => $Orders, 'title' => $Title, 'headings' => $Headings]);
+
     }
     public function create()
     {
