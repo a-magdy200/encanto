@@ -8,15 +8,63 @@ use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\TrainingSession;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::all();
+
         $headings = ['username', 'email ','attendance date','attendance time','training session name', 'gym', 'city'];
         $title = 'attendance';
-        return view('attendance.index',['attendances'=>$attendances,])->with([ 'title' => $title, 'headings' => $headings]);
+        if ($request->ajax()) {
+            $attendances = Attendance::all();
+
+            return Datatables::of($attendances)
+
+                ->addColumn('action', function($row){
+
+                    $editUrl= route('attendance.edit',['attendance'=>$row->id]);
+                    $deleteUrl=route('attendance.delete',['attendance'=>$row->id]);
+                    $btn="<a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                            <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
+                               data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+
+                    return $btn;
+                })
+                ->addColumn('name', function($row){
+                    $name= $row->client->user->name;
+                    return $name;
+                })
+                ->addColumn('email', function($row){
+                    $email= $row->client->user->email;
+                    return $email;
+                })
+                ->addColumn('date', function($row){
+                    $date=\Illuminate\Support\Carbon::parse( $row->attended_at)->format('Y-m-d');
+                    return $date;
+                })
+                ->addColumn('time', function($row){
+                    $time=\Illuminate\Support\Carbon::parse( $row->attended_at)->format('H:i:s');
+                    return $time;
+                })
+                ->addColumn('training_session', function($row){
+                    $training_session= $row->training_session->name;
+                    return $training_session;
+                })
+                ->addColumn('gym', function($row){
+                    $gym= $row->training_session->gym->name;
+                    return $gym;
+                })
+                ->addColumn('city', function($row){
+                    $city= $row->training_session->gym->city->name;
+                    return $city;
+                })
+
+                ->rawColumns(['action','name','email','date','time','gym','city','training_session'])
+                ->make(true);
+        }
+        return view('attendance.index')->with([ 'title' => $title, 'headings' => $headings]);
 
     }
 

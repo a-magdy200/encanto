@@ -8,16 +8,46 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-        $clients = Client::all();
-        $headings = ['username', 'email','date of birth','gender'];
+
+        $headings = ['username', 'email',"date_of_birth",'gender'];
         $title = 'clients';
-        return view('clients.index', ['clients' => $clients,])->with(['title' => $title, 'headings' => $headings]);
+
+        if ($request->ajax()) {
+            $clients = Client::all();
+
+            return Datatables::of($clients)
+
+                ->addColumn('action', function($row){
+                    $showUrl=route('clients.show',['client'=>$row->id]);
+                    $editUrl= route('clients.edit',['client'=>$row->id]);
+                    $deleteUrl=route('clients.delete',['client'=>$row->id]);
+                    $btn="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                      <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                            <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
+                               data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+
+                    return $btn;
+                })
+                ->addColumn('name', function($row){
+                   $name= $row->user->name;
+                    return $name;
+                })
+                ->addColumn('email', function($row){
+                    $email= $row->user->email;
+                    return $email;
+                })
+
+                ->rawColumns(['action','name','email'])
+                ->make(true);
+        }
+        return view('clients.index')->with(['title' => $title, 'headings' => $headings]);
     }
 
     public function create()
