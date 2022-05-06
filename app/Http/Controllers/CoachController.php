@@ -17,7 +17,7 @@ class CoachController extends Controller
     {
 
 
-        $roleID = 4;
+        $roleID = 5;
 
         $headings = ['username', 'email'];
         $title = 'coaches';
@@ -55,14 +55,14 @@ class CoachController extends Controller
         {$path = Storage::putFile('avatars/coaches', $request->file('avatar'));}
         else
             $path=env('DEFAULTIMAGE');
-        User::create([
+       $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
             'avatar'=>$path,
 
         ]);
+        $user->assignRole('Coach');
         return to_route('coaches.index');
 
 
@@ -83,13 +83,13 @@ class CoachController extends Controller
         {$path = Storage::putFile('avatars/coaches', $request->file('avatar'));}
         else
             $path=env('DEFAULTIMAGE');
-        User::where('id', $coachId)->update([
+       $user=User::where('id', $coachId)->update([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
             'avatar'=>$path,
         ]);
+        $user->assignRole('Coach');
         return to_route('coaches.index');
     }
 

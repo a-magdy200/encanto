@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'avatar',
+        'role_id'
     ];
 
 
@@ -65,10 +66,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function manager()
     {
-        if ($this->hasRole("Gym Manager")) {
-            return $this->hasOne(GymManager::class);
+        if ($this->hasAnyRole('Gym Manager')) {
+            return $this->hasOne(GymManager::class)->with('gym');
         }
-        return $this->hasOne(CityManager::class);
+        return $this->hasOne(CityManager::class)->with('city');
     }
 
     public function client(): HasOne

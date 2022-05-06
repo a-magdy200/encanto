@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCoachRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\TrainingSession;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -16,34 +17,39 @@ class AttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        if (auth()->user()->role_id === 2) {
-            $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym'];
-        }
-        $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym', 'city'];
+        $user = auth()->user();
+        $manager=User::with('manager')->find($user->id)->manager;
+
         $title = 'attendance';
-        if ($request->ajax()) {
-            if (auth()->user()->role_id === 1) {
-                $attendances = Attendance::all();
-            }
-            if (auth()->user()->role_id === 2) {
+        if ($user->hasRole('Super Admin')) {
 
-                $cityId = auth()->user()->manager->city->id;
+            $attendances = Attendance::all();
+            $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym', 'city'];
+        } elseif ($user->hasRole('City Manager')) {
 
-                $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
-                    ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
-                $attendances = Attendance::whereIn('id', $attendanceIds)->get();
+            $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym'];
+            if($manager->city){
+            $cityId = $manager->city->id;
 
-            }
-            if (auth()->user->role_id=3){
-                $gymId = auth()->user()->gymManager->gym->id;
-                $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
+            $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
+                ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
+            $attendances = Attendance::whereIn('id', $attendanceIds)->get();}
+            else
+                $attendances=[];
+
+
+        } elseif ($user->hasRole('Gym Manager')) {
+            $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name'];
+            $gymId = $manager->gym->id;
+            $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->get()->pluck('id')->toArray();
-                $attendances = Attendance::whereIn('id', $attendanceIds)->get();
+            $attendances = Attendance::whereIn('id', $attendanceIds)->get();
 
 
-            }
-            return Datatables::of($attendances)
+        }
+        if ($request->ajax()) {
 
+            $dataTables = Datatables::of($attendances)
                 ->addColumn('action', function ($row) {
 
                     $editUrl = route('attendance.edit', ['attendance' => $row->id]);
@@ -73,20 +79,42 @@ class AttendanceController extends Controller
                 ->addColumn('training_session', function ($row) {
                     $training_session = $row->training_session->name;
                     return $training_session;
-                })
-                ->addColumn('gym', function ($row) {
+                });
+
+            if ($user->hasRole('Super Admin')) {
+                $dataTables->addColumn('gym', function ($row) {
                     $gym = $row->training_session->gym->name;
                     return $gym;
-                })
-                ->addColumn('city', function ($row) {
+                });
+                $dataTables->addColumn('city', function ($row) {
                     $city = $row->training_session->gym->city->name;
                     return $city;
-                })
+                });
 
-                ->rawColumns(['action', 'name', 'email', 'date', 'time', 'gym', 'city', 'training_session'])
-                ->make(true);
-        }
-        return view('attendance.index')->with(['title' => $title, 'headings' => $headings]);
+                $dataTables->rawColumns(['action', 'name', 'email', 'date', 'time', 'gym', 'city', 'training_session']);
+                return $dataTables->make(true);
+            } elseif ($user->hasRole('City Manager')) {
+                if($manager->city)
+                {$dataTables->addColumn('gym', function ($row) {
+                    $gym = $row->training_session->gym->name;
+                    return $gym;
+                });
+
+
+                $dataTables->rawColumns(['action', 'name', 'email', 'date', 'time', 'gym', 'training_session']);
+                return $dataTables->make(true);}
+                else
+                    return  $dataTables->make(true);
+
+            } elseif ($user->hasRole('Gym Manager')) {
+
+
+                $dataTables->rawColumns(['action', 'name', 'email', 'date', 'time', 'training_session']);
+                return $dataTables->make(true);
+
+            }}
+            return view('attendance.index')->with(['title' => $title, 'headings' => $headings]);
+
     }
 
     public function create()
@@ -99,6 +127,7 @@ class AttendanceController extends Controller
             "trainingSessions" => $trainingSessions
         ]);
     }
+
     public function store(StoreAttendanceRequest $request)
     {
         $data = request()->all();
@@ -110,6 +139,7 @@ class AttendanceController extends Controller
         ]);
         return to_route('attendance.index');
     }
+
     public function edit($attendanceId)
     {
 
@@ -123,6 +153,7 @@ class AttendanceController extends Controller
             "attendance" => $attendance
         ]);
     }
+
     public function update($attendanceId, StoreAttendanceRequest $request)
     {
         $data = request()->all();
@@ -133,6 +164,7 @@ class AttendanceController extends Controller
         ]);
         return to_route('attendance.index');
     }
+
     public function delete($attendanceId)
     {
         Attendance::find($attendanceId)->delete();

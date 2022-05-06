@@ -26,10 +26,10 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
 //
-   
+
         return [
             'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
-            'email' =>['required'],
+            'email' =>['required','email',Rule::unique('users')],
             'password'=>['required','string','min:8'],
             'gender'=>['required'],
             'date'=>['required','before:today'],

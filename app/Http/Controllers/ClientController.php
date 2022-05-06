@@ -62,15 +62,14 @@ class ClientController extends Controller
         {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
         else
             $path=env('DEFAULTIMAGE');
-       
-        $user= User::create([
+       $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 5,
             'avatar'=>$path,
 
         ]);
+        $user->assignRole('Client');
         Client::create([
          'date_of_birth'=> $data['date'],
          'gender' =>$data['gender'] ,
@@ -102,9 +101,9 @@ class ClientController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 5,
             'avatar'=>$path,
         ]);
+        $user->assignRole('Client');
         Client::where('id', $clientId)->update([
             'date_of_birth'=> $data['date'],
             'gender' =>$data['gender'] ,
