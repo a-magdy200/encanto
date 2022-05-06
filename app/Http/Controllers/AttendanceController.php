@@ -19,7 +19,6 @@ class AttendanceController extends Controller
     {
         $user = auth()->user();
         $manager=User::with('manager')->find($user->id)->manager;
-
         $title = 'attendance';
         if ($user->hasRole('Super Admin')) {
 

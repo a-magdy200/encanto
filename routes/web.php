@@ -150,8 +150,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/packages/{package}/edit', [TrainingPackageController::class, 'edit'])->name('packages.edit');
     Route::put('/packages/{package}', [TrainingPackageController::class, 'update'])->name('packages.update');
     Route::delete('/packages/{package}/danger', [TrainingPackageController::class, 'delete'])->name('packages.delete');
+    Route::get('/packages/ajax', [TrainingPackageController::class, 'ajax'])->name('packages.ajax');
     Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
-    Route::get('/ajax', [TrainingPackageController::class, 'ajax'])->name('packages.ajax');
 
 
     Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
