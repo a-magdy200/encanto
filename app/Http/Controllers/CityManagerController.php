@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GymManager;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
@@ -21,33 +22,44 @@ class CityManagerController extends Controller
 
         $headings = ['id', 'name', 'city','is_approved'];
         $title = 'City Managers';
-        if ($request->ajax()) {
-            $cityManagers = CityManager::with('user', 'city')->get();
-            return Datatables::of($cityManagers)
-                ->addColumn('action', function ($row) {
-                    $showUrl = route('citymanagers.show',['citymanager' => $row->id]);
-                    $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
-                    $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
+        $user = auth()->user();
+        if (!$user->hasRole([ 'Super Admin'])) {
+            return view('errors.401');
+        } else {
 
-                    return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+            if ($request->ajax()) {
+                $cityManagers = CityManager::with('user', 'city')->get();
+                return Datatables::of($cityManagers)
+                    ->addColumn('action', function ($row) {
+                        $showUrl = route('citymanagers.show', ['citymanager' => $row->id]);
+                        $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
+                        $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
+
+                        return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                 <a href='$editUrl' class='btn btn-warning mx-2'><i
                         class='fa fa-edit'></i></a>
                 <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
-                })
-                ->addColumn('city', function ($row) {
-                    return $row->city->name;
-                })
-                ->addColumn('name', function ($row) {
-                    return $row->user->name;
-                })
-                ->rawColumns(['name','city', 'action'])
-                ->make(true);
+                    })
+                    ->addColumn('city', function ($row) {
+                        if($row->city){
+                            return $row->city->name;
+                        }else{
+                            $row->city="";
+                        }
+
+                    })
+                    ->addColumn('name', function ($row) {
+                        return $row->user->name;
+                    })
+                    ->rawColumns(['name', 'city', 'action'])
+                    ->make(true);
+            }
+            return view('citymanagers.index', [
+                'title' => $title,
+                'headings' => $headings
+            ]);
         }
-        return view('citymanagers.index', [
-            'title' => $title,
-            'headings' => $headings
-        ]);
     }
     public function show($managerId)
     {

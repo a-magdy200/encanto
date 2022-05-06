@@ -16,9 +16,11 @@ class RevenueController extends Controller
     public function index()
     {
         /* Admin */
-        if (auth()->user()->role_id === 1) {
-            $roleId = Role::where('name', '=', 'client')->value('id');
-            $users = User::where('role_id', '=', $roleId)->get();
+        $user = auth()->user();
+        if ($user->hasRole('Super Admin')) {
+            //$roleId = Role::where('name', '=', 'client')->value('id');
+            $users=User::role('Client')->get();
+//            $users = User::where('role_id', '=', $roleId)->get();
             $orders = Order::all();
             $totalRevenues = Order::all()->sum('price');
 
@@ -32,16 +34,17 @@ class RevenueController extends Controller
             ]);
         }
 
-        /* City Manager */ 
-        elseif (auth()->user()->role_id === 2) {
+        /* City Manager */
+        elseif ($user->hasRole('City Manager')) {
 
-            $cityId = auth()->user()->manager->city->id;
+            //$cityId = auth()->user()->manager->city->id;
+            $cityId=User::with('manager')->find($user->id)->manager->city->id;
             $cityOrders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get();
 
             $cityClients = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->select('client_id')->distinct()->get();
-            
+
             $cityRevenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->sum('orders.price');
 
@@ -57,7 +60,7 @@ class RevenueController extends Controller
         }
 
         /* Gym Manager */
-        elseif (auth()->user()->role_id === 3)
+        elseif ($user->hasRole('Gym Manager'))
         {
             $gymId = auth()->user()->gymManager->gym->id;
 
@@ -70,19 +73,19 @@ class RevenueController extends Controller
             $gymRevenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
             ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->sum('orders.price');
 
-       
+
             $gymOrdersCount = $gymOrders->count();
             $gymClientsCount = $gymClients->count();
-         
+
             return view('revenues.index', [
                 'gymOrdersCount' => $gymOrdersCount,
                 'gymClientsCount' => $gymClientsCount,
                 'gymRevenues' => $gymRevenues,
             ]);
-           
+
 
         }
-    
+
 
     }
 }

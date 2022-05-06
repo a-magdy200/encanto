@@ -8,9 +8,10 @@ use App\Models\City;
 use App\Models\CityManager;
 use App\Models\Gym;
 use Illuminate\Support\Facades\Storage;
-use DataTables;
+//use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Yajra\DataTables\DataTables;
 
 class GymController extends Controller
 {
@@ -77,7 +78,7 @@ class GymController extends Controller
             $cities = City::all();
         } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
-            $cities = City::where('city_id', $city)->first();
+            $cities = City::where('id', $city)->first();
         } else {
             return view('errors.401');
         }
