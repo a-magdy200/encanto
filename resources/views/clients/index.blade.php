@@ -16,30 +16,50 @@
                 </div>
             </div>
         </div><!-- /.container-fluid -->
-        @endsection
-        @section('content')
-            <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
-                @foreach($clients as $client)
-                    <tr>
+    @endsection
+    @section('content')
+        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+        </x-table-component>
+        <div class="text-center">
+            <a href="{{ route('clients.create') }}" class="mt-4 btn btn-primary">add client</a>
+        </div>
+    @endsection
+    @push('page_scripts')
+        <script type="text/javascript">
+            $(function() {
 
+                var table = $('.datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('clients.index') }}",
+                    columns: [
 
-                        <td>{{$client->user->name}}</td>
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'email',
+                            name: 'email'
+                        },
+                        {
+                            data: 'date_of_birth',
+                            name: 'date_of_birth'
+                        },
+                        {
+                            data: 'gender',
+                            name: 'gender'
+                        },
 
-                        <td>{{$client->user->email}}</td>
-                        <td>{{$client->date_of_birth}}</td>
-                        <td>{{$client->gender}}</td>
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: true,
+                            searchable: true
+                        },
+                    ]
+                });
 
-
-
-                        <td class="d-flex align-items-center">
-                            <a href="{{route('clients.show',['client'=>$client->id])}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                            <a href="{{route('clients.edit',['client'=>$client->id])}}" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-
-                        </td>
-                    </tr>
-                @endforeach
-            </x-table-component>
-            <div class="text-center">
-                <a href="{{route('clients.create')}}" class="mt-4 btn btn-primary">add client</a>
-            </div>
-@endsection
+            });
+        </script>
+    @endpush

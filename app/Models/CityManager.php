@@ -15,12 +15,13 @@ class CityManager extends Model
     protected $fillable = [
         'national_id',
         'user_id',
-        'city_id'
+        'city_id',
+        'is_approved',
     ];
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->with('gyms');
     }
     public function user(): BelongsTo
     {

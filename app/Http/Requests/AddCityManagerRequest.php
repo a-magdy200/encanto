@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\CityManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddCityManagerRequest extends FormRequest
@@ -13,6 +14,10 @@ class AddCityManagerRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['City Manager', 'Super Admin'])) {
+            return false;
+        }
         return true;
     }
 
@@ -24,9 +29,9 @@ class AddCityManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
+            'name' => ['required','regex:/^[\pL\s\-]+$/u'],
             'email'=> ['required','unique:users,email'],
-            'national_id'=>['required','unique:city_managers,national_id','min:10','max:10'],
+            'national_id'=>['required','unique:city_managers,national_id','min:16','max:16'],
             'password'=>['required','min:6'],
             'confirm_password' => ['required_with:password','same:password'],
             'city'=>['required','unique:city_managers,city_id'],

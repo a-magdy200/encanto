@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="text-center">
+  <a href="{{ route('profile.editpass') }}" class="mt-4 btn btn-success">Edit Password </a>
+</div><br>
 <form method="post" action="{{ route('profile.update')}}">
     @method("PUT")
     @csrf
@@ -12,10 +15,7 @@
         <label>User Email</label>
         <input type="email" class="form-control" name="userEmail" value="{{auth()->user()->email}}">
     </div>
-    <div class="form-group">
-        <label> Password</label>
-        <input type="password" class="form-control" name="userPassword">
-    </div>
+   
     @if(Auth::user()->role_id ==2)
     <div class="form-group">
         <label> National Id</label>

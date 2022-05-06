@@ -6,7 +6,7 @@
     <h3 class="profile-username text-center">{{ $city['name'] }}</h3>
     <ul class="list-group list-group-unbordered mb-3">
       <li class="list-group-item">
-        <b>City Managers</b> <a class="float-right">1</a>
+        <b>City Managers</b> <a class="float-right">{{$citymanager}}</a>
       </li>
       <li class="list-group-item">
         <b>Gyms</b> <a class="float-right">20</a>

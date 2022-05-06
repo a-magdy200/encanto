@@ -17,36 +17,37 @@
 
                 <div class="form-group">
                   <label for="gymName">Gym Name</label>
-                  <input type="text" id="gymName" class="form-control" name="gymName" placeholder="Enter ...">
+                  <input type="text" id="gymName" class="form-control @error('gymName') is-invalid @enderror" name="gymName" placeholder="Enter ...">
                   @error('gymName')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        <br><div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                 </div>
                 <div class="form-group">
                   <label>Gym Cover Image</label>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" name="gymCoverImg" id="exampleInputFile1">
+                      <input type="file" class="custom-file-input @error('gymCoverImg') is-invalid @enderror" name="gymCoverImg" id="exampleInputFile1">
                       <label class="custom-file-label" for="exampleInputFile1">Choose file</label>
 
                     </div>
                   </div>
                   @error('gymCoverImg')
-                  <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
+                           <br> <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
 
                 <div class="form-group">
                     <label>City Name</label>
-                    <select class="form-control" style="width: 100%;" name="gym_city">
-                      @foreach ($cities as $city)
-                        <option value="{{ $city['id'] }}" class="form-control">{{ $city['name'] }}</option>
+                    <select class="form-control @error('gym_city') is-invalid @enderror" style="width: 100%;" name="gym_city">
+                    <option value="" disabled selected>Select city </option>
+                    @foreach ($cities as $city)
+                        <option value="{{ $city['id'] }}" class="form-control ">{{ $city['name'] }}</option>
                       @endforeach
                     </select>
                     @error('gym_city')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                            <br><div class="alert alert-danger">{{ $message }}</div>
                   @enderror
-                </div>
+                  </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add</button>
               </div>

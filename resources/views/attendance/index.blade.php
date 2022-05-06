@@ -19,30 +19,34 @@
         @endsection
         @section('content')
             <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
-                @foreach($attendances as $attendance)
-                    <tr>
-
-
-                                <td>{{$attendance->client->user->name}}</td>
-
-                        <td>{{$attendance->client->user->email}}</td>
-
-                        <td>{{ \Illuminate\Support\Carbon::parse( $attendance->attended_at)->format('Y-m-d')}}</td>
-                        <td>{{ \Illuminate\Support\Carbon::parse( $attendance->attended_at)->format('H:i:s')}}</td>
-                        <td>{{$attendance->training_session->name}}</td>
-                        <td>{{$attendance->training_session->gym->name}}</td>
-                        <td>{{$attendance->training_session->gym->city->name}}</td>
-
-                        <td class="d-flex align-items-center">
-
-                            <a href="{{route('attendance.edit',['attendance'=>$attendance->id])}}" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                            <a href="{{route('attendance.delete',['attendance'=>$attendance->id])}}" class="btn btn-danger delete-btn" data-toggle="modal"
-                               data-target="#delete-modal"><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
             </x-table-component>
             <div class="text-center">
                 <a href="{{route('attendance.create')}}" class="mt-4 btn btn-primary">add attendance</a>
             </div>
 @endsection
+        @push('page_scripts')
+            <script type="text/javascript">
+                $(function () {
+
+                    var table = $('.datatable').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: "{{ route('attendance.index') }}",
+                        columns: [
+
+                            {data: 'name', name: 'name'},
+                            {data: 'email', name: 'email'},
+                            {data:'date',name:'date'},
+                            {data:'time',name:'time'},
+                            {data:'training_session',name:'training_session'},
+                            {data:'gym',name:'gym'},
+                            {data:'city',name:'city'},
+
+
+                            {data: 'action', name: 'action', orderable: true, searchable: true},
+                        ]
+                    });
+
+                });
+            </script>
+    @endpush

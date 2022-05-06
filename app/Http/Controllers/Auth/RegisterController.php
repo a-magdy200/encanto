@@ -59,8 +59,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id' => ['required','exists:roles,id'],
-            'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16'],
+//            'role_id' => ['required','exists:roles,id'],
+            'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16','unique:city_managers','unique:gym_managers'],
             'gender' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'in:male,female'],
             'date_of_birth' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'date', 'before:today'],
             'avatar' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'image'],
@@ -87,15 +87,21 @@ class RegisterController extends Controller
                     'user_id'=>$user->id,
                     'national_id' => $data['national_id']
                 ]);
+                $user->assignRole('City Manager');
+
                 break;
             case 3:
                 GymManager::create([
                     'user_id'=>$user->id,
                     'national_id' => $data['national_id']
                 ]);
+                $user->assignRole('Gym Manager');
+
                 break;
             case 4:
                 // Coach
+                $user->assignRole('Coach');
+
                 break;
             case 5:
                 $avatarUrl = $data['avatar']->store();
@@ -105,6 +111,8 @@ class RegisterController extends Controller
                     'date_of_birth' => $data['date_of_birth'],
                     'avatar' => $avatarUrl
                 ]);
+                $user->assignRole('Client');
+
                 break;
             default:
                 break;

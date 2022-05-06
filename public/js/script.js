@@ -21,19 +21,19 @@
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     })
-    // $(".datatable").DataTable({
-    //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-    //     "responsive": true,
-    //     "dom": 'Bfrtip',
-    //     "pageLength": 10,
-    //     "paging": true,
-    //     "lengthChange": false,
-    //     "searching": true,
-    //     "ordering": true,
-    //     "info": false,
-    //     "autoWidth": false,
-    // });
-    $('body').on('click', function (e) {
+  //   $(".datatable").DataTable({
+  //       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+  //       "responsive": true,
+  //       "dom": 'Bfrtip',
+  //       "pageLength": 10,
+  //       "paging": true,
+  //       "lengthChange": false,
+  //       "searching": true,
+  //       "ordering": true,
+  //       "info": false,
+  //       "autoWidth": false,
+  //   });
+    $('.delete-btn').click(function () {
         // Dynamically changes the form action path
         // Reads href attribute from the button
         // Assigns the href value to form action
@@ -93,7 +93,16 @@
     });
 
     const channel = pusher.subscribe('notifications-channel');
-    channel.bind('my-event', function(data) {
-        alert(JSON.stringify(data));
+    channel.bind_global(function({title}) {
+        Toast.fire({
+            icon: 'info',
+            title
+        });
+        const currentCount = parseInt($('.notifications-count').eq(0).text(), 10);
+        $(".notifications-count").text(currentCount + 1);
+        $('.dropdown-header').after("<div class=\"dropdown-divider\"></div>\n" +
+            "            <a href=\"#\" class=\"dropdown-item\">\n" +
+            "              <i class=\"fas fa-info mr-2\"></i>"+title+"\n" +
+            "            </a>")
     });
 })(jQuery);

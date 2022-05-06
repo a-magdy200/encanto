@@ -13,7 +13,12 @@ class StoreSessionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['City Manager','Super Admin'])) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
@@ -24,13 +29,17 @@ class StoreSessionRequest extends FormRequest
     public function rules()
     {
         return [
-           
-            'SessionName'=>['required','min:5'],
+
+            'SessionName'=>['required','min:5','string'],
             'day'=>['required'],
             'starttime'=>['required'],
             'endtime'=>'required|after:starttime',
+            'users' => 'required|array',
+            'users.*' => 'exists:users,id',
+            'gymid'=>['required','exists:gyms,id'],
+
         ];
-    } 
+    }
     public function messages()
     {
         return [
@@ -40,6 +49,7 @@ class StoreSessionRequest extends FormRequest
            'starttime.required'=>'you should add start_time',
            'endtime.required'=>'you should add finish_time',
            'endtime.after'=>'finish_time must be greater than start_time',
+
 
         ];
     }

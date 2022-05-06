@@ -24,7 +24,7 @@
                 <div class="card card-primary card-outline ">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/imaages' .$user->avatar)}}"
+                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/images' .$user->avatar)}}"
                                 alt="User profile picture">
                         </div>
 
@@ -41,7 +41,7 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                            <p class="text-muted">{{ $user->manager->city->name}}</p>
+                            <p class="text-muted">{{ $user->manager->city ? $user->manager->city->name : 'no city'}}</p>
 
                         </div>
                         <div class="row justify-content-center">
