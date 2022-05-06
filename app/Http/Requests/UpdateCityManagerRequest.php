@@ -26,14 +26,14 @@ class UpdateCityManagerRequest extends FormRequest
     public function rules()
     {
         $userId = User::find((int) request()->segment(3));
-        
+        $cityId = CityManager::find($this->citymanager)->value('city_id');
         return [
             'name' => ['required'],
             'email' => [ 'required', 'string', 'email', 'max:255' ],
             'old_password' => ['required'],
             'new_password' => ['required', 'min:6'],
             'confirm_password' => ['required_with:new_password','same:new_password'],
-            'city' => ['required'],
+            'city' => ['required',Rule::unique('city_managers')->ignore('city_id')],
             'avatar' => ['image', 'mimes:jpg,png'],
         ];
     }

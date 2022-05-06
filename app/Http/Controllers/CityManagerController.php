@@ -31,7 +31,6 @@ class CityManagerController extends Controller
     public function show($managerId)
     {
         // TODO :: show Image
-        
         $user = User::find($managerId);
         return view('citymanagers.show', [
             'user' => $user
@@ -49,10 +48,9 @@ class CityManagerController extends Controller
     public function update($managerId, UpdateCityManagerRequest $request)
     {
         $data = request()->all();
-
+        dd('jjjjjjjjjj');
         $user = User::find($managerId);
         if (!Hash::check($data['old_password'], $user->password)) {
-
             return redirect()->back()->with('error', 'old password is not correct');
         } else {
 
@@ -65,12 +63,15 @@ class CityManagerController extends Controller
             } else {
                 $avatar_name = User::find($managerId)->avatar;
             }
-
             User::where('id', $managerId)->update([
                 'name' => $data['name'],
                 'email' =>  $data['email'],
                 'password' => Hash::make($data['new_password']),
                 'avatar' => $avatar_name,
+            ]);
+            //dd($data);
+            CityManager::where('user_id',$managerId)->update([
+                 'city_id' => $data['city'],
             ]);
             return redirect()->route('citymanagers.index');
         }

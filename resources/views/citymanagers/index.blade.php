@@ -31,7 +31,7 @@
                   <tr>
                     <td>{{ $cityManager['id'] }}</th>
                     <td>{{$cityManager['name']  }}</td>
-                    <td>{{$cityManager->manager->city->name }}</td>
+                    <td>{{$cityManager->manager->city ? $cityManager->manager->city->name : 'no city' }}</td>
                     <td class="d-flex align-items-center">
                         <a href="citymanagers/{{ $cityManager['id'] }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                         <a href="citymanagers/{{ $cityManager['id'] }}/edit" class="btn btn-warning mx-2"><i

@@ -10,12 +10,23 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
-
+use Illuminate\Support\Facades\DB;
 class TrainingSessionController extends Controller
 {
     public function index()
     {
-        $trainingSessions = TrainingSession::all();
+        $user = auth()->user();
+        $cityId= $user->manager->city->id;
+        if ($user->hasRole('city_manager')) {
+            $trainingSessions = DB::table('training_sessions')->join('gyms','gyms.id','gym_id')->join('cities','cities.id','city_id')->where('city_id',$cityId)->get();
+            dd($trainingSessions);
+        }elseif($user->hasRole('admin')){
+            $trainingSessions = TrainingSession::all();
+            foreach($trainingSessions as $trainingSession){
+                dd($trainingSession->gym_id);
+            }
+          
+        }
         $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
         $Title = 'TrainingSessions';
         return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);

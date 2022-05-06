@@ -41,7 +41,7 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                            <p class="text-muted">{{ $user->manager->city->name}}</p>
+                            <p class="text-muted">{{ $user->manager->city ? $user->manager->city->name : 'no city'}}</p>
 
                         </div>
                         <div class="row justify-content-center">
