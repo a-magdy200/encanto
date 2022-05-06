@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Events\AdminNotificationEvent;
 use App\Models\Gym;
+use App\Models\User;
 
 class HomeController extends Controller
 {
