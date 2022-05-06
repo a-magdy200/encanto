@@ -32,7 +32,7 @@
     var table = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('packages.ajax') }}",
+        ajax: "{{ route('packages.index') }}",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'package_name', name: 'package_name'},
@@ -44,7 +44,7 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-    
+
   });
 </script>
 @endpush

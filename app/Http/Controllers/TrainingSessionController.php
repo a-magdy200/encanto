@@ -10,8 +10,9 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
-use DataTables;
+
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 //use Yajra\DataTables\DataTables;
 

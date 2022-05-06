@@ -11,8 +11,10 @@ use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Requests\OrderPackageRequest;
 use Stripe;
-use Session;
-use DataTables;
+
+
+use Stripe\BillingPortal\Session;
+use Yajra\DataTables\DataTables;
 
 class TrainingPackageController extends Controller
 {

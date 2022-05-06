@@ -28,7 +28,9 @@ class AttendanceController extends Controller
 
             $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym'];
             if($manager->city){
+
             $cityId = $manager->city->id;
+
 
             $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
@@ -46,7 +48,9 @@ class AttendanceController extends Controller
 
 
         }
+        dd($request->ajax());
         if ($request->ajax()) {
+
 
             $dataTables = Datatables::of($attendances)
                 ->addColumn('action', function ($row) {
@@ -93,10 +97,14 @@ class AttendanceController extends Controller
                 $dataTables->rawColumns(['action', 'name', 'email', 'date', 'time', 'gym', 'city', 'training_session']);
                 return $dataTables->make(true);
             } elseif ($user->hasRole('City Manager')) {
+
                 if($manager->city)
-                {$dataTables->addColumn('gym', function ($row) {
+                {
+                    $dataTables->addColumn('gym', function ($row) {
                     $gym = $row->training_session->gym->name;
+
                     return $gym;
+
                 });
 
 
