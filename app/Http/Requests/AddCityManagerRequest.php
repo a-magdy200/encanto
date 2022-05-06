@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\CityManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddCityManagerRequest extends FormRequest
@@ -24,7 +25,7 @@ class AddCityManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
+            'name' => ['required','regex:/^[\pL\s\-]+$/u'],
             'email'=> ['required','unique:users,email'],
             'national_id'=>['required','unique:city_managers,national_id','min:16','max:16'],
             'password'=>['required','min:6'],

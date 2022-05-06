@@ -9,16 +9,38 @@ use App\Models\TrainingSession;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class CoachController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+
         $roleID = 5;
-        $coaches = User::where('role_id', "=", $roleID)->get();
+
         $headings = ['username', 'email'];
         $title = 'coaches';
-        return view('coaches.index', ['coaches' => $coaches,])->with(['title' => $title, 'headings' => $headings]);
+        if ($request->ajax()) {
+            $coaches = User::where('role_id', "=", $roleID)->get();
+            return Datatables::of($coaches)
+                ->addColumn('action', function($row){
+                    $showUrl=route('coaches.show',['coach'=>$row->id]);
+                   $editUrl= route('coaches.edit',['coach'=>$row->id]);
+                   $deleteUrl=route('coaches.delete',['coach'=>$row->id]);
+                  $btn="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                      <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                            <a href='deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
+                               data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+
+        return view('coaches.index')->with(['title' => $title, 'headings' => $headings]);
     }
 
     public function create()
@@ -29,7 +51,10 @@ class CoachController extends Controller
     public function store(StoreCoachRequest $request)
     {
         $data = request()->all();
-        $path = Storage::putFile('avatars/coaches', $request->file('avatar'));
+        if($request->file('avatar'))
+        {$path = Storage::putFile('avatars/coaches', $request->file('avatar'));}
+        else
+            $path=env('DEFAULTIMAGE');
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -54,7 +79,10 @@ class CoachController extends Controller
     public function update($coachId,StoreCoachRequest $request)
     {
         $data = request()->all();
-        $path = Storage::putFile('avatars/coaches', $request->file('avatar'));
+        if($request->file('avatar'))
+        {$path = Storage::putFile('avatars/coaches', $request->file('avatar'));}
+        else
+            $path=env('DEFAULTIMAGE');
         User::where('id', $coachId)->update([
             'name' => $data['name'],
             'email' => $data['email'],
