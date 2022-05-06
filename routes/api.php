@@ -52,4 +52,5 @@ Route::group(['prefix'=>'profile','middleware'=>['auth:sanctum','verified']],fun
 
 });
 Route::get('/attendance',[ClientController::class,'attendHistory'])->middleware('auth:sanctum');
+Route::get('/remaining/sessions',[ClientController::class,'remainingSessions'])->middleware('auth:sanctum');
 

@@ -99,6 +99,17 @@ class ClientController extends Controller
 
         return response()->json(["Attendance History"=>$data]);
     }
+    public function remainingSessions(){
+        $userId=Auth::user()->id;
+        $clientId=Client::where('user_id',$userId)->first()->id;
+        $orders=Order::where('client_id',$clientId)->get();
+        $attendedSessions=Attendance::where('client_id',$clientId)->count();
+
+        // $remaining_sessions=(int)$orders-(int)$attendedSessions;
+
+
+        return response()->json(["total_training_sessions"=>$orders]);
+    }
 
 
 }
