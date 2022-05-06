@@ -22,6 +22,7 @@
             {data: 'name', name: 'name'},
             {data: 'cover_image', name: 'cover_image'},
             {data: 'City Name', name: 'City Name'},
+            {data:'Created_At',name:'Created_At'},
             {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
