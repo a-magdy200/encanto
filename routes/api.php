@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Apis\ClientController;
+use App\Http\Controllers\Apis\AuthController;
 use App\Http\Controllers\Apis\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +21,11 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //     return $request->user();
 // });
 
-Route::get('/Clients',[ClientController::class,'show'])->name('Clients');
+Route::get('/Clients',[AuthController::class,'show'])->name('Clients');
 
-Route::post('/register',[ClientController::class,'register'])->name('register');
+Route::post('/register',[AuthController::class,'register'])->name('register');
+
+Route::post('/login',[AuthController::class,'login'])->name('login')->middleware('auth','verified');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Apis\ClientRequest;
+use App\Http\Requests\Apis\LoginRequest;
+use App\Http\Requests\Apis\RegisterRequest;
 use Illuminate\Auth\Events\Registered;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ClientController extends Controller
+class AuthController extends Controller
 {
     public function show(){
         $clients=User::where('role_id',5)->with('client')->get();
 
         return response()->json($clients);
     }
-    public function register(ClientRequest $request){
+    public function register(RegisterRequest $request){
         $inputImage=$request->file('avatar');
         $name = $inputImage->getClientOriginalName();
         $image = str_replace(' ', '_', $name);
@@ -30,13 +32,25 @@ class ClientController extends Controller
             'date_of_birth'=>$request->input('date_of_birth'),
             'gender'=>$request->input('gender')
         ]);
-        if($result){
+        if($user && $result){
             event(new Registered($user));
-            return response()->json(["message"=>"Client is added successfully"],200);
+            $token=$user->createToken('myapptoken')->plainTextToken;
+            return response()->json(["message"=>"Client is added successfully",'User'=>$user->client,"Token"=>$token],201);
 
         }else{
             return response()->json(["message"=>"user failed to add"],400);
 
         }
+    }
+
+    public function login(LoginRequest $request){
+
+        $client=User::where("email",$request->input('email'))->first();
+
+        if(!$client | !Hash::check($request->input('password'),$client['password'])){
+            return response(['message'=>'Password is invalid '],401);
+        }
+        $token=$client->createToken('myapptoken')->plainTextToken;
+        return response(['Client'=>$client,'Token'=>$token],201);
     }
 }
