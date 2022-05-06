@@ -25,22 +25,18 @@ class AuthController extends Controller
         $user=User::firstOrCreate([
             'name'=>$request->input('name'),
             'email'=>$request->input('email'),
-            'password'=>Hash::make($request->input('password')),
+            'password'=>bcrypt($request->input('password')),
             'avatar'=>'storage/ClientsImages/'.$image,
         ]);
         $result=$user->client()->create([
             'date_of_birth'=>$request->input('date_of_birth'),
             'gender'=>$request->input('gender')
         ]);
-        if($user && $result){
-            event(new Registered($user));
-            $token=$user->createToken('myapptoken')->plainTextToken;
-            return response()->json(["message"=>"Client is added successfully",'User'=>$user->client,"Token"=>$token],201);
+        event(new Registered($user));
+        $token=$user->createToken('myapptoken')->plainTextToken;
+        return response()->json(["message"=>"Client is added successfully",'User'=>$user->client,"Token"=>$token],201);
 
-        }else{
-            return response()->json(["message"=>"user failed to add"],400);
 
-        }
     }
 
     public function login(LoginRequest $request){
@@ -53,4 +49,8 @@ class AuthController extends Controller
         $token=$client->createToken('myapptoken')->plainTextToken;
         return response(['Client'=>$client,'Token'=>$token],201);
     }
+    // public function logout(Request $request){
+    //     auth()->user()->tokens()->delete();
+    //     return response(['message'=>"Logged out"]);
+    // }
 }
