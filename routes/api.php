@@ -47,7 +47,9 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::group(['prefix'=>'profile','middleware'=>['auth:sanctum','verified']],function(){
     Route::get('/{id}',[ClientController::class,'index']);
     Route::put('/{id}/edit',[ClientController::class,'edit']);
+    Route::post('/{id}/attend',[ClientController::class,'attend']);
 
 
 });
+Route::get('/attendance',[ClientController::class,'attendHistory'])->middleware('auth:sanctum');
 
