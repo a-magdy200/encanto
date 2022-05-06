@@ -17,7 +17,7 @@ class CoachController extends Controller
     {
 
 
-        $roleID = 5;
+        $roleID = 4;
 
         $headings = ['username', 'email'];
         $title = 'coaches';
@@ -59,7 +59,7 @@ class CoachController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 5,
+            'role_id' => 4,
             'avatar'=>$path,
 
         ]);
@@ -87,7 +87,7 @@ class CoachController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 5,
+            'role_id' => 4,
             'avatar'=>$path,
         ]);
         return to_route('coaches.index');

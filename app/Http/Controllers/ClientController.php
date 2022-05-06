@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\UpdateClientRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Models\Attendance;
 use App\Models\Client;
@@ -62,11 +62,12 @@ class ClientController extends Controller
         {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
         else
             $path=env('DEFAULTIMAGE');
-       $user= User::create([
+       
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
+            'role_id' => 5,
             'avatar'=>$path,
 
         ]);
@@ -89,7 +90,7 @@ class ClientController extends Controller
             "client" => $client]);
     }
 
-    public function update($clientId,StoreClientRequest $request)
+    public function update($clientId,UpdateClientRequest $request)
     {
         $data = request()->all();
         if($request->file('avatar'))
@@ -101,7 +102,7 @@ class ClientController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
+            'role_id' => 5,
             'avatar'=>$path,
         ]);
         Client::where('id', $clientId)->update([

@@ -34,11 +34,7 @@
                         @csrf
                         @method('put')
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">City</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="city"
-                                    value="{{ $user->manager->city->name }}" readonly>
-                            </div>
+                    
                             <div class="form-group">
                                 <label for="exampleInputEmail1">National Id</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" name="national_id"
@@ -87,7 +83,17 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
 
-
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1" class="form-label">City</label>
+                                <select class="form-control @error('city') is-invalid @enderror" name='city'>
+                                    @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('city')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                             <div class="form-group">
                                 <label for="exampleInputFile">Avatar</label>
                                 <input type="file" id="avatar" name="avatar"

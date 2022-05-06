@@ -42,7 +42,7 @@ class CityManagerController extends Controller
                     return $btn;
                 })
                 ->addColumn('city', function ($row) {
-                    $city = $row->manager->city->name;
+                    $city = $row->manager->city?  $row->manager->city->name: 'Not Found';
                     return $city;
                 })
                 ->rawColumns(['city', 'action'])
@@ -95,6 +95,9 @@ class CityManagerController extends Controller
                 'email' =>  $data['email'],
                 'password' => Hash::make($data['new_password']),
                 'avatar' => $avatar_name,
+            ]);
+            CityManager::where('user_id', $managerId)->update([
+               'city_id' => $data['city'],
             ]);
             return redirect()->route('citymanagers.index');
         }
