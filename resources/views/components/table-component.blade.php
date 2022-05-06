@@ -19,7 +19,6 @@
                         </tr>
                         </thead>
                         <tbody>
-{{--                        {{$slot}}--}}
                         </tbody>
                     </table>
                 </div>

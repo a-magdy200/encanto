@@ -20,8 +20,6 @@ class TrainingPackageController extends Controller
     {
        // $packages = TrainingPackage::with('gym')->get();
         $packages = TrainingPackage::select('*');
-        //$title = 'Training Packages';
-        //$headings = ['Package ID', 'Package Name', 'Sessions Number', 'Gym Name', 'Price', 'Created At', 'Updated At'];
             // $package-gym->name
            return Datatables::of($packages)
             ->addIndexColumn()
@@ -41,8 +39,6 @@ class TrainingPackageController extends Controller
             })
             ->rawColumns(['gym_id','action'])
             ->make(true);
-        
-        //return view('packages.index')->with(['title' => $title, 'headings' => $headings]);
     }
 
    public function index()
@@ -108,9 +104,11 @@ class TrainingPackageController extends Controller
     {
         $packages = TrainingPackage::all();
         $clients = User::where('role_id', 5)->get();
+        $gyms = Gym::all();
         return view('packages.purchase', [
             'packages' => $packages,
             'clients' => $clients,
+            'gyms' => $gyms,
         ]);
     }
 

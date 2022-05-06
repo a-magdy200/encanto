@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function manager()
     {
-        if ($this->role_id === 3) {
+        if ($this->hasRole("Gym Manager")) {
             return $this->hasOne(GymManager::class);
         }
         return $this->hasOne(CityManager::class);
