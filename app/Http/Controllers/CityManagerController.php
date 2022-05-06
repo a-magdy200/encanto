@@ -23,6 +23,7 @@ class CityManagerController extends Controller
         $title = 'City Managers';
         if ($request->ajax()) {
             $cityManagers = CityManager::with('user', 'city')->get();
+
             return Datatables::of($cityManagers)
                 ->addColumn('action', function ($row) {
                     $showUrl = route('citymanagers.show',['citymanager' => $row->id]);
@@ -36,7 +37,8 @@ class CityManagerController extends Controller
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
                 })
                 ->addColumn('city', function ($row) {
-                    $city = $row->manager->city?  $row->manager->city->name: 'Not Found';
+                    $city = $row->user->manager->city?  $row->user->manager->city->name: 'Not Found';
+
                     return $city;
                 })
                 ->rawColumns(['name','city', 'action'])

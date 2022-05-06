@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateGymRequest;
 use App\Models\City;
 use App\Models\CityManager;
 use App\Models\Gym;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use DataTables;
 use Illuminate\Http\Request;
@@ -77,7 +78,8 @@ class GymController extends Controller
             $cities = City::all();
         } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
-            $cities = City::where('city_id', $city)->first();
+            $cities = City::where('id', $city)->get();
+
         } else {
             return view('errors.401');
         }
@@ -90,16 +92,18 @@ class GymController extends Controller
             return view('errors.401');
         } elseif ($user->hasRole('Super Admin')) {
             $cities = City::all();
+            dd($cities);
         } elseif ($user->hasRole('City Manager')) {
-            $city = CityManager::where('user_id', $user->id)->first()->city_id;
+            $city = CityManager::where('user_id', $user->id)->first()->city;
             if (!$city) {
                 $cities = [];
             } else {
-                $cities = City::where('city_id', $city)->first();
+                $cities = [$city];
             }
         } else {
             return view('errors.401');
         }
+
         if ($request->hasFile('gymCoverImg')) {
             $image = $request->file('gymCoverImg');
             $imageName = $image->getClientOriginalName();
@@ -109,7 +113,8 @@ class GymController extends Controller
             $result = Gym::create([
                 'name' => $gymName,
                 'cover_image' => 'storage/GymImages/' . $image,
-                'city_id' => $request->input('gym_city')
+                'city_id' => $request->input('gym_city'),
+                'created_by'=>Auth::user()->id,
             ]);
             if ($result) {
                 return to_route('show.AllGyms');

@@ -22,7 +22,7 @@ class CoachController extends Controller
         $headings = ['username', 'email'];
         $title = 'coaches';
         if ($request->ajax()) {
-            $coaches = User::where('role_id', "=", $roleID)->get();
+            $coaches = User::role('Coach')->get();
             return Datatables::of($coaches)
                 ->addColumn('action', function($row){
                     $showUrl=route('coaches.show',['coach'=>$row->id]);
