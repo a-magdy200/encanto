@@ -20,13 +20,13 @@ class TrainingSessionController extends Controller
     public function ajax(Request $request)
     {
         $user = auth()->user();
-        if ($user->hasRole('city_manager')) {
+        if ($user->hasRole('City Manager')) {
             $cityId = $user->manager->city_id;
             $trainingSessionsid = DB::table('training_sessions')->select('training_sessions.id')->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
             $trainingSessions = TrainingSession::whereIn('id', $trainingSessionsid);
-        } elseif ($user->hasRole('admin')) {
+        } elseif ($user->hasRole('Super Admin')) {
             $trainingSessions = TrainingSession::all();
-        } elseif ($user->hasRole('gym_manager')) {
+        } elseif ($user->hasRole('Gym Manager')) {
             $gym_id = $user->manager->gym_id;
             $trainingSessions = TrainingSession::where('gym_id', '=', $gym_id)->get();
         }
@@ -67,9 +67,9 @@ class TrainingSessionController extends Controller
     }
     public function store(StoreSessionRequest $request)
     {
-        if (auth()->user()->hasAnyRole(['admin', 'city_manager'])) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'City Manager'])) {
             $gymId = $request->get('gymid');
-        } elseif (auth()->user()->hasRole('gym_manager')) {
+        } elseif (auth()->user()->hasRole('Gym Manager')) {
             $gymId = auth()->user()->manager->gym_id;
         }
         $findSessions = TrainingSession::where('day', '=', $request->get('day'))

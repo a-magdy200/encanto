@@ -28,13 +28,13 @@
     }
 </style>
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 <form method="post" action="{{ route('packages.order')}}" role="form" class="validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
     @csrf
@@ -56,72 +56,74 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Gym Name</label>
-            <select name="gym_id" class="form-control">
-                @foreach ($gyms as $gym)
-                <option value="{{$gym->id}}">{{$gym->name}}</option>
-                @endforeach
-            </select>
-        </div>
+        @if (!auth()->user()->hasRole('Gym Manager'))
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Gym Name</label>
+                <select name="gym_id" class="form-control">
+                    @foreach ($gyms as $gym)
+                    <option value="{{$gym->id}}">{{$gym->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
+            <div class="panel-heading">
+                <div class="row text-center">
+                    <h3 class="panel-heading">Payment Details</h3>
+                </div>
+            </div>
+            <div class="panel-body">
 
-        <div class="panel-heading">
-        <div class="row text-center">
-            <h3 class="panel-heading">Payment Details</h3>
-        </div>
-    </div>
-    <div class="panel-body">
+                @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+                @endif
 
-        @if (Session::has('success'))
-        <div class="alert alert-success text-center">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <p>{{ Session::get('success') }}</p>
-        </div>
-        @endif
+                @if (Session::has('fail'))
+                <div class="alert alert-danger text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('fail') }}</p>
+                </div>
+                @endif
+                <div class='form-row row'>
+                    <div class='col-xs-12 form-group required'>
+                        <label class='control-label'>Name on Card</label> <input class='form-control' size='4' type='text'>
+                    </div>
+                </div>
 
-        @if (Session::has('fail'))
-        <div class="alert alert-danger text-center">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <p>{{ Session::get('fail') }}</p>
-        </div>
-        @endif
-        <div class='form-row row'>
-            <div class='col-xs-12 form-group required'>
-                <label class='control-label'>Name on Card</label> <input class='form-control' size='4' type='text'>
+                <div class='form-row row'>
+                    <div class='col-xs-12 form-group card required'>
+                        <label class='control-label'>Card Number</label> <input autocomplete='off' class='form-control card-num' size='20' type='text'>
+                    </div>
+                </div>
+
+                <div class='form-row row'>
+                    <div class='col-xs-12 col-md-4 form-group cvc required'>
+                        <label class='control-label'>CVC</label>
+                        <input autocomplete='off' class='form-control card-cvc' placeholder='e.g 415' size='4' type='text'>
+                    </div>
+                    <div class='col-xs-12 col-md-4 form-group expiration required'>
+                        <label class='control-label'>Expiration Month</label> <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                    </div>
+                    <div class='col-xs-12 col-md-4 form-group expiration required'>
+                        <label class='control-label'>Expiration Year</label> <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
+                    </div>
+                </div>
+
+                <div class='form-row row'>
+                    <div class='col-md-12 hide error form-group'>
+                        <div class='alert-danger alert'>Fix the errors before you begin.</div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- /.card-body -->
 
-        <div class='form-row row'>
-            <div class='col-xs-12 form-group card required'>
-                <label class='control-label'>Card Number</label> <input autocomplete='off' class='form-control card-num' size='20' type='text'>
-            </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Purchase</button>
         </div>
-
-        <div class='form-row row'>
-            <div class='col-xs-12 col-md-4 form-group cvc required'>
-                <label class='control-label'>CVC</label>
-                <input autocomplete='off' class='form-control card-cvc' placeholder='e.g 415' size='4' type='text'>
-            </div>
-            <div class='col-xs-12 col-md-4 form-group expiration required'>
-                <label class='control-label'>Expiration Month</label> <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
-            </div>
-            <div class='col-xs-12 col-md-4 form-group expiration required'>
-                <label class='control-label'>Expiration Year</label> <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
-            </div>
-        </div>
-
-        <div class='form-row row'>
-            <div class='col-md-12 hide error form-group'>
-                <div class='alert-danger alert'>Fix the errors before you begin.</div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- /.card-body -->
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Purchase</button>
-    </div>
 </form>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 

@@ -20,7 +20,7 @@ class TrainingPackageController extends Controller
     {
        // $packages = TrainingPackage::with('gym')->get();
         $packages = TrainingPackage::select('*');
-            // $package-gym->name
+         // dd ($packages);
            return Datatables::of($packages)
             ->addIndexColumn()
             ->addColumn('gym_id', function ($row) {
@@ -59,11 +59,16 @@ class TrainingPackageController extends Controller
     public function store(StorePackageRequest $request)
     {
         $request = request()->all();
+        if (auth()->user()->hasAnyRole(['Super Admin', 'City Manager'])) {
+            $gymId = $request->get('gymid');
+        } elseif (auth()->user()->hasRole('Gym Manager')) {
+            $gymId = auth()->user()->manager->gym_id;
+        }
         TrainingPackage::create([
             'package_name' => $request['package_name'],
             'number_of_sessions' => $request['number_of_sessions'],
             'price' => $request['price'],
-            'gym_id' => $request['gym_id'],
+            'gym_id' => $gymId,
         ]);
 
         return to_route('packages.index');

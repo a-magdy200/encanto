@@ -42,7 +42,7 @@
             </select>
         </div>
     </div>
-    @if (!auth()->user()->hasRole('gym_manager'))
+    @if (!auth()->user()->hasRole('Gym Manager'))
     <div class="form-group">
         <label>Gym Name</label>
         <select class="form-control" name="gymid">
