@@ -56,6 +56,15 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Gym Name</label>
+            <select name="gym_id" class="form-control">
+                @foreach ($gyms as $gym)
+                <option value="{{$gym->id}}">{{$gym->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="panel-heading">
         <div class="row text-center">
             <h3 class="panel-heading">Payment Details</h3>

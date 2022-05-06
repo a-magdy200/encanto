@@ -18,6 +18,7 @@ class AuthController extends Controller
         return response()->json($clients);
     }
     public function register(RegisterRequest $request){
+
         $inputImage=$request->file('avatar');
         $name = $inputImage->getClientOriginalName();
         $image = str_replace(' ', '_', $name);

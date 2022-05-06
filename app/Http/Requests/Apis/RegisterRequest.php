@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Apis;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -25,9 +26,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:50',
-            'email' => 'required|string|email|unique:users',
+            'email' => ['required','string','email',Rule::unique('users', 'email')->ignore($this->user)
+            ],
             'password'=>'required|min:6|string|confirmed',
-            'avatar'=>'required|image',
+            'avatar'=>'required|image|mimes:png,jpg',
             'date_of_birth'=>'required|date',
             'gender'=>'required'
         ];
