@@ -18,6 +18,9 @@
                 <div class="form-group">
                   <label for="gymName">Gym Name</label>
                   <input type="text" id="gymName" class="form-control" name="gymName" placeholder="Enter ...">
+                  @error('gymName')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="form-group">
                   <label>Gym Cover Image</label>
@@ -28,6 +31,9 @@
 
                     </div>
                   </div>
+                  @error('gymCoverImg')
+                  <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <div class="form-group">
@@ -37,7 +43,10 @@
                         <option value="{{ $city['id'] }}" class="form-control">{{ $city['name'] }}</option>
                       @endforeach
                     </select>
-                  </div>
+                    @error('gym_city')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
+                </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add</button>
               </div>

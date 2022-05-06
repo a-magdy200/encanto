@@ -15,9 +15,11 @@
                 @csrf
                 <div class="form-group">
                   <label for="cityName">City</label>
-                  <input type="text" id="cityName" class="form-control" name="cityName" placeholder="Enter ...">
+                  <input type="text" id="cityName" class="form-control @error('name') is-invalid @enderror" name="cityName"  placeholder="Enter ...">
                 </div>
-              
+                @error('cityName')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add City</button>
               </div>
