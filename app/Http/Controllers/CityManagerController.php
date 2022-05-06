@@ -21,28 +21,32 @@ class CityManagerController extends Controller
 
         $headings = ['id', 'name', 'city','is_approved'];
         $title = 'City Managers';
-        if ($request->ajax()) {
-            $cityManagers = CityManager::with('user', 'city')->get();
+        $user = auth()->user();
+        if (!$user->hasRole([ 'Super Admin'])) {
+            return view('errors.401');
+        } else {
 
-            return Datatables::of($cityManagers)
-                ->addColumn('action', function ($row) {
-                    $showUrl = route('citymanagers.show',['citymanager' => $row->id]);
-                    $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
-                    $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
+            if ($request->ajax()) {
+                $cityManagers = CityManager::with('user', 'city')->get();
+                return Datatables::of($cityManagers)
+                    ->addColumn('action', function ($row) {
+                        $showUrl = route('citymanagers.show', ['citymanager' => $row->id]);
+                        $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
+                        $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
 
-                    return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                        return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                 <a href='$editUrl' class='btn btn-warning mx-2'><i
                         class='fa fa-edit'></i></a>
                 <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
-                })
-                ->addColumn('city', function ($row) {
-                    $city = $row->user->manager->city?  $row->user->manager->city->name: 'Not Found';
-
-                    return $city;
-                })
-                ->rawColumns(['name','city', 'action'])
-                ->make(true);
+                    })
+                    ->addColumn('city', function ($row) {
+                        $city = $row->manager->city ? $row->manager->city->name : 'Not Found';
+                        return $city;
+                    })
+                    ->rawColumns(['name', 'city', 'action'])
+                    ->make(true);
+            }
         }
         return view('citymanagers.index', [
             'title' => $title,

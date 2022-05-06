@@ -30,7 +30,7 @@ class GymManagerController extends Controller
                 // City Manager
                 $cityManager = CityManager::with('user', 'city')->where('user_id', $user->id)->first();
                 $gymManagers = GymManager::with('user', 'gym')->where('gym_id', $cityManager->city->gyms->pluck('id')->toArray())->get();
-            }
+            }}
             if ($request->ajax()) {
                 return Datatables::of($gymManagers)
                     ->addIndexColumn()
@@ -65,7 +65,7 @@ class GymManagerController extends Controller
             $title = 'gymmanager';
             return view('gymmanagers.index')->with(['title' => $title, 'headings' => $headings]);
         }
-    }
+
     public function destroy($gymmanagerid)
     {
         $user = auth()->user();
