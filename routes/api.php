@@ -25,16 +25,22 @@ Route::get('/Clients',[AuthController::class,'show'])->name('Clients');
 
 Route::post('/register',[AuthController::class,'register'])->name('register');
 
-Route::post('/login',[AuthController::class,'login'])->name('login')->middleware('auth','verified');
+Route::post('/login',[AuthController::class,'login'])->name('api.login');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
+Route::get('/email/verify/{id}/{hash}',  [VerificationController::class, 'verify'])
+->middleware(['signed', 'throttle:6,1'])
+->name('verification.verify');
 
-Route::get('/email/verify/{id}/{hash}', [VerificationController::class,'verify'])->middleware('signed')->name('verification.verify');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
 
-Route::post('/email/verification-notification', [VerificationController::class,'resend'])->middleware(['auth:sanctum','signed', 'throttle:6,1'])->name('verification.send');
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+
 
 Route::get('/profile', function () {
     return view('layouts.app');
