@@ -15,7 +15,7 @@
     var table = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('trainingSessions.index') }}",
+        ajax: "{{ route('trainingSessions.ajax') }}",
 
 columns: [
 
@@ -36,7 +36,7 @@ columns: [
 ]
 
 });
-           
+
 
     });
 </script>

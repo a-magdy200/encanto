@@ -14,7 +14,7 @@ class StoreSessionRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->user();
-        if (!$user->hasAnyRole(['city_manager','admin'])) {
+        if (!$user->hasAnyRole(['city_manager','admin','gym_manager'])) {
             return false;
         }else{
             return true;
@@ -36,7 +36,7 @@ class StoreSessionRequest extends FormRequest
             'endtime'=>'required|after:starttime',
             'users' => 'required|array',
             'users.*' => 'exists:users,id', 
-            'gymid'=>['required','exists:gyms,id'],
+            'gymid'=>['exists:gyms,id'],
 
         ];
     } 

@@ -26,6 +26,7 @@ class OrderPackageRequest extends FormRequest
         return [
             'client_id'=>['required','exists:users,id'],
             'package_id'=>['required','exists:training_packages,id'],
+            'gym_id'=>['required','exists:gyms,id'],
         ];
     }
 }

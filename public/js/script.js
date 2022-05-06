@@ -32,7 +32,7 @@
     //     "ordering": true,
     //     "info": false,
     //     "autoWidth": false,
-    // });
+//});
     $('.delete-btn').click(function () {
         // Dynamically changes the form action path
         // Reads href attribute from the button
