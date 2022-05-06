@@ -13,6 +13,10 @@ class UpdateSessionRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = auth()->user();
+        if (!$user->hasRole(['City Manager','Super Admin'])) {
+            return false;
+        }
         return true;
     }
 
@@ -24,7 +28,7 @@ class UpdateSessionRequest extends FormRequest
     public function rules()
     {
         return [
-           
+
             'day'=>['required'],
             'starttime'=>['required'],
             'endtime'=>'required|after:starttime',

@@ -21,7 +21,7 @@ class CityManager extends Model
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->with('gyms');
     }
     public function user(): BelongsTo
     {

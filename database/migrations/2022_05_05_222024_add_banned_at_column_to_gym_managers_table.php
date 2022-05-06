@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('gym_managers', function (Blueprint $table) {
+            $table->timestamp('banned_at')->nullable();
+
         });
     }
 
@@ -27,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::table('gym_managers', function (Blueprint $table) {
+            $table->dropColumn('banned_at');
+        });
     }
 };

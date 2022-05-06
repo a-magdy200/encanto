@@ -14,6 +14,10 @@ class StoreGymRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = auth()->user();
+        if (!$user->hasAnyRole(['City Manager', 'Super Admin'])) {
+            return false;
+        }
         return true;
     }
 
@@ -34,8 +38,11 @@ class StoreGymRequest extends FormRequest
     {
         return [
             'gymName.required'=>'Gym name field is required',
+            'gymName.min'=>'Gym name should be at least 3 character',
             'gymCoverImg.required'=>'Image is required',
-            'gymCoverImg.mimes'=>'The image must be jpg or png file only'
+            'gymCoverImg.mimes'=>'The image must be jpg or png file only',
+            'gym_city.required'=>'gym city is required',
+            'gym_city.exists'=>'gym city is invalid',
         ];
     }
 }

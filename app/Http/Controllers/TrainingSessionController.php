@@ -10,23 +10,27 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
-use DataTables;
 
 class TrainingSessionController extends Controller
 {
     public function index(Request $request)
     {
-        $TrainingSessions = TrainingSession::select('*');
-        $headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
-        $title="Training Sessions";
+        $user = auth()->user();
+        $cityId= $user->manager->city->id;
+        if ($user->hasRole('City Manager')) {
+            $trainingSessions = DB::table('training_sessions')->join('gyms','gyms.id','gym_id')->join('cities','cities.id','city_id')->where('city_id',$cityId)->get();
+        }elseif($user->hasRole('Super Admin')){
+            $trainingSessions = TrainingSession::all();
+
+        }
         if ($request->ajax()) {
-            return DataTables::of($TrainingSessions)
+            return DataTables::of($trainingSessions)
                 ->addIndexColumn()
                 ->addColumn('Gym Name', function ($row) {
                     $gymName=$row->gym->name;
                     return $gymName;
                 })
-                
+
                 ->addColumn('action', function ($row) {
                     $show=route('trainingSessions.show',['id'=>$row->id]);
                     $edit=route('trainingSessions.edit',['id'=>$row->id]);
@@ -40,8 +44,9 @@ class TrainingSessionController extends Controller
                 ->rawColumns(['Gym Name','action'])
                 ->make(true);
         }
-
-        return view('trainingSessions.index')->with(['title' => $title, 'headings' => $headings]);
+        $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
+        $Title = 'Training Sessions';
+        return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);
     }
     public function create()
     {
@@ -79,7 +84,7 @@ class TrainingSessionController extends Controller
                 'users' => $request->get('users'),
 
         ]);
-                
+
         }
     }
     public function show($id)

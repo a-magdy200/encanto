@@ -23,7 +23,7 @@
 
     <div class="form-group">
         <label>Session Start Time</label>
-        <input type="time" class="form-control" name="starttime"value="{{old('starttime') }}">
+        <input type="time" class="form-control" name="starttime" value="{{old('starttime') }}">
     </div>
     <div class="form-group">
         <label>Session End Time</label>
@@ -48,7 +48,7 @@
             @endforeach
         </select>
     </div>
-   
+
     <button class="btn btn-success">Add Session</button>
 
 </form>

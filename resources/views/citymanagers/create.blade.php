@@ -19,7 +19,8 @@
             </div><!-- /.container-fluid -->
             @endsection
             @section('content')
-            
+
+
             <div class="card card-primary mt-4">
                 <div class="card-header">
                     <h3 class="card-title"></h3>
