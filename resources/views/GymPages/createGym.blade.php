@@ -39,7 +39,8 @@
                 <div class="form-group">
                     <label>City Name</label>
                     <select class="form-control @error('gym_city') is-invalid @enderror" style="width: 100%;" name="gym_city">
-                      @foreach ($cities as $city)
+                    <option value="" disabled selected>Select city </option> 
+                    @foreach ($cities as $city)
                         <option value="{{ $city['id'] }}" class="form-control ">{{ $city['name'] }}</option>
                       @endforeach
                     </select>

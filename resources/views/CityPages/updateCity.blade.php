@@ -15,7 +15,10 @@
                 @method('put')
                 <div class="form-group">
                   <label for="cityName">City</label>
-                  <input type="text" id="cityName" class="form-control" name="cityName" value="{{ $city['name'] }}" placeholder="Enter ...">
+                  <input type="text" id="cityName" class="form-control @error('cityName') is-invalid @enderror" name="cityName" value="{{ $city['name'] }}" placeholder="Enter ...">
+                  @error('cityName')
+                 <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
                 </div>
 
               <div class="form-group">
