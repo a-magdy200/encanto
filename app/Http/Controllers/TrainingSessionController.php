@@ -10,8 +10,9 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
-use DataTables;
+
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 //use Yajra\DataTables\DataTables;
 
@@ -20,14 +21,15 @@ class TrainingSessionController extends Controller
     public function ajax(Request $request)
     {
         $user = auth()->user();
-        if ($user->hasRole('city_manager')) {
-            $cityId = $user->manager->city_id;
+        $manager=User::with('manager')->find($user->id)->manager;
+        if ($user->hasRole('City Manager')) {
+            $cityId = $manager->city_id;
             $trainingSessionsid = DB::table('training_sessions')->select('training_sessions.id')->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
             $trainingSessions = TrainingSession::whereIn('id', $trainingSessionsid);
-        } elseif ($user->hasRole('admin')) {
+        } elseif ($user->hasRole('Super Admin')) {
             $trainingSessions = TrainingSession::all();
-        } elseif ($user->hasRole('gym_manager')) {
-            $gym_id = $user->manager->gym_id;
+        } elseif ($user->hasRole('Gym Manager')) {
+            $gym_id = $manager->gym_id;
             $trainingSessions = TrainingSession::where('gym_id', '=', $gym_id)->get();
         }
         return DataTables::of($trainingSessions)
@@ -66,11 +68,12 @@ class TrainingSessionController extends Controller
         ]);
     }
     public function store(StoreSessionRequest $request)
-    {
-        if (auth()->user()->hasAnyRole(['admin', 'city_manager'])) {
+    { $user = auth()->user();
+        $manager=User::with('manager')->find($user->id)->manager;
+        if (auth()->user()->hasAnyRole(['Super Admin', 'City Manager'])) {
             $gymId = $request->get('gymid');
-        } elseif (auth()->user()->hasRole('gym_manager')) {
-            $gymId = auth()->user()->manager->gym_id;
+        } elseif (auth()->user()->hasRole('Gym Manager')) {
+            $gymId = $manager->gym_id;
         }
         $findSessions = TrainingSession::where('day', '=', $request->get('day'))
             ->where('gym_id', '=', $gymId)

@@ -39,6 +39,7 @@
                             {data:'date',name:'date'},
                             {data:'time',name:'time'},
                             {data:'training_session',name:'training_session'},
+
                             {data:'gym',name:'gym'},
                             {data:'city',name:'city'},
 
