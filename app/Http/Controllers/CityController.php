@@ -56,7 +56,8 @@ class CityController extends Controller
 
     public function showSingleCity($cityId){
         $city=City::find($cityId);
-        return view('CityPages.showSingleCity',["city"=>$city]);
+        $citymanager=$city->manager->user->name;
+        return view('CityPages.showSingleCity',["city"=>$city,"citymanager"=>$citymanager]);
     }
 
     public function editCity($cityId){
