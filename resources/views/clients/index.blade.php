@@ -16,33 +16,50 @@
                 </div>
             </div>
         </div><!-- /.container-fluid -->
-        @endsection
-        @section('content')
-            <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
+    @endsection
+    @section('content')
+        <x-table-component :actions="true" title="{{ $title }}" :headings="$headings">
+        </x-table-component>
+        <div class="text-center">
+            <a href="{{ route('clients.create') }}" class="mt-4 btn btn-primary">add client</a>
+        </div>
+    @endsection
+    @push('page_scripts')
+        <script type="text/javascript">
+            $(function() {
 
-            <div class="text-center">
-                <a href="{{route('clients.create')}}" class="mt-4 btn btn-primary">add client</a>
-            </div>
-@endsection
-        @push('page_scripts')
-            <script type="text/javascript">
-                $(function () {
+                var table = $('.datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('clients.index') }}",
+                    columns: [
 
-                    var table = $('.datatable').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: "{{ route('clients.index') }}",
-                        columns: [
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'email',
+                            name: 'email'
+                        },
+                        {
+                            data: 'date_of_birth',
+                            name: 'date_of_birth'
+                        },
+                        {
+                            data: 'gender',
+                            name: 'gender'
+                        },
 
-                            {data: 'name', name: 'name'},
-                            {data: 'email', name: 'email'},
-                            {data:'date_of_birth',name:'date_of_birth'},
-                            {data:'gender',name:'gender'},
-
-                            {data: 'action', name: 'action', orderable: true, searchable: true},
-                        ]
-                    });
-
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: true,
+                            searchable: true
+                        },
+                    ]
                 });
-            </script>
+
+            });
+        </script>
     @endpush

@@ -24,17 +24,8 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                @if (auth()->user()->role_id === 1)
-                                <h3>{{ $allClientsCount }}</h3>
-                                @endif
-
-                                @if (auth()->user()->role_id === 2)
-                                <h3>{{ $cityClientsCount }}</h3>
-                                @endif
-
-                                @if (auth()->user()->role_id === 3)
-                                <h3>{{ $gymClientsCount }}</h3>
-                                @endif
+                                <h3>{{ $clientsCount }}</h3>
+                                
 
 
                                 <p>Number of Users</p>
@@ -49,17 +40,8 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                @if (auth()->user()->role_id === 1)
-                                <h3>{{ $allOrdersCount }}<sup style="font-size:20px"></sup></h3>
-                                @endif
-
-                                @if (auth()->user()->role_id === 2)
-                                <h3>{{ $cityOrdersCount }}<sup style="font-size:20px"></sup></h3>
-                                @endif
-
-                                @if (auth()->user()->role_id === 3)
-                                <h3>{{ $gymOrdersCount }}</h3>
-                                @endif
+                                <h3>{{ $ordersCount }}<sup style="font-size:20px"></sup></h3>
+                             
 
                                 <p>Number of Orders</p>
                             </div>
@@ -73,17 +55,10 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                @if (auth()->user()->role_id === 1)
-                                <h3>${{ $totalRevenues/100 }}</h3>
-                                @endif
+                                <h3>${{ $revenues/100 }}</h3>
+                                
 
-                                @if (auth()->user()->role_id === 2)
-                                <h3>${{ $cityRevenues/100}}</h3>
-                                @endif
-
-                                @if (auth()->user()->role_id === 3)
-                                <h3>${{ $gymRevenues/100 }}</h3>
-                                @endif
+                            
                                 
                                 <p>Total Revenues</p>
                             </div>
