@@ -78,9 +78,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class,'user_id');
     }
-    public function gymManager(): HasOne
-    {
-        return $this->hasOne(GymManager::class,'user_id');
-    }
 
 }

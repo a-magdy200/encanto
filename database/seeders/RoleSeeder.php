@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\RoleFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -19,7 +17,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $admin_role=Role::create(['name'=>'admin']);
         $city_manager_role=Role::create(['name'=>'city_manager']);
         $gym_manager_role=Role::create(['name'=>'gym_manager']);
@@ -50,12 +48,13 @@ class RoleSeeder extends Seeder
         $update_attendance=Permission::create(['name' => 'update attendance']);
         $delete_attendance=Permission::create(['name' => 'delete attendance']);
         $city_managers_permissions=[$create_gym_manager,$read_gym_manager,$update_gym_manager,$delete_gym_manager,$ban_gym_manager,$unban_gym_manager,$create_gym,
-        $update_gym,$read_gym,$delete_gym,$create_training_sessions,$read_training_sessions,$update_training_sessions,$delete_training_sessions,$assign_coache_to_training_sessions,
-        $buy_training_packages,$create_attendance,$read_attendance,$update_attendance,$delete_attendance
-    ];
+            $update_gym,$read_gym,$delete_gym,$create_training_sessions,$read_training_sessions,$update_training_sessions,$delete_training_sessions,$assign_coache_to_training_sessions,
+            $buy_training_packages,$create_attendance,$read_attendance,$update_attendance,$delete_attendance
+        ];
+        $admin_role->givePermissionTo(Permission::all());
     $city_manager_role->givePermissionTo($city_managers_permissions);
-    $city_manager_user=User::where('role_id','2');
-    $city_manager_user->givePermissionTo($city_managers_permissions);
+//    $city_manager_user=User::where('role_id','2');
+//    $city_manager_user->givePermissionTo($city_managers_permissions);
 
 
 
