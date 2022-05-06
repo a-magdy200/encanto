@@ -12,6 +12,7 @@ use App\Http\Requests\AddCityManagerRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Averages;
+use Yajra\DataTables\DataTables;
 
 class CityManagerController extends Controller
 {
@@ -21,29 +22,26 @@ class CityManagerController extends Controller
         $headings = ['id', 'name', 'city'];
         $title = 'City Managers';
         if ($request->ajax()) {
-            $roleId = Role::where('name', '=', 'city_manager')->value('id');
-            $cityManagers = User::where('role_id', '=', $roleId)->get();
+            $cityManagers = CityManager::with('user', 'city')->get();
             return Datatables::of($cityManagers)
-
-
                 ->addColumn('action', function ($row) {
                     $showUrl = route('citymanagers.show',['citymanager' => $row->id]);
                     $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
                     $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
 
-                    $btn = "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                    return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                 <a href='$editUrl' class='btn btn-warning mx-2'><i
                         class='fa fa-edit'></i></a>
                 <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
-
-                    return $btn;
                 })
                 ->addColumn('city', function ($row) {
-                    $city = $row->manager->city->name;
-                    return $city;
+                    return $row->city->name;
                 })
-                ->rawColumns(['city', 'action'])
+                ->addColumn('name', function ($row) {
+                    return $row->user->name;
+                })
+                ->rawColumns(['name','city', 'action'])
                 ->make(true);
         }
         return view('citymanagers.index', [
@@ -127,7 +125,7 @@ class CityManagerController extends Controller
             'avatar' => $avatar_name,
             // 'role_id' => 2
         ]);
-        $user->assignRole('city_manager');
+        $user->assignRole('City Manager');
 
 
         $userId = User::where('email', '=', $data['email'])->value('id');

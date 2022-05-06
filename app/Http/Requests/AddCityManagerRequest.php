@@ -15,7 +15,7 @@ class AddCityManagerRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->user();
-        if (!$user->hasRole('city_manager')) {
+        if (!$user->hasAnyRole(['City Manager', 'Super Admin'])) {
             return false;
         }
         return true;

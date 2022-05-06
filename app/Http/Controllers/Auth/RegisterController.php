@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id' => ['required','exists:roles,id'],
+//            'role_id' => ['required','exists:roles,id'],
             'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16'],
             'gender' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'in:male,female'],
             'date_of_birth' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'date', 'before:today'],
@@ -87,7 +87,7 @@ class RegisterController extends Controller
                     'user_id'=>$user->id,
                     'national_id' => $data['national_id']
                 ]);
-                $user->assignRole('city_manager');
+                $user->assignRole('City Manager');
 
                 break;
             case 3:

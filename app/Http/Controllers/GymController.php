@@ -18,16 +18,16 @@ class GymController extends Controller
     public function showGyms(Request $request)
     {
         $user = auth()->user();
-        if (!$user->hasAnyRole(['city_manager', 'admin'])) {
+        if (!$user->hasAnyRole(['City Manager', 'Super Admin'])) {
             return view('errors.401');
-        } elseif ($user->hasRole('city_manager')) {
+        } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
             if (!$city) {
                 $gyms = [];
             } else {
                 $gyms = Gym::where('city_id', $city)->get();
             }
-        } elseif ($user->hasRole('admin')) {
+        } elseif ($user->hasRole('Super Admin')) {
             $gyms = Gym::all();
         }
         if ($request->ajax()) {
@@ -65,9 +65,9 @@ class GymController extends Controller
     public function showGymForm()
     {
         $user = auth()->user();
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('Super Admin')) {
             $cities = City::all();
-        } elseif ($user->hasRole('city_manager')) {
+        } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
             $cities = City::where('city_id', $city)->first();
         } else {
@@ -78,11 +78,11 @@ class GymController extends Controller
     public function createGymForm(StoreGymRequest $request)
     {
         $user = auth()->user();
-        if (!$user->hasAnyRole(['city_manager', 'admin'])) {
+        if (!$user->hasAnyRole(['City Manager', 'Super Admin'])) {
             return view('errors.401');
-        } elseif ($user->hasRole('admin')) {
+        } elseif ($user->hasRole('Super Admin')) {
             $cities = City::all();
-        } elseif ($user->hasRole('city_manager')) {
+        } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
             if (!$city) {
                 $cities = [];
@@ -123,9 +123,9 @@ class GymController extends Controller
     public function editGymForm($gymId)
     {
         $user = auth()->user();
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('Super Admin')) {
             $cities = City::all();
-        } elseif ($user->hasRole('city_manager')) {
+        } elseif ($user->hasRole('City Manager')) {
             $city = CityManager::where('user_id', $user->id)->first()->city_id;
             if (!$city) {
                 $cities = [];
@@ -168,7 +168,7 @@ class GymController extends Controller
     public function deleteGym($gymId)
     {
         $user = auth()->user();
-        if ($user->hasAnyRole(['city_manager', 'admin'])) {
+        if ($user->hasAnyRole(['City Manager', 'Super Admin'])) {
             $gym = Gym::find($gymId);
             $sessions=$gym->sessions;
             if($sessions){

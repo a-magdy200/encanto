@@ -24,7 +24,7 @@ class Gym extends Model
     }
     public function managers(): HasMany
     {
-        return $this->hasMany(GymManager::class);
+        return $this->hasMany(GymManager::class)->with('user');
     }
     public function sessions(): HasMany
     {

@@ -17,9 +17,9 @@ class TrainingSessionController extends Controller
     {
         $user = auth()->user();
         $cityId= $user->manager->city->id;
-        if ($user->hasRole('city_manager')) {
+        if ($user->hasRole('City Manager')) {
             $trainingSessions = DB::table('training_sessions')->join('gyms','gyms.id','gym_id')->join('cities','cities.id','city_id')->where('city_id',$cityId)->get();
-        }elseif($user->hasRole('admin')){
+        }elseif($user->hasRole('Super Admin')){
             $trainingSessions = TrainingSession::all();
 
         }

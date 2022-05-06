@@ -3,6 +3,6 @@
 @section('content')
     <div class="container-fluid">
         <h1 class="text-black-50">You are logged in!</h1>
-        <p>{{auth()->user()->role->name}}</p>
+        <p>{{auth()->user()->roleName}}</p>
     </div>
 @endsection
