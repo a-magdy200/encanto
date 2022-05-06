@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\User;
@@ -66,10 +67,10 @@ class ClientController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
             'avatar'=>$path,
 
         ]);
+        $user->assignRole('Client');
         Client::create([
          'date_of_birth'=> $data['date'],
          'gender' =>$data['gender'] ,
@@ -89,7 +90,7 @@ class ClientController extends Controller
             "client" => $client]);
     }
 
-    public function update($clientId,StoreClientRequest $request)
+    public function update($clientId,UpdateClientRequest $request)
     {
         $data = request()->all();
         if($request->file('avatar'))
@@ -101,9 +102,9 @@ class ClientController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => 4,
             'avatar'=>$path,
         ]);
+        $user->assignRole('Client');
         Client::where('id', $clientId)->update([
             'date_of_birth'=> $data['date'],
             'gender' =>$data['gender'] ,
