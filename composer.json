@@ -9,6 +9,7 @@
         "ext-gd": "*",
         "almasaeed2010/adminlte": "^3.2",
         "beyondcode/laravel-websockets": "^1.13",
+        "cybercog/laravel-ban": "^4.7",
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "infyomlabs/laravel-ui-adminlte": "^4.0",

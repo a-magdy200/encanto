@@ -57,6 +57,12 @@
                             data: 'city',
                             name: 'city'
                         },
+                        {
+                            data: 'is_approved',
+                            name: 'is_approved',
+                            orderable: false,
+                            searchable: false
+                        },
 
                         {
                             data: 'action',

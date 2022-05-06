@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public $timestamps = false;
-
     /**
      * Run the migrations.
      *
@@ -15,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gyms', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('city_id')->references('id')->on('cities');
-            $table->string('name');
-            $table->string('created_by');
-            $table->string('cover_image');
-            $table->timestamps();
+        Schema::table('gym_managers', function (Blueprint $table) {
+            $table->timestamp('banned_at')->nullable();
+
         });
     }
 
@@ -32,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gyms');
+        Schema::table('gym_managers', function (Blueprint $table) {
+            $table->dropColumn('banned_at');
+        });
     }
 };

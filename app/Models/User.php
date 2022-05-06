@@ -70,10 +70,7 @@ class User extends Authenticatable
         }
         return $this->hasOne(CityManager::class);
     }
-    public function gymManager(): HasOne
-    {
-        return $this->hasOne(GymManager::class);
-    }
+   
     public function client(): HasOne
     {
         return $this->hasOne(Client::class,'user_id');

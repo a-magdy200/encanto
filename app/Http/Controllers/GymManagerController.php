@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CityManager;
-use Database\Seeders\RoleSeeder;
 
 use App\Models\GymManager;
 use App\Models\User;
 use App\Models\Gym;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateGymManagerRequest;
-use Yajra\DataTables\DataTables;
-
 
 class GymManagerController extends Controller
 {
@@ -112,7 +107,7 @@ class GymManagerController extends Controller
             'gyms' => $gyms,
         ]);
     }
-    public function update(UpdateGymManagerRequest $request, $gymmanagerid)
+    public function update(UpdateGymManagerRequest $request , $gymmanagerid)
     {
         $data = request()->all();
         $path=Storage::putFile('avatars',$request->file('image'));
@@ -146,7 +141,7 @@ class GymManagerController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
 //            'role_id'=>'3',
             'avatar'=>$path,
         ]);
@@ -164,8 +159,13 @@ class GymManagerController extends Controller
     public function ban($id)
     {
         $gymmanager = GymManager::find($id);
+      //  dd($gymmanager->ban()->bannable_id);
         $gymmanager->is_banned=!$gymmanager->is_banned;
-       // dd($gymmanager->is_banned);
+       //if($gymmanager->ban()->bannable_id)
+      // $gymmanager->unban();
+      // else
+       $gymmanager->ban();
+       // dd($x);
        $gymmanager->update();
        return to_route('gymmanagers.index');
 
@@ -174,7 +174,6 @@ class GymManagerController extends Controller
     {
         $gymmanager = GymManager::find($id);
         $gymmanager->is_approved='1';
-       // dd($gymmanager->is_banned);
        $gymmanager->update();
        return to_route('gymmanagers.index');
 

@@ -1,20 +1,20 @@
 <?php
 
-    use App\Http\Controllers\AttendanceController;
-    use App\Http\Controllers\CityController;
-    use App\Http\Controllers\CityManagerController;
-    use App\Http\Controllers\ClientController;
-    use App\Http\Controllers\CoachController;
-    use App\Http\Controllers\GymController;
-    use App\Http\Controllers\GymManagerController;
-    use App\Http\Controllers\HomeController;
-    use App\Http\Controllers\OrderController;
-    use App\Http\Controllers\ProfileController;
-    use App\Http\Controllers\TrainingPackageController;
-    use App\Http\Controllers\TrainingSessionController;
-    use App\Http\Controllers\RevenueController;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CityManagerController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CoachController;
+use App\Http\Controllers\GymController;
+use App\Http\Controllers\GymManagerController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrainingPackageController;
+use App\Http\Controllers\TrainingSessionController;
+use App\Http\Controllers\RevenueController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'show'])->name('gymmanagers.show');
     Route::put('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'update'])->name('gymmanagers.update');
     Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store');
-    Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index');
+    Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index')->middleware('forbid-banned-user');
     Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
 
     Route::get('/revenues', [App\Http\Controllers\RevenueController::class, 'index'])->name('revenues.admin');

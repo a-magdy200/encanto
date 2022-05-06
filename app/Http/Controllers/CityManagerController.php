@@ -19,7 +19,7 @@ class CityManagerController extends Controller
     public function index(Request $request)
     {
 
-        $headings = ['id', 'name', 'city'];
+        $headings = ['id', 'name', 'city','is_approved'];
         $title = 'City Managers';
         if ($request->ajax()) {
             $cityManagers = CityManager::with('user', 'city')->get();
