@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Apis\AuthController;
+use App\Http\Controllers\Apis\ClientController;
 use App\Http\Controllers\Apis\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 
 
-Route::get('/profile', function () {
-    return view('layouts.app');
-})->middleware('verified');
+/////////////////////////////////////////////////////////////////////////////////
+Route::group(['prefix'=>'profile','middleware'=>['auth:sanctum','verified']],function(){
+    Route::get('/{id}',[ClientController::class,'index']);
+    Route::put('/{id}/edit',[ClientController::class,'edit']);
+
+
+});
+
