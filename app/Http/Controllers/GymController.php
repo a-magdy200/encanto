@@ -46,10 +46,10 @@ class GymController extends Controller
                     return $date;
                 })
 
-                ->rawColumns(['cover_image', 'City Name', 'Created_At', 'action'])
+                ->rawColumns(['cover_image', 'City Name', 'Created_At','created_by', 'action'])
                 ->make(true);
         }
-        $headings = ['Gym Name', 'Cover Image', 'City Name', 'Created_At'];
+        $headings = ['Gym Name', 'Cover Image', 'City Name', 'Created_At','created_by'];
         $title = "Gyms";
         return view('GymPages.showAllGyms', ["headings" => $headings, "title" => $title]);
     }

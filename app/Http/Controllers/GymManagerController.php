@@ -9,7 +9,8 @@ use App\Models\Gym;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Hash;
 class GymManagerController extends Controller
 {
     public function index()

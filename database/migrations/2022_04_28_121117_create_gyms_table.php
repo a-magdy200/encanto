@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('city_id')->references('id')->on('cities');
             $table->string('name');
+            $table->string('created_by');
             $table->string('cover_image');
             $table->timestamps();
         });

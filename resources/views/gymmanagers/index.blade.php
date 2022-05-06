@@ -20,8 +20,10 @@
     @section('content')
 
 
-    <x-table-component :actions="false" title="{{$title}}" :headings="$headings">
-        @foreach($items as $item)
+    <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
+     
+    @foreach($items as $item)
+  
         <tr>
 
             <td>{{$item->user->name}}</td>

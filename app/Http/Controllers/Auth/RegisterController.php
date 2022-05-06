@@ -60,7 +60,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required','exists:roles,id'],
-            'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16'],
+            'national_id' => [Rule::requiredIf(fn () => $data['role_id'] !== 1 && $data['role_id'] !== 5), 'integer', 'digits:16','unique:city_managers','unique:gym_managers'],
             'gender' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'in:male,female'],
             'date_of_birth' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'date', 'before:today'],
             'avatar' => [Rule::requiredIf(fn () => $data['role_id'] === 5), 'image'],
