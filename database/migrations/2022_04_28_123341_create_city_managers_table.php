@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('national_id')->unique();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('city_id')->nullable()->references('id')->on('cities');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

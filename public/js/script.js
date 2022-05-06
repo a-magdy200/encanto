@@ -21,26 +21,35 @@
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     })
-    $(".datatable").DataTable({
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "responsive": true,
-        "dom": 'Bfrtip',
-        "pageLength": 10,
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": false,
-        "autoWidth": false,
-    });
+    // $(".datatable").DataTable({
+    //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    //     "responsive": true,
+    //     "dom": 'Bfrtip',
+    //     "pageLength": 10,
+    //     "paging": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "ordering": true,
+    //     "info": false,
+    //     "autoWidth": false,
+    // });
     $('.delete-btn').click(function () {
         // Dynamically changes the form action path
         // Reads href attribute from the button
         // Assigns the href value to form action
-        const path = $(this).attr('href');
-        $("#delete-modal form").attr('action', path);
+        let target;
+        if ($(e.target).hasClass('delete-btn')) {
+            target = $(e.target);
+        } else if ($(e.target).parent().hasClass('delete-btn')) {
+            target = $(e.target).parent();
+        }
+        if (target) {
+            const path = target.attr('href');
+            console.log(path);
+            $("#delete-modal form").attr('action', path);
+        }
     });
-    $("#delete-modal form").submit(e  => {
+    $("#delete-modal form").on('submit',e  => {
         // Submits the form by ajax
         // prevents normal submission
         // in case of success, shows toast of success, and remove the row from html
@@ -75,5 +84,25 @@
         const fileName = this.files[0].name;
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
-    })
+    });
+
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('44fa6c6e3c8fd13e074f', {
+        cluster: 'eu'
+    });
+
+    const channel = pusher.subscribe('notifications-channel');
+    channel.bind_global(function({title}) {
+        Toast.fire({
+            icon: 'info',
+            title
+        });
+        const currentCount = parseInt($('.notifications-count').eq(0).text(), 10);
+        $(".notifications-count").text(currentCount + 1);
+        $('.dropdown-header').after("<div class=\"dropdown-divider\"></div>\n" +
+            "            <a href=\"#\" class=\"dropdown-item\">\n" +
+            "              <i class=\"fas fa-info mr-2\"></i>"+title+"\n" +
+            "            </a>")
+    });
 })(jQuery);

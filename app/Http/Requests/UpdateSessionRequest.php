@@ -38,6 +38,7 @@ class UpdateSessionRequest extends FormRequest
     {
         return [
            'day.required'=>'you should add session day',
+           'day.integer'=>'day should be integer',
            'starttime.required'=>'you should add start_time',
            'endtime.required'=>'you should add finish_time',
            'endtime.after'=>'finish_time must be greater than start_time',

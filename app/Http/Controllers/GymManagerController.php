@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateGymManagerRequest;
-use App\Models\CityManager;
+
+
+
 
 class GymManagerController extends Controller
 {
@@ -50,10 +52,9 @@ class GymManagerController extends Controller
     }
 
     public function show($gymmanagerid)
-    {        
+    {
         $gymmanager = GymManager::find($gymmanagerid);
-        dd($gymmanager->gym->city->id);
-        $user_id = $gymmanager->user_id;
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gym = Gym::where('id', $gymmanager->gym_id)->first();
@@ -69,7 +70,7 @@ class GymManagerController extends Controller
     public function edit($gymmanagerid)
     {
         $gymmanager = GymManager::find($gymmanagerid);
-        $user_id = $gymmanager->user_id;
+        $user_id=$gymmanager->user_id;
         $user = User::where('id', $user_id)->first();
         $gymmanager = GymManager::where('id', $gymmanagerid)->first();
         $gyms = Gym::all();
@@ -82,13 +83,13 @@ class GymManagerController extends Controller
     public function update(UpdateGymManagerRequest $request, $gymmanagerid)
     {
         $data = request()->all();
-        $path = Storage::putFile('avatars', $request->file('image'));
+        $path=Storage::putFile('avatars',$request->file('image'));
         $gym = Gym::where('name', $data['gym'])->first();
         User::where('id', $gymmanagerid)
             ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'avatar' => $path,
+                'avatar'=>$path,
             ]);
         GymManager::where('user_id', $gymmanagerid)
             ->update([
@@ -114,8 +115,8 @@ class GymManagerController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => '3',
-            'avatar' => $path,
+            'role_id'=>'3',
+            'avatar'=>$path,
         ]);
         $user->assignRole('gym_manager');
 
@@ -127,5 +128,23 @@ class GymManagerController extends Controller
 
         ]);
         return to_route('gymmanagers.index');
+    }
+    public function ban($id)
+    {
+        $gymmanager = GymManager::find($id);
+        $gymmanager->is_banned=!$gymmanager->is_banned;
+       // dd($gymmanager->is_banned);
+       $gymmanager->update();
+       return to_route('gymmanagers.index');
+
+    }
+    public function approve($id)
+    {
+        $gymmanager = GymManager::find($id);
+        $gymmanager->is_approved='1';
+       // dd($gymmanager->is_banned);
+       $gymmanager->update();
+       return to_route('gymmanagers.index');
+
     }
 }

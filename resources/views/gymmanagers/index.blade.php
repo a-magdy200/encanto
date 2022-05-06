@@ -31,9 +31,9 @@
 
             <td>
                 @if($item['is_banned'])
-                <a href="gummanagers/restore" class="btn btn-success ml-2">Unban<i class="fa fa-check"></i></a>
+                <a href="gymmanagers/{{$item->id}}/ban" class="btn btn-success ml-2"><i class="fa fa-check"></i></a>
                 @else
-                <a href="gummanagers/ban" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
+                <a href="gymmanagers/{{$item->id}}/ban" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
                 @endif
             </td>
             <td>{{$item->user->id}}</td>
@@ -44,6 +44,13 @@
                 <a href="gymmanagers/{{$item->id}}/edit" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
                 <a href="{{route('gymmanagers.destroy', ['gymmanagerid' => $item->id])}}" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-times"></i></a>
 
+            </td>
+            <td>
+                @if($gymManager['is_approved'])
+                <a href="gymmanagers/{{$item->id}}/approve" class="btn btn-success ml-2"><i class="fa fa-check"></i></a>
+                @else
+                <a href="gymmanagers/{{$item->id}}/approve" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>
+                @endif
             </td>
         </tr>
         @endforeach

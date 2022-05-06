@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('is_banned')->default(false);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('gym_id')->nullable()->references('id')->on('gyms');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

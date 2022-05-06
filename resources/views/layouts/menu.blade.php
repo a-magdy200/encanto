@@ -43,22 +43,8 @@
         <p>City Managers</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Coaches
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Attendance
-        </p>
-    </a>
-</li>
+
+
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-table"></i>
@@ -69,21 +55,24 @@
 </li>
 <li class="nav-item">
     <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-street"></i>
+                <i class="nav-icon fas fa-table"></i>
+
         <p>Attendance</p>
     </a>
 </li>
 
 <li class="nav-item">
     <a href="{{ route('coaches.index') }}" class="nav-link {{ Request::is('coaches') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-street"></i>
+                <i class="nav-icon fas fa-table"></i>
+
         <p>Coaches</p>
     </a>
 </li>
 
 <li class="nav-item">
     <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-street"></i>
+        <i class="nav-icon fas fa-table"></i>
+
         <p>Clients</p>
     </a>
 </li>
@@ -112,5 +101,13 @@
         <i class="nav-icon fas fa-street"></i>
         <p>profile info</p>
     </a>
-</li>
+</li><li class="nav-item">
+    <a href="{{ route('revenues.admin') }}" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>
+        Revenues
+        </p>
+    </a>
+
+
 

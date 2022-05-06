@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdatePackageRequest extends FormRequest
+class StoreCoachRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,15 +20,16 @@ class UpdatePackageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
-            'package_name' => ['required','min:3'],
-            'number_of_sessions' => ['required','integer'],
-            'gym_id' => ['required','exists:gyms,id'],
-            'price' =>['required','integer'],
+            'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
+            'email' =>['required','email',Rule::unique('users')->ignore($this->coach)],
+            'password'=>['required','string','min:8'],
+            'avatar'=>['image','mimes:jpg,png'],
+
         ];
     }
 }

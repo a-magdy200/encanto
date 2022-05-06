@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdatePackageRequest extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +24,11 @@ class UpdatePackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'package_name' => ['required','min:3'],
-            'number_of_sessions' => ['required','integer'],
-            'gym_id' => ['required','exists:gyms,id'],
-            'price' =>['required','integer'],
+            'user_id'=>['required','exists:users,id'],
+            'package_id'=>['required','exists:training_packages,id'],
+            'number_of_sessions'=>['required'],
+            'order_price'=>['required']
+
         ];
     }
 }

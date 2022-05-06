@@ -10,25 +10,42 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
-use Illuminate\Support\Facades\DB;
+
 class TrainingSessionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         $cityId= $user->manager->city->id;
         if ($user->hasRole('city_manager')) {
             $trainingSessions = DB::table('training_sessions')->join('gyms','gyms.id','gym_id')->join('cities','cities.id','city_id')->where('city_id',$cityId)->get();
-            dd($trainingSessions);
         }elseif($user->hasRole('admin')){
             $trainingSessions = TrainingSession::all();
-            foreach($trainingSessions as $trainingSession){
-                dd($trainingSession->gym_id);
-            }
-          
+
+        }
+        if ($request->ajax()) {
+            return DataTables::of($trainingSessions)
+                ->addIndexColumn()
+                ->addColumn('Gym Name', function ($row) {
+                    $gymName=$row->gym->name;
+                    return $gymName;
+                })
+
+                ->addColumn('action', function ($row) {
+                    $show=route('trainingSessions.show',['id'=>$row->id]);
+                    $edit=route('trainingSessions.edit',['id'=>$row->id]);
+                    $delete=route('trainingSessions.delete',['id'=>$row->id]);
+
+                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+                    return $btn;
+                })
+                ->rawColumns(['Gym Name','action'])
+                ->make(true);
         }
         $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
-        $Title = 'TrainingSessions';
+        $Title = 'Training Sessions';
         return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);
     }
     public function create()
@@ -67,7 +84,7 @@ class TrainingSessionController extends Controller
                 'users' => $request->get('users'),
 
         ]);
-                
+
         }
     }
     public function show($id)
@@ -94,7 +111,7 @@ class TrainingSessionController extends Controller
             $Session->finish_time = $request->get('finishtime');
             $Session->update();
         } else {
-            return redirect()->back()->with([
+            return redirect()->back()->withErrors([
                 'error' => 'invalid session time',
                 'day' => $request->get('day'),
                 'start_time' => $request->get('starttime'),

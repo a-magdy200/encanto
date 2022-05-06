@@ -19,25 +19,28 @@
         @endsection
         @section('content')
             <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
-                @foreach($coaches as $coach)
-                    <tr>
 
-
-                        <td>{{$coach->name}}</td>
-
-                        <td>{{$coach->email}}</td>
-
-
-                        <td class="d-flex align-items-center">
-                            <a href="{{route('coaches.show',['coach'=>$coach->id])}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                            <a href="{{route('coaches.edit',['coach'=>$coach->id])}}" class="btn btn-warning mx-2"><i class="fa fa-edit"></i></a>
-                            <a href="{{route('coaches.delete',['coach'=>$coach->id])}}" class="btn btn-danger delete-btn" data-toggle="modal"
-                               data-target="#delete-modal"><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
             </x-table-component>
             <div class="text-center">
                 <a href="{{route('coaches.create')}}" class="mt-4 btn btn-primary">add coach</a>
             </div>
 @endsection
+        @push('page_scripts')
+        <script type="text/javascript">
+            $(function () {
+
+                var table = $('.datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('coaches.index') }}",
+                    columns: [
+
+                        {data: 'name', name: 'name'},
+                        {data: 'email', name: 'email'},
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ]
+                });
+
+            });
+        </script>
+    @endpush
