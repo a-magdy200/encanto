@@ -41,7 +41,6 @@ class GymController extends Controller
                 ->addColumn('cover_image', function ($row) {
                     $image = $row->cover_image;
                     $imageUrl = asset($image);
-                    // $cover_image='<img src=\"" + $imageUrl + "\" height=\"100px\" width=\"100px\" alt=\"gym_cover_image\"/>';
                     $cover_image = '<img src=' . $imageUrl . ' style="width:100px;height:100px;" alt="gym_cover_image"/>';
                     return $cover_image;
                 })
