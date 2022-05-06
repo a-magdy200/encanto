@@ -25,7 +25,7 @@ class UpdateCityManagerRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {  $email = CityManager::find($this->citymanager)->user->email;
+    {  $email = User::find($this->citymanager)->email;
         $userId = User::find((int) request()->segment(3));
 
         return [

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Apis;
 
-use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreClientRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,17 +24,14 @@ class StoreClientRequest extends FormRequest
      */
     public function rules()
     {
-//
-
         return [
-            'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
-            'email' =>['required','email',Rule::unique('users')],
-            'password'=>['required','string','min:8'],
-            'gender'=>['required'],
-            'date'=>['required','before:today'],
-            'avatar'=>['image','mimes:jpg,png'],
-
+            'name' => 'required|string|min:3|max:50',
+            'email' => ['required','string','email',Rule::unique('users', 'email')->ignore($this->user)
+            ],
+            'password'=>'required|min:6|string|confirmed',
+            'avatar'=>'required|image|mimes:png,jpg',
+            'date_of_birth'=>'required|date',
+            'gender'=>'required'
         ];
-
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Apis;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderPackageRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class OrderPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'=>['required','exists:users,id'],
-            'package_id'=>['required','exists:training_packages,id'],
-            'gym_id'=>['required','exists:gyms,id'],
+            'email' => 'required|email',
+            'password'=>'required|string',
         ];
     }
 }

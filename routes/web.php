@@ -161,5 +161,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/trainingSessions/{id}', [TrainingSessionController::class, 'show'])->name('trainingSessions.show');
     Route::get('/trainingSessions/{id}/edit', [TrainingSessionController::class, 'edit'])->name('trainingSessions.edit');
     Route::delete('/trainingSessions/{id}/delete', [TrainingSessionController::class, 'delete'])->name('trainingSessions.delete');
+    Route::get('/ajax', [TrainingSessionController::class, 'ajax'])->name('trainingSessions.ajax');
 });
 Auth::routes();

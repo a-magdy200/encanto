@@ -37,8 +37,7 @@ class RevenueController extends Controller
         /* City Manager */
         elseif ($user->hasRole('City Manager')) {
 
-            //$cityId = auth()->user()->manager->city->id;
-            $cityId=User::with('manager')->find($user->id)->manager->city->id;
+            $cityId = auth()->user()->manager->city->id;
             $cityOrders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get();
 

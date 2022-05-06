@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateGymRequest;
 use App\Models\City;
 use App\Models\CityManager;
 use App\Models\Gym;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 //use DataTables;
 use Illuminate\Http\Request;
@@ -42,7 +43,6 @@ class GymController extends Controller
                 ->addColumn('cover_image', function ($row) {
                     $image = $row->cover_image;
                     $imageUrl = asset($image);
-                    // $cover_image='<img src=\"" + $imageUrl + "\" height=\"100px\" width=\"100px\" alt=\"gym_cover_image\"/>';
                     $cover_image = '<img src=' . $imageUrl . ' style="width:100px;height:100px;" alt="gym_cover_image"/>';
                     return $cover_image;
                 })
@@ -110,7 +110,8 @@ class GymController extends Controller
             $result = Gym::create([
                 'name' => $gymName,
                 'cover_image' => 'storage/GymImages/' . $image,
-                'city_id' => $request->input('gym_city')
+                'city_id' => $request->input('gym_city'),
+                'created_by'=>Auth::User()->id;
             ]);
             if ($result) {
                 return to_route('show.AllGyms');

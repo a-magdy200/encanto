@@ -10,43 +10,52 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Models\User;
 use App\Models\Gym;
+use DataTables;
+use Illuminate\Support\Facades\DB;
+
+//use Yajra\DataTables\DataTables;
 
 class TrainingSessionController extends Controller
 {
-    public function index(Request $request)
+    public function ajax(Request $request)
     {
         $user = auth()->user();
-        $cityId= $user->manager->city->id;
-        if ($user->hasRole('City Manager')) {
-            $trainingSessions = DB::table('training_sessions')->join('gyms','gyms.id','gym_id')->join('cities','cities.id','city_id')->where('city_id',$cityId)->get();
-        }elseif($user->hasRole('Super Admin')){
+        if ($user->hasRole('city_manager')) {
+            $cityId = $user->manager->city_id;
+            $trainingSessionsid = DB::table('training_sessions')->select('training_sessions.id')->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get()->pluck('id')->toArray();
+            $trainingSessions = TrainingSession::whereIn('id', $trainingSessionsid);
+        } elseif ($user->hasRole('admin')) {
             $trainingSessions = TrainingSession::all();
-
+        } elseif ($user->hasRole('gym_manager')) {
+            $gym_id = $user->manager->gym_id;
+            $trainingSessions = TrainingSession::where('gym_id', '=', $gym_id)->get();
         }
-        if ($request->ajax()) {
-            return DataTables::of($trainingSessions)
-                ->addIndexColumn()
-                ->addColumn('Gym Name', function ($row) {
-                    $gymName=$row->gym->name;
-                    return $gymName;
-                })
+        return DataTables::of($trainingSessions)
+            ->addIndexColumn()
+            ->addColumn('Gym Name', function ($row) {
+                $gymName = $row->gym->name;
+                return $gymName;
+            })
 
-                ->addColumn('action', function ($row) {
-                    $show=route('trainingSessions.show',['id'=>$row->id]);
-                    $edit=route('trainingSessions.edit',['id'=>$row->id]);
-                    $delete=route('trainingSessions.delete',['id'=>$row->id]);
+            ->addColumn('action', function ($row) {
+                $show = route('trainingSessions.show', ['id' => $row->id]);
+                $edit = route('trainingSessions.edit', ['id' => $row->id]);
+                $delete = route('trainingSessions.delete', ['id' => $row->id]);
 
-                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+                $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
                     <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
                     <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
-                    return $btn;
-                })
-                ->rawColumns(['Gym Name','action'])
-                ->make(true);
-        }
+                return $btn;
+            })
+            ->rawColumns(['Gym Name', 'action'])
+            ->make(true);
+    }
+
+    public function index()
+    {
         $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
         $Title = 'Training Sessions';
-        return view('trainingSessions.index')->with(['items' => $trainingSessions, 'title' => $Title, 'headings' => $Headings]);
+        return view('trainingSessions.index')->with(['title' => $Title, 'headings' => $Headings]);
     }
     public function create()
     {
@@ -58,11 +67,17 @@ class TrainingSessionController extends Controller
     }
     public function store(StoreSessionRequest $request)
     {
+        if (auth()->user()->hasAnyRole(['admin', 'city_manager'])) {
+            $gymId = $request->get('gymid');
+        } elseif (auth()->user()->hasRole('gym_manager')) {
+            $gymId = auth()->user()->manager->gym_id;
+        }
         $findSessions = TrainingSession::where('day', '=', $request->get('day'))
-            ->where('gym_id', '=', $request->get('gymid'))
+            ->where('gym_id', '=', $gymId)
             ->whereBetween('start_time', [$request->get('starttime'), $request->get('endtime')])
             ->orWhereBetween('finish_time', [$request->get('starttime'), $request->get('endtime')])
             ->count();
+
         if ($findSessions == 0) {
             $session = TrainingSession::create([
                 'name' => $request->get('SessionName'),
@@ -80,11 +95,10 @@ class TrainingSessionController extends Controller
                 'day' => $request->get('day'),
                 'start_time' => $request->get('starttime'),
                 'finish_time' => $request->get('endtime'),
-                'gym_id' => $request->get('gymid'),
+                'gym_id' =>  $gymId,
                 'users' => $request->get('users'),
 
-        ]);
-
+            ]);
         }
     }
     public function show($id)

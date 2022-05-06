@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab644c21a5e4739cca866dac9c2c48b8",
+    "content-hash": "a88544bc20c79ddb96d46ddba7aea62e",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -4503,16 +4503,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.3",
+            "version": "v0.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573"
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/6833626ee48ef9bcc8aca8f9f166760441c12573",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/05c544b339b112226ad14803e1e5b09a61957454",
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454",
                 "shasum": ""
             },
             "require": {
@@ -4573,9 +4573,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.3"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.4"
             },
-            "time": "2022-05-05T02:19:43+00:00"
+            "time": "2022-05-06T12:49:14+00:00"
         },
         {
             "name": "pusher/pusher-php-server",
@@ -5768,16 +5768,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.5.2",
+            "version": "5.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "eb838cd2c539d1c97f8c997e67479cb68c2d0e36"
+                "reference": "4e3ad0aed6e3a8a4b5df9424aa0a721902bc7841"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/eb838cd2c539d1c97f8c997e67479cb68c2d0e36",
-                "reference": "eb838cd2c539d1c97f8c997e67479cb68c2d0e36",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/4e3ad0aed6e3a8a4b5df9424aa0a721902bc7841",
+                "reference": "4e3ad0aed6e3a8a4b5df9424aa0a721902bc7841",
                 "shasum": ""
             },
             "require": {
@@ -5838,7 +5838,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.5.2"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.3"
             },
             "funding": [
                 {
@@ -5846,20 +5846,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-09T10:21:20+00:00"
+            "time": "2022-05-05T21:50:47+00:00"
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.127.0",
+            "version": "v7.128.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "c6416c9953cfafd9a2785fb0f8aa11c44ab9f411"
+                "reference": "c704949c49b72985c76cc61063aa26fefbd2724e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c6416c9953cfafd9a2785fb0f8aa11c44ab9f411",
-                "reference": "c6416c9953cfafd9a2785fb0f8aa11c44ab9f411",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c704949c49b72985c76cc61063aa26fefbd2724e",
+                "reference": "c704949c49b72985c76cc61063aa26fefbd2724e",
                 "shasum": ""
             },
             "require": {
@@ -5904,9 +5904,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.127.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v7.128.0"
             },
-            "time": "2022-05-05T13:26:46+00:00"
+            "time": "2022-05-05T17:18:02+00:00"
         },
         {
             "name": "symfony/console",
@@ -11472,16 +11472,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "924d1ae878874ad0bb49f63b69a9af759a34ee78"
+                "reference": "51e5daaa7e43c154fe57f1ddfbba862f9fe57646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/924d1ae878874ad0bb49f63b69a9af759a34ee78",
-                "reference": "924d1ae878874ad0bb49f63b69a9af759a34ee78",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/51e5daaa7e43c154fe57f1ddfbba862f9fe57646",
+                "reference": "51e5daaa7e43c154fe57f1ddfbba862f9fe57646",
                 "shasum": ""
             },
             "require": {
@@ -11558,7 +11558,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-14T18:04:51+00:00"
+            "time": "2022-05-05T15:53:24+00:00"
         },
         {
             "name": "symfony/debug",
@@ -11689,5 +11689,5 @@
         "ext-gd": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GymManager;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
@@ -42,24 +41,17 @@ class CityManagerController extends Controller
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
                     })
                     ->addColumn('city', function ($row) {
-                        if($row->city){
-                            return $row->city->name;
-                        }else{
-                            $row->city="";
-                        }
-
-                    })
-                    ->addColumn('name', function ($row) {
-                        return $row->user->name;
+                        $city = $row->manager->city ? $row->manager->city->name : 'Not Found';
+                        return $city;
                     })
                     ->rawColumns(['name', 'city', 'action'])
                     ->make(true);
             }
-            return view('citymanagers.index', [
-                'title' => $title,
-                'headings' => $headings
-            ]);
         }
+        return view('citymanagers.index', [
+            'title' => $title,
+            'headings' => $headings
+        ]);
     }
     public function show($managerId)
     {
@@ -104,9 +96,8 @@ class CityManagerController extends Controller
                 'password' => Hash::make($data['new_password']),
                 'avatar' => $avatar_name,
             ]);
-            //dd($data);
-            CityManager::where('user_id',$managerId)->update([
-                 'city_id' => $data['city'],
+            CityManager::where('user_id', $managerId)->update([
+               'city_id' => $data['city'],
             ]);
             return redirect()->route('citymanagers.index');
         }

@@ -6,7 +6,7 @@ use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,17 +25,15 @@ class StoreClientRequest extends FormRequest
      */
     public function rules()
     {
-//
-
+        $email = Client::find($this->client)->user->email;
         return [
             'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
-            'email' =>['required','email',Rule::unique('users')],
+            'email' =>['required','email',Rule::unique('users')->ignore( $email, 'email')],
             'password'=>['required','string','min:8'],
             'gender'=>['required'],
             'date'=>['required','before:today'],
             'avatar'=>['image','mimes:jpg,png'],
 
         ];
-
     }
 }

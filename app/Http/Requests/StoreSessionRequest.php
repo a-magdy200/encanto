@@ -14,7 +14,7 @@ class StoreSessionRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->user();
-        if (!$user->hasAnyRole(['City Manager','Super Admin'])) {
+        if (!$user->hasAnyRole(['city_manager','admin'])) {
             return false;
         }else{
             return true;
