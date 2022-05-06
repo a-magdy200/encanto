@@ -60,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
         // TODO:: complete relation
         return $this->belongsTo(Gym::class);
     }
+
     public function manager()
     {
         if ($this->hasAnyRole('Gym Manager')) {

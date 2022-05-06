@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateGymManagerRequest;
 use App\Models\CityManager;
 use App\Models\GymManager;
 use App\Models\User;

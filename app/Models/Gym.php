@@ -17,6 +17,7 @@ class Gym extends Model
         'name',
         'cover_image',
         'city_id',
+        'created_by',
     ];
     public function city(): BelongsTo
     {
