@@ -20,7 +20,7 @@ class CityManagerController extends Controller
     public function index(Request $request)
     {
 
-        $headings = ['id', 'name', 'city'];
+        $headings = ['id', 'name', 'city','is_approved'];
         $title = 'City Managers';
         if ($request->ajax()) {
             $roleId = Role::where('name', '=', 'city_manager')->value('id');

@@ -29,4 +29,14 @@ class UpdateGymRequest extends FormRequest
             'gym_city'=>['required','exists:cities,id']
         ];
     }
+    public function messages()
+    {
+        return [
+            'gymName.required'=>'Gym name field is required',
+            'gymName.min'=>'Gym name should be at least 3 character',
+            'gymCoverImg.mimes'=>'The image must be jpg or png file only',
+            'gym_city.required'=>'gym city is required',
+            'gym_city.exists'=>'gym city is invalid',
+        ];
+    }
 }

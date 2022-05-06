@@ -19,6 +19,7 @@ class GymManager extends Authenticatable implements BannableContract
         'is_banned',
         'user_id',
         'gym_id',
+        'banned_at',
         
     ];
     public function gym(): BelongsTo

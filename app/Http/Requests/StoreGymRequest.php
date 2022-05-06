@@ -35,7 +35,9 @@ class StoreGymRequest extends FormRequest
         return [
             'gymName.required'=>'Gym name field is required',
             'gymCoverImg.required'=>'Image is required',
-            'gymCoverImg.mimes'=>'The image must be jpg or png file only'
+            'gymCoverImg.mimes'=>'The image must be jpg or png file only',
+            'gym_city.required'=>'gym city is required',
+            'gym_city.exists'=>'gym city is invalid',
         ];
     }
 }

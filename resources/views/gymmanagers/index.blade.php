@@ -20,7 +20,7 @@
     @section('content')
 
 
-    <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
+    <x-table-component :actions="false" title="{{$title}}" :headings="$headings">
         @foreach($items as $item)
         <tr>
 
@@ -46,7 +46,7 @@
 
             </td>
             <td>
-                @if($gymManager['is_approved'])
+                @if($item['is_approved'])
                 <a href="gymmanagers/{{$item->id}}/approve" class="btn btn-success ml-2"><i class="fa fa-check"></i></a>
                 @else
                 <a href="gymmanagers/{{$item->id}}/approve" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></a>

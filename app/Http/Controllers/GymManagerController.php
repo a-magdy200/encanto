@@ -108,9 +108,13 @@ class GymManagerController extends Controller
     public function ban($id)
     {
         $gymmanager = GymManager::find($id);
+      //  dd($gymmanager->ban()->bannable_id);
         $gymmanager->is_banned=!$gymmanager->is_banned;
-        $gymmanager->ban();
-       // dd($gymmanager->is_banned);
+       //if($gymmanager->ban()->bannable_id)
+      // $gymmanager->unban();
+      // else
+       $gymmanager->ban();
+       // dd($x);
        $gymmanager->update();
        return to_route('gymmanagers.index');
 
