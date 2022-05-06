@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\CityManager;
 use App\Models\GymManager;
 use App\Models\User;
 use App\Models\Gym;
@@ -10,6 +11,7 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class GymManagerController extends Controller
 {

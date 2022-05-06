@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\StoreClientRequest;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\User;

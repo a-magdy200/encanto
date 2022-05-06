@@ -114,7 +114,7 @@
     <div class="content-wrapper">
         @yield('content-header')
         <section class="content">
-      
+
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}

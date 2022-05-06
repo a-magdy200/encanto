@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable ,HasRoles;
 
@@ -65,12 +65,12 @@ class User extends Authenticatable
     }
     public function manager()
     {
-        if ($this->role_id === 3) {
-            return $this->hasOne(GymManager::class);
+        if ($this->hasAnyRole('Gym Manager')) {
+            return $this->hasOne(GymManager::class)->with('gym');
         }
-        return $this->hasOne(CityManager::class);
+        return $this->hasOne(CityManager::class)->with('city');
     }
-   
+
     public function client(): HasOne
     {
         return $this->hasOne(Client::class,'user_id');

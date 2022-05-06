@@ -19,6 +19,29 @@
             </div><!-- /.container-fluid -->
             @endsection
             @section('content')
+<<<<<<< HEAD
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
+                <div class="card card-primary mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="POST" action="{{ route('citymanagers.update', ['citymanager' => $user['id']]) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
+                        <div class="card-body">
+                    
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">National Id</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="national_id"
+                                    value="{{ $user->manager->national_id }}" readonly>
+                            </div>
+=======
             @if (Session::has('error'))
             <div class="alert alert-danger">
                 {{ Session::get('error') }}
@@ -49,6 +72,7 @@
                             <label for="exampleInputEmail1">National Id</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" name="national_id" value="{{ $user->manager->national_id }}" readonly>
                         </div>
+>>>>>>> a600121e90b6cff86b409241d92a3e1dbc0901d5
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
@@ -87,10 +111,28 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
 
+<<<<<<< HEAD
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1" class="form-label">City</label>
+                                <select class="form-control @error('city') is-invalid @enderror" name='city'>
+                                    @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('city')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <div class="form-group">
+                                <label for="exampleInputFile">Avatar</label>
+                                <input type="file" id="avatar" name="avatar"
+                                    class="form-control  @error('avatar') is-invalid @enderror">
+=======
 
                         <div class="form-group">
                             <label for="exampleInputFile">Avatar</label>
                             <input type="file" id="avatar" name="avatar" class="form-control  @error('avatar') is-invalid @enderror">
+>>>>>>> a600121e90b6cff86b409241d92a3e1dbc0901d5
 
                         </div>
                         @error('avatar')
