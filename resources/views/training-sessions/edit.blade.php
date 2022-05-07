@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Update Training Session
+@endsection
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
