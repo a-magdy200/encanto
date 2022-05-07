@@ -32,11 +32,11 @@ class StoreSessionRequest extends FormRequest
 
             'SessionName'=>['required','min:5','string'],
             'day'=>['required'],
-            'starttime'=>['required'],
-            'endtime'=>'required|after:starttime',
+            'start_time'=>['required'],
+            'finish_time'=>'required|after:start_time',
             'users' => 'required|array',
             'users.*' => 'exists:users,id',
-            'gymid'=>['required','exists:gyms,id'],
+            'gym_id'=>['required','exists:gyms,id'],
 
         ];
     }
@@ -46,9 +46,9 @@ class StoreSessionRequest extends FormRequest
            'SessionName.required'=>'you should add session name',
            'SessionNme.min'=>'session name should not be less than 5 char',
            'day.required'=>'you should add session day',
-           'starttime.required'=>'you should add start_time',
-           'endtime.required'=>'you should add finish_time',
-           'endtime.after'=>'finish_time must be greater than start_time',
+           'start_time.required'=>'you should add start_time',
+           'finish_time.required'=>'you should add finish_time',
+           'finish_time.after'=>'finish_time must be greater than start_time',
 
 
         ];

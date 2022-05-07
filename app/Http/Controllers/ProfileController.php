@@ -41,7 +41,7 @@ class ProfileController extends Controller
 
         } else if ($user->hasRole('Gym Manager')) {
 //            $gymmanager = GymManager::where('user_id','=',$userid)->first();
-//            $gymmanager->gym_id=$request->get('gymid');
+//            $gymmanager->gym_id=$request->get('gym_id');
 //            $gymmanager->national_id=$request->get('national_id');
 //            $gymmanager->update();
         } else if ($user->hasRole('Client')) {

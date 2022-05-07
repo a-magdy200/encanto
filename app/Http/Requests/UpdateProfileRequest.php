@@ -31,7 +31,7 @@ class UpdateProfileRequest extends FormRequest
             'national_id' => [Rule::requiredIf(fn () => Auth::user()->role_id === 2),'min:16' ],
             'cityid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 2),'exists:cities,id'],
             'national_id' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'min:16' ],
-            'gymid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'exists:gyms,id'],
+            'gym_id' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'exists:gyms,id'],
             'date_of_birth' => [Rule::requiredIf(fn () => Auth::user()->role_id === 5), 'date', 'before:today'],
 
 

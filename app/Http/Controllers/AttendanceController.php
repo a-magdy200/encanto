@@ -110,7 +110,7 @@
 
             return view('attendance.create', [
                 "clients" => $clients,
-                "trainingSessions" => $trainingSessions
+                "training-sessions" => $trainingSessions
             ]);
         }
 
@@ -123,7 +123,7 @@
 
             return view('attendance.edit', [
                 "clients" => $clients,
-                "trainingSessions" => $trainingSessions,
+                "training-sessions" => $trainingSessions,
                 "attendance" => $attendance
             ]);
         }

@@ -19,43 +19,35 @@ class RevenueController extends Controller
         $user = auth()->user();
         if ($user->hasRole('Super Admin')) {
             //$roleId = Role::where('name', '=', 'client')->value('id');
-            $users=User::role('Client')->get();
+            $clients=User::role('Client')->get();
 //            $users = User::where('role_id', '=', $roleId)->get();
             $orders = Order::all();
-            $totalRevenues = Order::all()->sum('price');
+            $revenues = Order::all()->sum('price');
 
-            $allUsersCount = $users->count();
-            $allOrdersCount = $orders->count();
+            $clientsCount = $clients->count();
+            $ordersCount = $orders->count();
 
-            return view('revenues.index', [
-                'allUsersCount' => $allUsersCount,
-                'allOrdersCount' => $allOrdersCount,
-                'totalRevenues' => $totalRevenues,
-            ]);
+
         }
 
         /* City Manager */
         elseif ($user->hasRole('City Manager')) {
-
             $cityId = auth()->user()->manager->city->id;
-            $cityOrders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
+
+            $orders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->get();
 
-            $cityClients = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
+            $clients = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->select('client_id')->distinct()->get();
 
-            $cityRevenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
+            $revenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->join('cities', 'cities.id', 'city_id')->where('city_id', $cityId)->sum('orders.price');
 
 
-            $cityOrdersCount = $cityOrders->count();
-            $cityClientsCount = $cityClients->count();
+            $ordersCount = $orders->count();
+            $clientsCount = $clients->count();
 
-            return view('revenues.index', [
-                'cityOrdersCount' => $cityOrdersCount,
-                'cityClientsCount' => $cityClientsCount,
-                'cityRevenues' => $cityRevenues,
-            ]);
+
         }
 
         /* Gym Manager */
@@ -63,28 +55,27 @@ class RevenueController extends Controller
         {
             $gymId = auth()->user()->gymManager->gym->id;
 
-            $gymOrders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
-            ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->get();
+            $orders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
+                ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->get();
 
-            $gymClients = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
-            ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->select('client_id')->distinct()->get();
+            $clients = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
+                ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->select('client_id')->distinct()->get();
 
-            $gymRevenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
-            ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->sum('orders.price');
+            $revenues = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')->select('client_id')
+                ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->sum('orders.price');
 
 
-            $gymOrdersCount = $gymOrders->count();
-            $gymClientsCount = $gymClients->count();
+            $ordersCount = $orders->count();
+            $clientsCount = $clients->count();
 
-            return view('revenues.index', [
-                'gymOrdersCount' => $gymOrdersCount,
-                'gymClientsCount' => $gymClientsCount,
-                'gymRevenues' => $gymRevenues,
-            ]);
 
 
         }
-
+        return view('revenues.index', [
+            'clientsCount' => $clientsCount,
+            'ordersCount' => $ordersCount,
+            'revenues' => $revenues,
+        ]);
 
     }
 }

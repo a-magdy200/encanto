@@ -132,13 +132,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/packages/{package}', [TrainingPackageController::class, 'show'])->name('packages.show');
 
 
-    Route::get('/trainingSessions', [TrainingSessionController::class, 'index'])->name('trainingSessions.index');
-    Route::get('/trainingSessions/create', [TrainingSessionController::class, 'create'])->name('trainingSessions.create');
-    Route::post('/trainingSessions', [TrainingSessionController::class, 'store'])->name('trainingSessions.store');
-    Route::put('/trainingSessions/update/{id}', [TrainingSessionController::class, 'update'])->name('trainingSessions.update');
-    Route::get('/trainingSessions/{id}', [TrainingSessionController::class, 'show'])->name('trainingSessions.show');
-    Route::get('/trainingSessions/{id}/edit', [TrainingSessionController::class, 'edit'])->name('trainingSessions.edit');
-    Route::delete('/trainingSessions/{id}/delete', [TrainingSessionController::class, 'delete'])->name('trainingSessions.delete');
-    Route::get('/ajax', [TrainingSessionController::class, 'ajax'])->name('trainingSessions.ajax');
+    Route::get('/training-sessions', [TrainingSessionController::class, 'index'])->name('training-sessions.index');
+    Route::get('/training-sessions/create', [TrainingSessionController::class, 'create'])->name('training-sessions.create');
+    Route::post('/training-sessions', [TrainingSessionController::class, 'store'])->name('training-sessions.store');
+    Route::put('/training-sessions/update/{trainingSession}', [TrainingSessionController::class, 'update'])->name('training-sessions.update');
+    Route::get('/training-sessions/{trainingSession}', [TrainingSessionController::class, 'show'])->name('training-sessions.show');
+    Route::get('/training-sessions/{trainingSession}/edit', [TrainingSessionController::class, 'edit'])->name('training-sessions.edit');
+    Route::delete('/training-sessions/{trainingSession}', [TrainingSessionController::class, 'delete'])->name('training-sessions.delete');
+    Route::get('/ajax', [TrainingSessionController::class, 'ajax'])->name('training-sessions.ajax');
 });
 Auth::routes();

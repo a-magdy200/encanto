@@ -72,7 +72,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('trainingSessions.index') }}" class="nav-link {{ Request::is('trainingSessions') ? 'active' : '' }}">
+    <a href="{{ route('training-sessions.index') }}" class="nav-link {{ Request::is('training-sessions') ? 'active' : '' }}">
         <i class="nav-icon fas fa-list"></i>
         <p>Training Sessions</p>
     </a>

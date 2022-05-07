@@ -7,6 +7,7 @@
     use App\Http\Requests\UpdateCoachRequest;
     use App\Models\User;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\Storage;
     use Yajra\DataTables\DataTables;
 
@@ -50,7 +51,7 @@
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => $data['password'],
+                'password' => Hash::make($data['password']),
                 'avatar' => $path,
             ]);
             $user->assignRole('Coach');
@@ -83,10 +84,6 @@
             if ($request->file('avatar')) {
                 $path = Storage::putFile('public/avatars/coaches', $request->file('avatar'));
                 $user->avatar = $path;
-                $user->save();
-            }
-            if($request->has('password') && strlen($request->get('password'))> 0) {
-                $user->password = $data['password'];
                 $user->save();
             }
             session()->flash("success", "Coach information has been updated successfully");

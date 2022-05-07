@@ -30,8 +30,8 @@ class UpdateSessionRequest extends FormRequest
         return [
 
             'day'=>['required'],
-            'starttime'=>['required'],
-            'endtime'=>'required|after:starttime',
+            'start_time'=>['required'],
+            'finish_time'=>'required|after:start_time',
         ];
     }
     public function messages()
@@ -39,9 +39,9 @@ class UpdateSessionRequest extends FormRequest
         return [
            'day.required'=>'you should add session day',
            'day.integer'=>'day should be integer',
-           'starttime.required'=>'you should add start_time',
-           'endtime.required'=>'you should add finish_time',
-           'endtime.after'=>'finish_time must be greater than start_time',
+           'start_time.required'=>'you should add start_time',
+           'finish_time.required'=>'you should add finish_time',
+           'finish_time.after'=>'finish_time must be greater than start_time',
 
         ];
     }
