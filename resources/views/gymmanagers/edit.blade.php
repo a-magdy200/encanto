@@ -41,7 +41,7 @@
     @enderror
   </div>
   <div class="mb-3">
-    <button type="submit" class="btn btn-success">Edit</button>
+    <button type="submit" class="btn btn-success"><i class="fa fa-edit mr-1"></i>Edit</button>
   </div>
 </form>
 @endsection

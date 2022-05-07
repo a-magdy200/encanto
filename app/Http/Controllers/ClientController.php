@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Events\AppNotificationEvent;
     use App\Http\Requests\StoreClientRequest;
     use App\Http\Requests\UpdateClientRequest;
     use App\Models\Client;
@@ -69,9 +70,8 @@
                 'user_id' => $user->id,
             ]);
             session()->flash("success", "A new client has been added successfully");
+            broadcast(new AppNotificationEvent("A new client has joined the platform"));
             return to_route('clients.index');
-
-
         }
 
         public function create()

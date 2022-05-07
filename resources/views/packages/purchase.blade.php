@@ -1,183 +1,157 @@
 @extends('layouts.app')
-@section('title')Purchase a package @endsection
+@section('page-title')
+    Purchase a Package
+@endsection
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<style type="text/css">
-    .container {
-        margin-top: 40px;
-    }
-
-    .panel-heading {
-        display: inline;
-        font-weight: bold;
-    }
-
-    .flex-table {
-        display: table;
-    }
-
-    .display-tr {
-        display: table-row;
-    }
-
-    .display-td {
-        display: table-cell;
-        vertical-align: middle;
-        width: 55%;
-    }
-</style>
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-<form method="post" action="{{ route('packages.order')}}" role="form" class="validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
-    @csrf
-    <div class="card-body">
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">User</label>
-            <select name="client_id" class="form-control">
-                @foreach ($clients as $client)
-                <option value="{{$client->id}}">{{$client->name}}</option>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
                 @endforeach
-            </select>
+            </ul>
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Training Package</label>
-            <select name="package_id" class="form-control">
-                @foreach ($packages as $package)
-                <option value="{{$package->id}}">{{$package->package_name}}</option>
-                @endforeach
-            </select>
-        </div>
-
-        @if (!auth()->user()->hasRole('Gym Manager'))
-        <div class="form-group">
+    @endif
+    <form method="post" action="{{ route('packages.order')}}" role="form" class="validation" data-cc-on-file="false"
+          data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+        @csrf
+        <div class="card-body">
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Gym Name</label>
-                <select name="gym_id" class="form-control">
-                    @foreach ($gyms as $gym)
-                    <option value="{{$gym->id}}">{{$gym->name}}</option>
+                <label for="client_id_select" class="form-label">User</label>
+                <select id="client_id_select" name="client_id" class="form-control">
+                    @foreach ($clients as $client)
+                        <option value="{{$client->id}}">{{$client->name}}</option>
                     @endforeach
                 </select>
             </div>
-            @endif
-            <div class="panel-heading">
-                <div class="row text-center">
-                    <h3 class="panel-heading">Payment Details</h3>
-                </div>
+            <div class="mb-3">
+                <label for="package_select" class="form-label">Training Package</label>
+                <select id="package_select" name="package_id" class="form-control">
+                    @foreach ($packages as $package)
+                        <option value="{{$package->id}}">{{$package->package_name}}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="panel-body">
 
-                @if (Session::has('success'))
-                <div class="alert alert-success text-center">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                    <p>{{ Session::get('success') }}</p>
-                </div>
-                @endif
+            @if (!auth()->user()->hasRole('Gym Manager'))
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="gym_select" class="form-label">Gym Name</label>
+                        <select id="gym_select" name="gym_id" class="form-control">
+                            @foreach ($gyms as $gym)
+                                <option value="{{$gym->id}}">{{$gym->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+                    <div class="panel-heading">
+                        <div class="row text-center">
+                            <h3 class="panel-heading">Payment Details</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class='form-row row'>
+                            <div class='col-6 form-group required'>
+                                <label for="name" class='control-label'>Name on Card</label>
+                                <input value="{{old('name')}}" id="name" name="name" class='form-control' size='4'
+                                       type='text'>
+                            </div>
+                            <div class='col-6 form-group required'>
+                                <label for="card_number" class='control-label'>Card Number</label>
+                                <input value="{{old('card_number')}}" id="card_number" name="card_number"
+                                       autocomplete='off'
+                                       class='form-control card-num' size='20' type='text'>
+                            </div>
+                        </div>
 
-                @if (Session::has('fail'))
-                <div class="alert alert-danger text-center">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                    <p>{{ Session::get('fail') }}</p>
-                </div>
-                @endif
-                <div class='form-row row'>
-                    <div class='col-xs-12 form-group required'>
-                        <label class='control-label'>Name on Card</label> <input class='form-control' size='4' type='text'>
+                        <div class='form-row row'>
+                            <div class='col-xs-12 col-md-4 form-group cvc required'>
+                                <label for="cvc" class='control-label'>CVC</label>
+                                <input value="{{old('cvc')}}" id="cvc" name="cvc" autocomplete='off'
+                                       class='form-control card-cvc'
+                                       placeholder='e.g 415' size='4' type='text'>
+                            </div>
+                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                <label for="expiration_month" class='control-label'>Expiration Month</label>
+                                <input value="{{old('expiration_month')}}" id="expiration_month" name="expiration_month"
+                                       class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                            </div>
+                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                <label for="expiration_year" class='control-label'>Expiration Year</label>
+                                <input value="{{old('expiration_year')}}" id="expiration_year" name="expiration_year"
+                                       class='form-control card-expiry-year'
+                                       placeholder='YYYY' size='4' type='text'>
+                            </div>
+                        </div>
+                        @if($errors->any())
+                            <div class='form-row row'>
+                                <div class='col-md-12 hide error form-group'>
+                                    <div class='alert-danger alert'>Fix the errors before you begin.</div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
+                <!-- /.card-body -->
 
-                <div class='form-row row'>
-                    <div class='col-xs-12 form-group card required'>
-                        <label class='control-label'>Card Number</label> <input autocomplete='off' class='form-control card-num' size='20' type='text'>
-                    </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Purchase</button>
                 </div>
+    </form>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
-                <div class='form-row row'>
-                    <div class='col-xs-12 col-md-4 form-group cvc required'>
-                        <label class='control-label'>CVC</label>
-                        <input autocomplete='off' class='form-control card-cvc' placeholder='e.g 415' size='4' type='text'>
-                    </div>
-                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                        <label class='control-label'>Expiration Month</label> <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
-                    </div>
-                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                        <label class='control-label'>Expiration Year</label> <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
-                    </div>
-                </div>
+    <script type="text/javascript">
+        $(function () {
+            var $form = $(".validation");
+            $('form.validation, #payment-form').on('submit', function (e) {
+                e.preventDefault();
+                var $form = $(".validation"),
+                    inputVal = ['input[type=email]', 'input[type=password]',
+                        'input[type=text]', 'input[type=file]',
+                        'textarea'
+                    ].join(', '),
+                    $inputs = $form.find('.required').find(inputVal),
+                    $errorStatus = $form.find('div.error'),
+                    valid = true;
+                $errorStatus.addClass('hide');
 
-                <div class='form-row row'>
-                    <div class='col-md-12 hide error form-group'>
-                        <div class='alert-danger alert'>Fix the errors before you begin.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.card-body -->
+                $('.has-error').removeClass('has-error');
+                $inputs.each(function (i, el) {
+                    var $input = $(el);
+                    if ($input.val() === '') {
+                        $input.parent().addClass('has-error');
+                        $errorStatus.removeClass('hide');
+                        e.preventDefault();
+                    }
+                });
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Purchase</button>
-        </div>
-</form>
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
-<script type="text/javascript">
-    $(function() {
-        var $form = $(".validation");
-        $('form.validation').bind('submit', function(e) {
-            var $form = $(".validation"),
-                inputVal = ['input[type=email]', 'input[type=password]',
-                    'input[type=text]', 'input[type=file]',
-                    'textarea'
-                ].join(', '),
-                $inputs = $form.find('.required').find(inputVal),
-                $errorStatus = $form.find('div.error'),
-                valid = true;
-            $errorStatus.addClass('hide');
-
-            $('.has-error').removeClass('has-error');
-            $inputs.each(function(i, el) {
-                var $input = $(el);
-                if ($input.val() === '') {
-                    $input.parent().addClass('has-error');
-                    $errorStatus.removeClass('hide');
+                if (!$form.data('cc-on-file')) {
                     e.preventDefault();
+                    Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+                    Stripe.createToken({
+                        number: $('.card-num').val(),
+                        cvc: $('.card-cvc').val(),
+                        exp_month: $('.card-expiry-month').val(),
+                        exp_year: $('.card-expiry-year').val()
+                    }, stripeHandleResponse);
                 }
+
             });
 
-            if (!$form.data('cc-on-file')) {
-                e.preventDefault();
-                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-                Stripe.createToken({
-                    number: $('.card-num').val(),
-                    cvc: $('.card-cvc').val(),
-                    exp_month: $('.card-expiry-month').val(),
-                    exp_year: $('.card-expiry-year').val()
-                }, stripeHandleResponse);
+            function stripeHandleResponse(status, response) {
+                if (response.error) {
+                    $('.error')
+                        .removeClass('hide')
+                        .find('.alert')
+                        .text(response.error.message);
+                } else {
+                    var token = response['id'];
+                    $form.find('input[type=text]').empty();
+                    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                    $form.get(0).submit();
+                }
             }
 
         });
-
-        function stripeHandleResponse(status, response) {
-            if (response.error) {
-                $('.error')
-                    .removeClass('hide')
-                    .find('.alert')
-                    .text(response.error.message);
-            } else {
-                var token = response['id'];
-                $form.find('input[type=text]').empty();
-                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                $form.get(0).submit();
-            }
-        }
-
-    });
-</script>
+    </script>
 @endsection

@@ -36,7 +36,7 @@
                                     Count: </strong>{{ $coach->sessions ? $coach->sessions->count() : 0 }}</p>
 
                             <div class="text-center p-4 align-items-center d-flex justify-content-center">
-                                <a href="{{ route('coaches.edit', ['coach' => $coach->id]) }}" class="btn btn-success">Edit
+                                <a href="{{ route('coaches.edit', ['coach' => $coach->id]) }}" class="btn btn-success"><i class="fa fa-edit mr-1"></i>Edit
                                     Info</a>
                             </div>
                         </div>

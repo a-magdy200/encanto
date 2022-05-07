@@ -46,7 +46,7 @@
                             </p>
                             <div class="text-center p-4 align-items-center d-flex justify-content-center">
                                 <a href="{{ route('clients.edit', ['client' => $client->id]) }}"
-                                   class="btn btn-success">Edit
+                                   class="btn btn-success"><i class="fa fa-edit mr-1"></i>Edit
                                     Info</a>
                             </div>
                         </div>

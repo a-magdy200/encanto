@@ -33,7 +33,7 @@
     //     "info": false,
     //     "autoWidth": false,
     // });
-    $('.delete-btn').click(function () {
+    $('body').click((e) => {
         // Dynamically changes the form action path
         // Reads href attribute from the button
         // Assigns the href value to form action
@@ -45,7 +45,6 @@
         }
         if (target) {
             const path = target.attr('href');
-            console.log(path);
             $("#delete-modal form").attr('action', path);
         }
     });
@@ -91,9 +90,9 @@
     const pusher = new Pusher('44fa6c6e3c8fd13e074f', {
         cluster: 'eu'
     });
-
     const channel = pusher.subscribe('notifications-channel');
-    channel.bind_global(function({title}) {
+    channel.bind("app-notification", ({title}) => {
+        console.log(title);
         Toast.fire({
             icon: 'info',
             title

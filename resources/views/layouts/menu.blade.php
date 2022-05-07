@@ -51,8 +51,13 @@
         <p>Gym Managers</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('packages.index') }}" class="nav-link {{ Request::is('packages') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-list"></i>
+        <p>Training Packages</p>
+    </a>
+</li>
 @endif
-
 <li class="nav-item">
     <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
         <i class="nav-icon fas fa-table"></i>
@@ -70,12 +75,6 @@
     <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user-alt"></i>
         <p>Clients</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('packages.index') }}" class="nav-link {{ Request::is('packages') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list"></i>
-        <p>Training Packages</p>
     </a>
 </li>
 <li class="nav-item">

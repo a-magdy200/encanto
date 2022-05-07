@@ -18,7 +18,7 @@ class TrainingPackage extends Model
     ];
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'id');
+        return $this->hasMany(Order::class, 'id', 'package_id');
     }
     public function gym(): BelongsTo
     {

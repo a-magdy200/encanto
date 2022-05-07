@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <div class="text-center p-4 align-items-center d-flex justify-content-center">
-        <a href="{{ route('profile.edit') }}" class="btn btn-success">Edit Info</a>
-        <a href="{{ route('profile.edit-pass') }}" class="ml-4 btn btn-success">Edit Password</a>
+        <a href="{{ route('profile.edit') }}" class="btn btn-success"><i class="fa fa-edit mr-1"></i>Edit Info</a>
+        <a href="{{ route('profile.edit-pass') }}" class="ml-4 btn btn-success"><i class="fa fa-edit mr-1"></i>Edit Password</a>
     </div>
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AppNotificationEvent;
 use App\Models\TrainingPackage;
 use App\Models\User;
 use App\Models\Gym;
@@ -20,15 +21,18 @@ class TrainingPackageController extends Controller
 {
     public function ajax(Request $request)
     {
-       // $packages = TrainingPackage::with('gym')->get();
-        $packages = TrainingPackage::select('*');
+//        $packages = TrainingPackage::select(["id", "package_name", "number_of_sessions", "price", "gym_id"])->get();
+        $packages = TrainingPackage::all();
          // dd ($packages);
            return Datatables::of($packages)
             ->addIndexColumn()
-            ->addColumn('gym_id', function ($row) {
+            ->addColumn('gym', function ($row) {
                 $gymName=$row->gym->name;
                 return $gymName;
             })
+               ->addColumn('price', function ($row) {
+                   return $row->price / 100;
+               })
             ->addColumn('action', function ($row) {
                 $show=route('packages.show',['package'=>$row->id]);
                 $edit=route('packages.edit',['package'=>$row->id]);
@@ -39,14 +43,14 @@ class TrainingPackageController extends Controller
                 <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a></td>";
                 return $btn;
             })
-            ->rawColumns(['gym_id','action'])
+            ->rawColumns(['gym_id','action', 'price'])
             ->make(true);
     }
 
    public function index()
     {
         $title = 'Training Packages';
-        $headings = ['Package ID', 'Package Name', 'Sessions Number', 'Gym Name', 'Price', 'Created At', 'Updated At'];
+        $headings = ['Package ID', 'Package Name', 'Sessions Number', 'Gym Name', 'Price'];
         return view('packages.index')->with(['title' => $title, 'headings' => $headings]);
     }
 
@@ -60,19 +64,17 @@ class TrainingPackageController extends Controller
 
     public function store(StorePackageRequest $request)
     {
-        $request = request()->all();
-        if (auth()->user()->hasAnyRole(['Super Admin', 'City Manager'])) {
-            $gymId = $request->get('gymid');
-        } elseif (auth()->user()->hasRole('Gym Manager')) {
-            $gymId = auth()->user()->manager->gym_id;
+        if (!auth()->user()->hasAnyRole(["Super Admin", 'City Manager'])) {
+            return view("errors.401");
         }
         TrainingPackage::create([
-            'package_name' => $request['package_name'],
-            'number_of_sessions' => $request['number_of_sessions'],
-            'price' => $request['price'],
-            'gym_id' => $gymId,
+            'package_name' => $request->package_name,
+            'number_of_sessions' => $request->number_of_sessions,
+            'price' => $request->price,
+            'gym_id' => $request->gym_id,
         ]);
-
+        broadcast(new AppNotificationEvent("A new training package has been added"));
+        session()->flash("success", "A new training package has been added successfully");
         return to_route('packages.index');
     }
 
@@ -80,11 +82,14 @@ class TrainingPackageController extends Controller
     {
         $packages = TrainingPackage::find($packageId);
         return view('packages.show', [
-            'items' => $packages,
+            'package' => $packages,
         ]);
     }
     public function edit($packageId)
     {
+        if (!auth()->user()->hasRole("Super Admin")) {
+            return view("errors.401");
+        }
         $gyms = Gym::all();
         $packages = TrainingPackage::find($packageId);
         return view('packages.edit', [
@@ -95,9 +100,14 @@ class TrainingPackageController extends Controller
 
     public function update(UpdatePackageRequest $request, $packageId)
     {
+        if (!auth()->user()->hasRole("Super Admin")) {
+            return view("errors.401");
+        }
         $package = TrainingPackage::find($packageId);
         $data = $request->all();
         $package->update($data);
+        session()->flash("success", "Training package details has been updated successfully");
+        broadcast(new AppNotificationEvent("A training package details has been updated"));
         return to_route('packages.index');
     }
 
@@ -110,7 +120,7 @@ class TrainingPackageController extends Controller
     public function purchase()
     {
         $packages = TrainingPackage::all();
-        $clients = User::where('role_id', 5)->get();
+        $clients = User::role("Client")->get();
         $gyms = Gym::all();
         return view('packages.purchase', [
             'packages' => $packages,
@@ -129,7 +139,6 @@ class TrainingPackageController extends Controller
                 "source" => $request->stripeToken,
                 "description" => "Making test payment."
             ]);
-
             $package = TrainingPackage::find($request->get('package_id'));
             Order::create([
                 'client_id' => $request->get('client_id'),
@@ -137,10 +146,12 @@ class TrainingPackageController extends Controller
                 'number_of_sessions' => $package->number_of_sessions,
                 'price' => $package->price,
             ]);
-            Session::flash('success', 'Payment has been successfully processed.');
+            broadcast(new AppNotificationEvent("A new training package purchase"));
+            session()->flash('success', 'Payment has been successfully processed.');
             return to_route('packages.index');
         } catch (\Throwable $th) {
-            Session::flash('fail', 'Payment has been failed.');
+            session()->flash('fail', 'Payment has been failed.');
+            dd($th);
             return back();
         }
     }

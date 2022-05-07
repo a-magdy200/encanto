@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             AdminSeeder::class,
-            UserSeeder::class,
+//            UserSeeder::class,
             CitySeeder::class,
             GymSeeder::class,
-            GymManagerSeeder::class,
+//            GymManagerSeeder::class,
         ]);
     }
 }

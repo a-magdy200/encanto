@@ -21,7 +21,7 @@ class AdminSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make(123456),
-//            'role_id' => 1
+            'avatar' => env('DEFAULT_IMAGE'),
         ]);
         $user->assignRole('Super Admin');
 

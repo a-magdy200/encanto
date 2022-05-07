@@ -11,18 +11,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AdminNotificationEvent implements ShouldBroadcastNow
+class AppNotificationEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $title;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * @param $title
      */
-    public function __construct()
+    public function __construct($title)
     {
-        //
+        $this->title = $title;
     }
 
     /**
@@ -36,6 +35,6 @@ class AdminNotificationEvent implements ShouldBroadcastNow
     }
     public function broadcastAs(): string
     {
-        return "admin-notification";
+        return "app-notification";
     }
 }

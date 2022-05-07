@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Events\AdminNotificationEvent;
+use App\Events\AppNotificationEvent;
 use App\Models\Gym;
 use App\Models\User;
 
@@ -30,7 +30,7 @@ class HomeController extends Controller
     }
 
     public function table() {
-        broadcast(new AdminNotificationEvent("hi"));
+        broadcast(new AppNotificationEvent("hi"));
         return 1;
     }
     public function sampleDelete($gymId) {

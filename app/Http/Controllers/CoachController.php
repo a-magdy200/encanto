@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Events\AppNotificationEvent;
     use App\Http\Requests\StoreCoachRequest;
     use App\Http\Requests\UpdateCoachRequest;
     use App\Models\User;
@@ -54,6 +55,7 @@
             ]);
             $user->assignRole('Coach');
             session()->flash("success", "A new coach has been added successfully");
+            broadcast(new AppNotificationEvent("A new coach has joined the platform"));
             return to_route('coaches.index');
         }
 

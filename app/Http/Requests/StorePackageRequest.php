@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePackageRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class StorePackageRequest extends FormRequest
         return [
             'package_name'=>['required','min:3'],
             'number_of_sessions'=>['required','integer'],
-            'gym_id' => ['required','exists:gyms,id'],
+            'gym_id' => [Rule::requiredIf(fn () => auth()->user()->hasAnyRole(['City Manager', 'Super Admin'])), 'exists:gyms,id'],
             'price'=>['required','integer'],
         ];
     }
