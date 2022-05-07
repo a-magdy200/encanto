@@ -55,7 +55,7 @@ class TrainingSessionController extends Controller
 
     public function index()
     {
-        $Headings = ['id', 'name', 'day', 'start_time', 'finish_time', 'gym_name'];
+        $Headings = ['ID', 'Name', 'Day', 'Start Time', 'Finish Time', 'Gym'];
         $Title = 'Training Sessions';
         return view('training-sessions.index')->with(['title' => $Title, 'headings' => $Headings]);
     }
