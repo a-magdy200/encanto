@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->nullOnDelete();
             $table->boolean('is_approved')->default(false);
-            $table->boolean('banned_at')->nullable();
+            $table->dateTime('banned_at')->nullable();
             $table->timestamps();
         });
     }

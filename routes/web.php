@@ -36,6 +36,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     // Route::get('/table', [HomeController::class, 'table'])->name('home');
     Route::get('/gym-managers/create/', [GymManagerController::class, 'create'])->name('gym-managers.create');
     Route::get('/gym-managers/{gymManager}/ban', [GymManagerController::class, 'ban'])->name('gym-managers.ban');
+    Route::get('/gym-managers/{gymManager}/unban', [GymManagerController::class, 'unban'])->name('gym-managers.unban');
     Route::get('/gym-managers/{gymManager}/approve', [GymManagerController::class, 'approve'])->name('gym-managers.approve');
 
     Route::get('/gym-managers/{gymManager}/edit', [GymManagerController::class, 'edit'])->name('gym-managers.edit');

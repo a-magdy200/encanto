@@ -54,7 +54,7 @@ class GymManagerController extends Controller
                         class='fa fa-check mr-1'></i>Approve</a>";
                         }
                     })->addColumn('is_banned', function ($row) {
-                        if ($row->is_banned) {
+                        if ($row->isBanned()) {
                             return "<a href='" . route("gym-managers.unban", ["gymManager" => $row]) . "' class='btn btn-success'><i
                         class='fa fa-check mr-1'></i>Unban</a>";
                         } else {
@@ -182,13 +182,27 @@ class GymManagerController extends Controller
     {
         $gymmanager = GymManager::find($id);
       //  dd($gymmanager->ban()->bannable_id);
-        $gymmanager->is_banned=!$gymmanager->is_banned;
+//        $gymmanager->is_banned=!$gymmanager->is_banned;
        //if($gymmanager->ban()->bannable_id)
       // $gymmanager->unban();
       // else
        $gymmanager->ban();
        // dd($x);
-       $gymmanager->update();
+//       $gymmanager->update();
+       return to_route('gym-managers.index');
+
+    }
+    public function unban($id)
+    {
+        $gymmanager = GymManager::find($id);
+      //  dd($gymmanager->ban()->bannable_id);
+//        $gymmanager->is_banned=!$gymmanager->is_banned;
+       //if($gymmanager->ban()->bannable_id)
+      // $gymmanager->unban();
+      // else
+       $gymmanager->unban();
+       // dd($x);
+//       $gymmanager->update();
        return to_route('gym-managers.index');
 
     }
