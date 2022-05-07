@@ -21,12 +21,12 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Asmaa Faried",
+							"value": "Ahmed",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "test5@app.com",
+							"value": "Ahmed@app.com",
 							"type": "text"
 						},
 						{
@@ -99,7 +99,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "1|XYkZgLMXjWf9nv3zMMZfaQBTKvLj7msFTXf8Q3ly",
+							"value": "1|r1YezuscNkK7T5DVo876T1uYCOEaYhV6g6cBpieh",
 							"type": "string"
 						}
 					]
@@ -123,41 +123,17 @@
 			"response": []
 		},
 		{
-			"name": "Email Validation Notifications",
+			"name": "login",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "1|XYkZgLMXjWf9nv3zMMZfaQBTKvLj7msFTXf8Q3ly",
+							"value": "1|r1YezuscNkK7T5DVo876T1uYCOEaYhV6g6cBpieh",
 							"type": "string"
 						}
 					]
-				},
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/api/email/verification-notification",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"email",
-						"verification-notification"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login",
-			"request": {
-				"auth": {
-					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
@@ -172,12 +148,17 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "test5@app.com",
+							"value": "Ahmed@app.com",
 							"type": "text"
 						},
 						{
 							"key": "password",
 							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "last_login",
+							"value": "2022-04-07",
 							"type": "text"
 						}
 					]
@@ -421,7 +402,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "8|aIuUhbYn3eRnrbGSyqOAoic9Vu2O5sy1wz5bvo5U",
+							"value": "4|tagqzvYZVM0a7A86Wd7eCHmYx1NfYiv7YkV0wVNH",
 							"type": "string"
 						}
 					]
@@ -445,6 +426,27 @@
 						"api",
 						"remaining",
 						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Last Client login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/email/command",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"email",
+						"command"
 					]
 				}
 			},
