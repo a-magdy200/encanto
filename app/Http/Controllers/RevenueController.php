@@ -50,7 +50,7 @@ class RevenueController extends Controller
         /* Gym Manager */
         elseif ($user->hasRole('Gym Manager'))
         {
-            $gymId = auth()->user()->gymManager->gym->id;
+            $gymId = auth()->user()->manager->gym->id;
 
             $orders = DB::table('orders')->select('orders.id')->join('training_packages', 'training_packages.id', 'orders.package_id')
                 ->join('gyms', 'gyms.id', 'gym_id')->where('gym_id', $gymId)->get();
