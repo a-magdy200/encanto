@@ -19,6 +19,9 @@ class Attendance extends Model
     {
         return $this->belongsTo(Client::class);
     }
+    public function added() {
+        return $this->belongsTo(User::class, 'added_by');
+    }
     public function training_session(): BelongsTo
     {
         return $this->belongsTo(TrainingSession::class);

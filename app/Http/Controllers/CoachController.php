@@ -42,7 +42,7 @@
         {
             $data = request()->all();
             if ($request->file('avatar')) {
-                $path = Storage::putFile('avatars/coaches', $request->file('avatar'));
+                $path = Storage::putFile('public/avatars/coaches', $request->file('avatar'));
             } else {
                 $path = env('DEFAULT_IMAGE');
             }
@@ -79,7 +79,7 @@
                 'email' => $data['email'],
             ]);
             if ($request->file('avatar')) {
-                $path = Storage::putFile('avatars/coaches', $request->file('avatar'));
+                $path = Storage::putFile('public/avatars/coaches', $request->file('avatar'));
                 $user->avatar = $path;
                 $user->save();
             }

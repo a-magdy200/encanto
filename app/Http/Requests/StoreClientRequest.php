@@ -30,11 +30,10 @@ class StoreClientRequest extends FormRequest
         return [
             'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
             'email' =>['required','email',Rule::unique('users')],
-            'password'=>['required','string','min:8'],
+            'password'=>['required','string','min:8', 'confirmed'],
             'gender'=>['required'],
             'date'=>['required','before:today'],
-            'avatar'=>['image','mimes:jpg,png'],
-
+            'avatar'=>['image','mimes:jpg,jpeg'],
         ];
 
     }

@@ -17,15 +17,28 @@ class Client extends Model
     protected $fillable = [
         'date_of_birth',
         'user_id',
-        'gender',  
+        'gender',
     ];
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
+    public function remainingSessionsCount(){
+        $totalSessionsCount = $this->totalSessionsCount();
+        $attendanceCount = $this->attendance()->count();
+        return $totalSessionsCount - $attendanceCount;
+    }
+    public function totalSessionsCount() {
+        $totalSessionsArray = $this->orders()->pluck("number_of_sessions")->toArray();
+        $totalSessionsCount = array_sum($totalSessionsArray);
+        return $totalSessionsCount;
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-  
+    public function attendance() {
+        return $this->hasMany(Attendance::class);
+    }
+
 }
