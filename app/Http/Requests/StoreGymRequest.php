@@ -32,7 +32,6 @@ class StoreGymRequest extends FormRequest
             'gymName'=>['required','min:3'],
             'gymCoverImg' => ['required','image','mimes:jpg,jpeg'],
             'gym_city'=>['required','exists:cities,id'],
-            "manager_id"=>['required', 'exists:city_managers,id']
         ];
     }
     public function messages()
