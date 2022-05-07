@@ -82,20 +82,17 @@ class CityManagerController extends Controller
     public function store(AddCityManagerRequest $request)
     {
         $data = request()->all();
-        if ($request->hasFile('avatar')) {
-            $detination_path = 'public/images';
-            $avatar = $request->file('avatar');
-            $avatar_name = $avatar->getClientOriginalName();
-            $request->file('avatar')->storeAs($detination_path, $avatar_name);
+        if ($request->file('avatar')) {
+            $path = Storage::putFile('public/avatars/citymanagers', $request->file('avatar'));
         } else {
-            $avatar_name = env('DEFAULT_IMAGE');
+            $path = env('DEFAULT_IMAGE');
         }
 
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'avatar' => $avatar_name,
+            'avatar' => $path,
             // 'role_id' => 2
         ]);
         $user->assignRole('City Manager');
@@ -148,19 +145,16 @@ class CityManagerController extends Controller
 
         $user = $cityManager->user;
 
-        if ($request->hasFile('avatar')) {
-            Storage::disk('public')->delete('public/images' . $user->avatar);
-            $destination_path = 'public/images';
-            $avatar = $request->file('avatar');
-            $avatar_name = $avatar->getClientOriginalName();
-            $request->file('avatar')->storeAs($destination_path, $avatar_name);
-            $user->avatar = $avatar_name;
-            $user->save();
+        if ($request->file('avatar')) {
+            $path = Storage::putFile('public/avatars/citymanagers', $request->file('avatar'));
+        } else {
+            $path = env('DEFAULT_IMAGE');
         }
 
         $user->update([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar'=>$path,
         ]);
         $cityManager->update([
             'city_id' => $data['city'],
