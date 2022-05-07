@@ -133,11 +133,11 @@ class TrainingPackageController extends Controller
     public function order(OrderPackageRequest $request)
     {
         $package = TrainingPackage::find($request->package_id);
-//        dd($request->all());
+
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             Stripe\Charge::create([
-                "amount" => $package->price / 100,
+                "amount" => $package->price/100,
                 "currency" => env('CASHIER_CURRENCY'),
                 "source" => $request->stripeToken,
                 "description" => "Making test payment."
@@ -153,7 +153,7 @@ class TrainingPackageController extends Controller
             session()->flash('success', 'Payment has been successfully processed.');
             return to_route('orders.index');
         } catch (\Throwable $th) {
-            session()->flash('fail', 'Payment has been failed.');;
+            session()->flash('fail', 'Payment has been failed.');
             return back();
         }
     }

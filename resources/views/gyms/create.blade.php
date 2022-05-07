@@ -48,18 +48,7 @@
                             <br><div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                   </div>
-                <div class="form-group">
-                    <label for="manager-select">Manager</label>
-                    <select id="manager-select" class="form-control @error('manager_id') is-invalid @enderror" style="width: 100%;" name="manager_id">
-                    <option value="" disabled selected>Select Manager</option>
-                    @foreach ($managers as $manager)
-                        <option @checked(old("manager_id") == $manager->id) value="{{ $manager->id }}" class="form-control ">{{ $manager->user->name}}</option>
-                      @endforeach
-                    </select>
-                    @error('manager_id')
-                            <br><div class="alert alert-danger">{{ $message }}</div>
-                  @enderror
-                  </div>
+
               <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Add</button>
               </div>

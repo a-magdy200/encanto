@@ -31,6 +31,7 @@
     <div class="mb-3">
         <label for="exampleFormControlSelect" class="form-label">Gym</label>
         <select id="exampleFormControlSelect" name="gym_id" class="form-control">
+            <option value="" disabled selected>Select Gym</option>
                 @foreach ($gyms as $gym)
                 <option value="{{$gym->id}}">{{$gym->name}}</option>
                 @endforeach
