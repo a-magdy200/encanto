@@ -53,9 +53,8 @@
                 'avatar' => $path,
             ]);
             $user->assignRole('Coach');
+            session()->flash("success", "A new coach has been added successfully");
             return to_route('coaches.index');
-
-
         }
 
         public function create()
@@ -88,7 +87,7 @@
                 $user->password = $data['password'];
                 $user->save();
             }
-            $user->assignRole('Coach');
+            session()->flash("success", "Coach information has been updated successfully");
             return to_route('coaches.index');
         }
 
