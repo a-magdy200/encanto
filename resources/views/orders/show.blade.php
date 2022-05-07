@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-section')
+@section('page-title')
     Order Details
 @endsection
 @section('content')
