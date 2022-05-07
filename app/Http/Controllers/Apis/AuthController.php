@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Apis;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Apis\LoginRequest;
 use App\Http\Requests\Apis\RegisterRequest;
+use App\Models\Client;
 use Illuminate\Auth\Events\Registered;
 use App\Models\User;
+use App\Notifications\EmailVerify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function show(){
-        $clients=User::where('role_id',5)->with('client')->get();
+        $clients=User::all();
 
         return response()->json($clients);
     }
@@ -29,12 +32,18 @@ class AuthController extends Controller
             'password'=>bcrypt($request->input('password')),
             'avatar'=>'storage/ClientsImages/'.$image,
         ]);
-        $result=$user->client()->create([
+        $user->client()->create([
             'date_of_birth'=>$request->input('date_of_birth'),
             'gender'=>$request->input('gender')
         ]);
         event(new Registered($user));
+
+        $delay = now()->addMinutes(1);
+        $user->notify((new EmailVerify())->delay($delay));
+
+
         $token=$user->createToken('myapptoken')->plainTextToken;
+
         return response()->json(["message"=>"Client is added successfully",'User'=>$user->client,"Token"=>$token],201);
 
 
@@ -47,7 +56,12 @@ class AuthController extends Controller
             return response(['message'=>'Password is invalid '],401);
         }
         $token=$client->createToken('myapptoken')->plainTextToken;
-        return response(['Client'=>$client,'Token'=>$token],201);
+        $user_id=$client->id;
+        $last_login=Client::where('user_id',$user_id)->update([
+
+            'last_login'=>$request->input('last_login')
+        ]);
+        return response(['Client'=>$client->client,'Token'=>$token],201);
     }
     // public function logout(Request $request){
     //     auth()->user()->tokens()->delete();
