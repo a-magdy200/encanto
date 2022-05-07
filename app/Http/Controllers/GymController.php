@@ -32,7 +32,7 @@
                     if (!$city) {
                         $gyms = [];
                     } else {
-                        $gyms = $city->gyms;
+                        $gyms = City::find($city)->gyms;
                     }
                 } elseif ($user->hasRole('Super Admin')) {
                     $gyms = Gym::all();

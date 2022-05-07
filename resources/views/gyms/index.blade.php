@@ -49,8 +49,10 @@
 
                     {data: 'name', name: 'name'},
                     {data: 'Cover Image', name: 'Cover Image'},
+                    @if(auth()->user()->hasRole('Super Admin'))
                     {data: 'City Name', name: 'City Name'},
                     {data: 'City Manager Name', name: 'City Manager Name'},
+                    @endif
                     {data: 'Created At', name: 'Created At'},
                     {data: 'Created By', name: 'Created By'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
