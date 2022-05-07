@@ -61,7 +61,7 @@ class TrainingSessionController extends Controller
     }
     public function create()
     {
-        $users = User::all(); //TODO choose coaches only based on role_id
+        $users = User::role("Coach")->get(); //TODO choose coaches only based on role_id
         $gyms = Gym::all();
         return view('training-sessions.create', [
             'users' => $users, 'gyms' => $gyms
@@ -112,7 +112,7 @@ class TrainingSessionController extends Controller
     }
     public function edit(TrainingSession $trainingSession)
     {
-        $coaches = User::all(); //TODO choose coaches only based on role_id
+        $coaches = User::role("Coach")->get(); //TODO choose coaches only based on role_id
         $gyms = Gym::all();
         return view('training-sessions.edit', [
             'trainingSession' => $trainingSession, 'coaches' => $coaches, 'gyms' => $gyms
