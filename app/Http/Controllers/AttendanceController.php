@@ -18,14 +18,14 @@
         {
             $user = auth()->user();
             $manager = auth()->user()->manager;
-            $title = 'attendance';
+            $title = 'Attendance';
             $attendances = [];
             if ($user->hasRole('Super Admin')) {
                 $attendances = Attendance::all();
-                $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym', 'city'];
+                $headings = ['User Name', 'Email ', 'Date', 'Time', 'Session Same', 'Gym', 'City'];
             } elseif ($user->hasRole('City Manager')) {
 
-                $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name', 'gym'];
+                $headings = ['User Name', 'Email ', 'Date', 'Time', 'Session Same', 'Gym'];
                 if ($manager->city) {
                     $cityId = $manager->city->id;
                     $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
@@ -33,7 +33,7 @@
                     $attendances = Attendance::whereIn('id', $attendanceIds)->get();
                 }
             } elseif ($user->hasRole('Gym Manager')) {
-                    $headings = ['username', 'email ', 'attendance date', 'attendance time', 'training session name'];
+                $headings = ['User Name', 'Email ', 'Date', 'Time', 'Session Same'];
                 if ($manager->gym) {
                     $gymId = $manager->gym->id;
                     $attendanceIds = DB::table('attendances')->select('attendances.id')->join('training_sessions', 'training_sessions.id', 'training_session_id')
@@ -44,8 +44,8 @@
             if ($request->ajax()) {
                 $dataTables = Datatables::of($attendances)
                     ->addColumn('action', function ($row) {
-                        $editUrl = route('attendance.edit', ['attendance' => $row->id]);
-                        $deleteUrl = route('attendance.delete', ['attendance' => $row->id]);
+                        $editUrl = route('attendance.edit', ['attendance' => $row]);
+                        $deleteUrl = route('attendance.delete', ['attendance' => $row]);
                         $btn = "<a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
                             <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal'
                                data-target='#delete-modal'><i class='fa fa-times'></i></a>";
@@ -94,6 +94,7 @@
         public function store(StoreAttendanceRequest $request)
         {
             $data = request()->all();
+            session()->flash("success", "Attendance recorded successfully");
             Attendance::create([
                 'training_session_id' => $data['training_session_id'],
                 'client_id' => $data['client_id'],
@@ -110,20 +111,19 @@
 
             return view('attendance.create', [
                 "clients" => $clients,
-                "training-sessions" => $trainingSessions
+                "trainingSessions" => $trainingSessions
             ]);
         }
 
-        public function edit($attendanceId)
+        public function edit(Attendance $attendance)
         {
 
-            $attendance = Attendance::find($attendanceId);
             $trainingSessions = TrainingSession::all();
             $clients = Client::all();
 
             return view('attendance.edit', [
                 "clients" => $clients,
-                "training-sessions" => $trainingSessions,
+                "trainingSessions" => $trainingSessions,
                 "attendance" => $attendance
             ]);
         }
