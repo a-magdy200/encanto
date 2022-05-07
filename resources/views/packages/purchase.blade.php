@@ -19,8 +19,8 @@
             <div class="mb-3">
                 <label for="client_id_select" class="form-label">User</label>
                 <select id="client_id_select" name="client_id" class="form-control">
-                    @foreach ($clients as $client)
-                        <option value="{{$client->id}}">{{$client->name}}</option>
+                    @foreach ($users as $user)
+                        <option value="{{$user->client->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -53,32 +53,36 @@
                         <div class='form-row row'>
                             <div class='col-6 form-group required'>
                                 <label for="name" class='control-label'>Name on Card</label>
-                                <input value="{{old('name')}}" id="name" name="name" class='form-control' size='4'
+                                <input value="{{old('name') ?? 'Ahmed'}}" id="name" name="name" class='form-control'
+                                       size='4'
                                        type='text'>
                             </div>
                             <div class='col-6 form-group required'>
                                 <label for="card_number" class='control-label'>Card Number</label>
-                                <input value="{{old('card_number')}}" id="card_number" name="card_number"
+                                <input value="{{old('card_number') ?? 4242424242424242}}" id="card_number"
+                                       name="card_number"
                                        autocomplete='off'
                                        class='form-control card-num' size='20' type='text'>
                             </div>
                         </div>
-
+                        <input type='hidden' name='stripeToken' value="" />
                         <div class='form-row row'>
                             <div class='col-xs-12 col-md-4 form-group cvc required'>
                                 <label for="cvc" class='control-label'>CVC</label>
-                                <input value="{{old('cvc')}}" id="cvc" name="cvc" autocomplete='off'
+                                <input value="{{old('cvc') ?? 123}}" id="cvc" name="cvc" autocomplete='off'
                                        class='form-control card-cvc'
                                        placeholder='e.g 415' size='4' type='text'>
                             </div>
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label for="expiration_month" class='control-label'>Expiration Month</label>
-                                <input value="{{old('expiration_month')}}" id="expiration_month" name="expiration_month"
+                                <input value="{{old('expiration_month') ?? 12}}" id="expiration_month"
+                                       name="expiration_month"
                                        class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
                             </div>
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label for="expiration_year" class='control-label'>Expiration Year</label>
-                                <input value="{{old('expiration_year')}}" id="expiration_year" name="expiration_year"
+                                <input value="{{old('expiration_year') ?? 2025}}" id="expiration_year"
+                                       name="expiration_year"
                                        class='form-control card-expiry-year'
                                        placeholder='YYYY' size='4' type='text'>
                             </div>
@@ -97,15 +101,17 @@
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Purchase</button>
                 </div>
+        </div>
     </form>
+@endsection
+@push("page_scripts")
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
     <script type="text/javascript">
         $(function () {
             var $form = $(".validation");
-            $('form.validation, #payment-form').on('submit', function (e) {
-                e.preventDefault();
-                var $form = $(".validation"),
+            $('#payment-form').eq(0).on('submit', function (e) {
+                const $form = $(this),
                     inputVal = ['input[type=email]', 'input[type=password]',
                         'input[type=text]', 'input[type=file]',
                         'textarea'
@@ -125,7 +131,7 @@
                     }
                 });
 
-                if (!$form.data('cc-on-file')) {
+                if (!$form.data('cc-on-file') && $("[name='stripeToken']").val() === '') {
                     e.preventDefault();
                     Stripe.setPublishableKey($form.data('stripe-publishable-key'));
                     Stripe.createToken({
@@ -145,13 +151,13 @@
                         .find('.alert')
                         .text(response.error.message);
                 } else {
-                    var token = response['id'];
-                    $form.find('input[type=text]').empty();
-                    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                    $form.get(0).submit();
+                    const token = response['id'];
+                    // $form.find('input[type=text]').empty();
+                    // $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                    $("[name='stripeToken']").val(token);
+                    $form.submit();
                 }
             }
-
         });
     </script>
-@endsection
+@endpush
