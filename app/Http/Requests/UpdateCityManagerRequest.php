@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\User;
 
-class UpdateCityManagerRequest extends FormRequest
+class updateManagerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

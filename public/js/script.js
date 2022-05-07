@@ -46,6 +46,8 @@
         if (target) {
             const path = target.attr('href');
             $("#delete-modal form").attr('action', path);
+            // $("#delete-modal").modal('show');
+            // e.preventDefault();
         }
     });
     $("#delete-modal form").on('submit',e  => {
@@ -92,7 +94,6 @@
     });
     const channel = pusher.subscribe('notifications-channel');
     channel.bind("app-notification", ({title}) => {
-        console.log(title);
         Toast.fire({
             icon: 'info',
             title

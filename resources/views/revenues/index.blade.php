@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('/home')}}">Home</a></li>
                         <li class="breadcrumb-item active">Revenue</li>
                     </ol>
                 </div>
@@ -25,7 +25,7 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{ $clientsCount }}</h3>
-                                
+
 
 
                                 <p>Number of Users</p>
@@ -41,7 +41,7 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{ $ordersCount }}<sup style="font-size:20px"></sup></h3>
-                             
+
 
                                 <p>Number of Orders</p>
                             </div>
@@ -56,10 +56,10 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>${{ $revenues/100 }}</h3>
-                                
 
-                            
-                                
+
+
+
                                 <p>Total Revenues</p>
                             </div>
                             <div class="icon">
@@ -71,5 +71,5 @@
                 </div>
                 <!-- /.row -->
             </div>
-        
+
      @endsection

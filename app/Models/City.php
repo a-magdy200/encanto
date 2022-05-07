@@ -22,4 +22,7 @@ class City extends Model
     {
         return $this->hasMany(Gym::class)->with(['packages','managers']);
     }
+    public function coachesCount(): int{
+        return 0;
+    }
 }

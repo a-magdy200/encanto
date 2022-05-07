@@ -24,7 +24,7 @@
       </li>
     </ul>
 
-    <a href="{{ route('show.AllGyms') }}" class="btn btn-warning btn-block"><b>Back</b></a>
+    <a href="{{ route('show.AllGyms') }}" class="btn btn-warning btn-block"><i class="fa fa-chevron-left mr-1"></i>Back</a>
   </div>
   <!-- /.card-body -->
 </div>

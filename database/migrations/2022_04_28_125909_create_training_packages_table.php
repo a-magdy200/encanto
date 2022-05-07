@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('package_name');
             $table->integer('number_of_sessions');
-            $table->foreignId("gym_id")->references("id")->on("gyms");
+            $table->foreignId("gym_id")->nullable()->references("id")->on("gyms")->nullOnDelete();
             $table->integer('price');
             $table->timestamps();
         });

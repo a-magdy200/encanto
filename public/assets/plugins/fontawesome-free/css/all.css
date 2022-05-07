@@ -429,10 +429,10 @@ readers do not read off random characters that represent icons */
 .fa-baby-carriage:before {
   content: "\f77d"; }
 
-.fa-backspace:before {
+.fa-chevron-leftspace:before {
   content: "\f55a"; }
 
-.fa-backward:before {
+.fa-chevron-leftward:before {
   content: "\f04a"; }
 
 .fa-bacon:before {

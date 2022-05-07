@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('training_sessions_coaches', function (Blueprint $table) {
-            $table->foreignId('training_session_id')->references('id')->on('training_sessions');
-            $table->foreignId('coach_id')->references('id')->on('users');
+            $table->foreignId('training_session_id')->nullable()->references('id')->on('training_sessions')->nullOnDelete();
+            $table->foreignId('coach_id')->nullable()->references('id')->on('users')->nullOnDelete();
         });
     }
 

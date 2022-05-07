@@ -1,32 +1,30 @@
 @extends('layouts.app')
 @section("page-title")
-    All Coaches
+    Cities List
 @endsection
 @section('content-header')
-    <!-- Content Header (Page header) -->
-
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Clients</h1>
+                    <h1>Cities</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Coaches</li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Cities</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
         @endsection
         @section('content')
-            <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
 
-            </x-table-component>
-            <div class="text-center">
-                <a href="{{route('coaches.create')}}" class="mt-4 btn btn-primary">add coach</a>
+            <div class="d-flex justify-content-center mb-4 pt-4">
+                <a href="{{ route('cities.create') }}" class="btn btn-primary "><i class="fa fa-plus mr-1"></i>Add City</a>
             </div>
+            <x-table-component :actions="false" title="{{$title}}" :headings="$headings"/>
+
         @endsection
         @push('page_scripts')
             <script type="text/javascript">
@@ -44,11 +42,9 @@
                         autoWidth: false,
                         processing: true,
                         serverSide: true,
-                        ajax: "{{ route('coaches.index') }}",
+                        ajax: "{{ route('cities.index') }}",
                         columns: [
-
                             {data: 'name', name: 'name'},
-                            {data: 'email', name: 'email'},
                             {data: 'action', name: 'action', orderable: false, searchable: false},
                         ]
                     });

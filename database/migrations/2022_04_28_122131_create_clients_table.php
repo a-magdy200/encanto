@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('date_of_birth');
             $table->enum('gender', ['male', 'female']);
-            $table->foreignId('user_id')->references('id')->on('users');
-           
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

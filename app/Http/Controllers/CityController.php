@@ -2,86 +2,86 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AppNotificationEvent;
 use App\Http\Requests\StoreCityRequest;
 use App\Models\City;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
 {
-    public function showCities(Request $request){
+    public function index(Request $request){
 
-        $headings=['City Name'];
+        $headings=['City Name', 'Actions'];
         $title="Cities";
         if ($request->ajax()) {
             $data = City::select('*');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $showUrl = route('show.singleCity',['cityId'=>$row->id]);
-                        $editUrl = route('edit.city',['cityId'=>$row->id]);
-                        $deleteUrl = route('delete.city',['cityId'=>$row->id ]);
+                        $showUrl = route('cities.show',['city'=>$row->id]);
+                        $editUrl = route('cities.edit',['city'=>$row->id]);
+                        $deleteUrl = route('cities.destroy',['city'=>$row->id ]);
                            $btn ="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                            <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
                            <a href='$deleteUrl' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
 
                             return $btn;
                     })
-
                     ->rawColumns(['action'])
                     ->make(true);
         }
 
-        return view('CityPages.showAllCities',["headings"=>$headings,"title"=>$title]);
+        return view('cities.index',["headings"=>$headings,"title"=>$title]);
 
     }
-    public function showCreateCity(){
-        return view('CityPages.createCity');
+    public function create(){
+        return view('cities.create');
     }
 
-    public function createCity(StoreCityRequest $request){
+    public function store(StoreCityRequest $request){
             $cityName=$request->input('cityName');
             $result=City::create([
                 'name'=>$cityName,
             ]);
             if($result){
-                return redirect()->back()->with(["success"=>"City is added successfully"]);
-
-            }else{
-                return redirect()->back()->with(["failed"=>"City failed to add"]);
-
+                broadcast(new AppNotificationEvent("A new city has been added"));
+                session()->flash("success", "City is added successfully");
+            } else {
+                session()->flash("failed", "City failed to add");
             }
+            return to_route("cities.index");
     }
 
 
-    public function showSingleCity($cityId){
+    public function show(City $city){
+        return view('cities.show',["city"=>$city]);
+    }
+
+    public function edit($cityId){
         $city=City::find($cityId);
-        $citymanager=$city->manager->user->name;
-        //dd($citymanager);
-        return view('CityPages.showSingleCity',["city"=>$city,"citymanager"=>$citymanager]);
+        return view('cities.edit',["city"=>$city]);
     }
 
-    public function editCity($cityId){
-        $city=City::find($cityId);
-        return view('CityPages.updateCity',["city"=>$city]);
-    }
-
-    public function updateCity(StoreCityRequest $request,$cityId){
+    public function update(StoreCityRequest $request,$cityId){
         $city=City::find($cityId);
         $cityName=$request->input('cityName');
             $result=$city->update([
                 'name'=>$cityName,
             ]);
-            if ($result) {
-                return redirect()->back()->with(['success'=>'City is Updated Successfully']);
-            } else {
-                return redirect()->back()->with(['error'=>'Failed to update this city']);
-            }
+        if($result){
+            broadcast(new AppNotificationEvent("A new city has been updated"));
+            session()->flash("success", "City is updated successfully");
+        } else {
+            session()->flash("failed", "City failed to update");
+        }
+        return to_route("cities.index");
     }
-    public function deleteCity($cityId){
+    public function destroy($cityId){
         $city=City::find($cityId);
         $result=$city->delete();
         if($result){
+            broadcast(new AppNotificationEvent("A city has been deleted"));
             return response()->json([], 200);
 
         }else{

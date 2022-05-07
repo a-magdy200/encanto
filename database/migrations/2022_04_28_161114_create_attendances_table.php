@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->references('id')->on('clients');
-            $table->foreignId('training_session_id')->references('id')->on('training_sessions');
+            $table->foreignId('client_id')->nullable()->references('id')->on('clients')->nullOnDelete();
+            $table->foreignId('training_session_id')->nullable()->references('id')->on('training_sessions')->nullOnDelete();
             $table->dateTime('attended_at');
             $table->timestamps();
         });

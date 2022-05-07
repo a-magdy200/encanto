@@ -19,7 +19,7 @@
 </li>
 @if(auth()->user()->hasRole('Super Admin'))
 <li class="nav-item">
-    <a href="{{ route('show.cities') }}" class="nav-link">
+    <a href="{{ route('cities.index') }}" class="nav-link">
         <i class="nav-icon fas fa-city"></i>
         <p>Cities</p>
     </a>

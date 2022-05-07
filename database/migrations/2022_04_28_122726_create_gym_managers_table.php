@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('national_id')->unique();
             $table->boolean('is_banned')->default(false);
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('gym_id')->nullable()->references('id')->on('gyms');
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->nullOnDelete();
             $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });

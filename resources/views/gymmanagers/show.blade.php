@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('/home')}}">Home</a></li>
                         <li class="breadcrumb-item active">Gym Manager</li>
                     </ol>
                 </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="row mb-2 ">
                             <div class="col-3">
-                                <a href="/gymmanagers" class="btn btn-primary btn-block "><b>Back</b></a>
+                                <a href="/gymmanagers" class="btn btn-primary btn-block "><i class="fa fa-chevron-left mr-1"></i>Back</a>
                             </div>
                         </div>
                     </div>

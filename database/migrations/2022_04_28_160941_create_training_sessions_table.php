@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date("day");
             $table->time('start_time');
             $table->time('finish_time');
-            $table->foreignId('gym_id')->references('id')->on('gyms');
+            $table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->nullOnDelete();
             $table->timestamps();
         });
     }

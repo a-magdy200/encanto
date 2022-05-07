@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('gyms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id')->references('id')->on('cities');
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->nullOnDelete();
             $table->string('name');
-            $table->string('created_by');
+            $table->foreignId('created_by')->nullable()->references('id')->on('users')->nullOnDelete();
             $table->string('cover_image');
             $table->timestamps();
         });

@@ -7,7 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\City;
 use App\Models\CityManager;
-use App\Http\Requests\UpdateCityManagerRequest;
+use App\Http\Requests\updateManagerRequest;
 use App\Http\Requests\AddCityManagerRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -70,7 +70,7 @@ class CityManagerController extends Controller
             'cities' => $cities
         ]);
     }
-    public function update($managerId, UpdateCityManagerRequest $request)
+    public function update($managerId, updateManagerRequest $request)
     {
         $data = request()->all();
 
