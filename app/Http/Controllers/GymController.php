@@ -111,7 +111,7 @@
                 if (!$city) {
                     $cities = [];
                 } else {
-                    $cities = City::where('city_id', $city)->first();
+                    $cities = City::where('id', $city)->first();
                 }
             } else {
                 return view('errors.401');
