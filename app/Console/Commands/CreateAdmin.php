@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\AppNotificationEvent;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -33,12 +34,13 @@ class CreateAdmin extends Command
             $email = $this->option("email");
             $password = $this->option("password");
             $this->info('A new admin has been created successfully!');
-            User::create([
+            $user = User::create([
                 'name' => 'admin',
                 'email' => $email,
                 'password' => Hash::make($password),
-                'role_id' => 1
             ]);
+            $user->assignRole("Super Admin");
+            broadcast(new AppNotificationEvent("A new admin has joined the platform"));
         }
     }
 }
