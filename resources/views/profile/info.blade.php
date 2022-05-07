@@ -11,7 +11,7 @@
         <div class="card-body box-profile">
             <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle" style="width:100px;height:100px;"
-                     src="{{asset(auth()->user()->avatar)}}" alt="User profile picture">
+                     src="{{Storage::url(auth()->user()->avatar)}}" alt="User profile picture">
             </div>
 
             <h3 class="profile-username text-center">{{auth()->user()->name}}</h3>
