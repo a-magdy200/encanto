@@ -21,11 +21,11 @@
         </div><!-- /.container-fluid -->
         @endsection
         @section('content')
-            <x-table-component :actions="true" title="{{$title}}" :headings="$headings">
-            </x-table-component>
-            <div class="text-center">
-                <a href="{{route('attendance.create')}}" class="mt-4 btn btn-primary">Add Attendance</a>
+
+            <div class="text-center mb-4">
+                <a href="{{route('attendance.create')}}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i>Add Attendance</a>
             </div>
+            <x-table-component :actions="true" title="{{$title}}" :headings="$headings" />
         @endsection
         @push('page_scripts')
             <script type="text/javascript">

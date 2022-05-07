@@ -16,6 +16,8 @@
             <strong> Finish Time</strong> {{$trainingSession->finish_time}}<br>
             <strong> Gym Name</strong> {{$trainingSession->gym->name}}<br>
             <strong> Attendance Count </strong> {{$trainingSession->attendance ? $trainingSession->attendance->count() : 0}}<br>
+            <strong> Coaches</strong> @foreach($trainingSession->coaches as $coach) <span class="badge badge-light border text-capitalize">{{$coach->name}}</span> @endforeach<br>
+
         </p>
 
     </div>

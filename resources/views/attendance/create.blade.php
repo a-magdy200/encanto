@@ -1,8 +1,11 @@
 @extends('layouts.app')
+@section('page-title')
+    Add Attendance
+@endsection
 @section('content')
 
 
-    <form method="post" action="{{route('attendance.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{route('attendance.store')}}">
         @csrf
 
         <div class="card-body">
@@ -10,10 +13,10 @@
 
 
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">user name</label>
-                <select  name="client_id" class="form-control @error('client_id') is-invalid @enderror">
+                <label for="client_id" class="form-label">Client</label>
+                <select id="client_id"  name="client_id" class="form-control @error('client_id') is-invalid @enderror">
                     @foreach ($clients as $client)
-                        <option value="{{$client->id}}">{{$client->user->name}}</option>
+                        <option @selected(old("client_id") == $client->id) value="{{$client->id}}">{{$client->user->name}}</option>
                     @endforeach
                 </select>
                 @error('client_id')
@@ -21,10 +24,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">training seesion</label>
-                <select  name="training_session_id" class="form-control @error('training_session_id') is-invalid @enderror">
+                <label for="training_session" class="form-label">Session</label>
+                <select id="training_session" name="training_session_id" class="form-control @error('training_session_id') is-invalid @enderror">
                     @foreach ($trainingSessions as $trainingSession)
-                        <option value="{{$trainingSession->id}}">{{$trainingSession->name}}</option>
+                        <option @selected(old("training_session_id") == $trainingSession->id) value="{{$trainingSession->id}}">{{$trainingSession->name}}</option>
                     @endforeach
                 </select>
                 @error('training_session_id')
@@ -33,8 +36,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="exampleInputPassword1">attend at</label>
-                <input type="datetime-local"  name ="date" class="form-control @error('date') is-invalid @enderror" id="exampleInputPassword1" placeholder="">
+                <label for="date">Attendance Date</label>
+                <input value="{{old("date")}}" id="date" type="datetime-local" name="date" class="form-control @error('date') is-invalid @enderror" placeholder="">
                 @error('date')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -45,7 +48,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">add</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus mr-1"></i>Add</button>
         </div>
     </form>
 

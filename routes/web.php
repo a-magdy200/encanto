@@ -62,8 +62,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/coaches/create', [CoachController::class, 'create'])->name('coaches.create');
     Route::post('/coaches/store', [CoachController::class, 'store'])->name('coaches.store');
     Route::get('/coaches/{coach}/edit', [CoachController::class, 'edit'])->name('coaches.edit');
-    Route::get('/coaches/{coach}/show', [CoachController::class, 'show'])->name('coaches.show');
-    Route::put('/coaches/{coach}/', [CoachController::class, 'update'])->name('coaches.update');
+    Route::get('/coaches/{coach}', [CoachController::class, 'show'])->name('coaches.show');
+    Route::put('/coaches/{coach}', [CoachController::class, 'update'])->name('coaches.update');
     Route::delete('/coaches/{coach}', [CoachController::class, 'delete'])->name('coaches.delete');
 
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');

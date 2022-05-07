@@ -15,15 +15,15 @@
     {
         public function index(Request $request)
         {
-            $headings = ['username', 'email'];
-            $title = 'coaches';
+            $headings = ['Name', 'Email'];
+            $title = 'Coaches';
             if ($request->ajax()) {
                 $coaches = User::role('Coach')->get();
                 return Datatables::of($coaches)
                     ->addColumn('action', function ($row) {
-                        $showUrl = route('coaches.show', ['coach' => $row->id]);
-                        $editUrl = route('coaches.edit', ['coach' => $row->id]);
-                        $deleteUrl = route('coaches.delete', ['coach' => $row->id]);
+                        $showUrl = route('coaches.show', ['coach' => $row]);
+                        $editUrl = route('coaches.edit', ['coach' => $row]);
+                        $deleteUrl = route('coaches.delete', ['coach' => $row]);
                         $btn = "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                       <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>";
                         if (auth()->user()->hasRole('Super Admin')) {
@@ -87,12 +87,13 @@
                 $user->save();
             }
             session()->flash("success", "Coach information has been updated successfully");
+            broadcast(new AppNotificationEvent("A coach has been updated"));
             return to_route('coaches.index');
         }
 
-        public function delete($coach)
+        public function delete(User $coach)
         {
-            User::find($coach)->delete();
+            $coach->delete();
             broadcast(new AppNotificationEvent("A coach has been removed"));
             return response()->json([], 200);
 
