@@ -121,29 +121,31 @@ class TrainingPackageController extends Controller
     public function purchase()
     {
         $packages = TrainingPackage::all();
-        $clients = User::role("Client")->get();
+        $users = User::role("Client")->with('client')->get();
         $gyms = Gym::all();
         return view('packages.purchase', [
             'packages' => $packages,
-            'clients' => $clients,
+            'users' => $users,
             'gyms' => $gyms,
         ]);
     }
 
     public function order(OrderPackageRequest $request)
     {
+        $package = TrainingPackage::find($request->package_id);
+//        dd($request->all());
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             Stripe\Charge::create([
-                "amount" => 100 * 150,
-                "currency" => "inr",
+                "amount" => $package->price / 100,
+                "currency" => env('CASHIER_CURRENCY'),
                 "source" => $request->stripeToken,
                 "description" => "Making test payment."
             ]);
             $package = TrainingPackage::find($request->get('package_id'));
             Order::create([
                 'client_id' => $request->get('client_id'),
-                'package_id' => $request->get('package_id'),
+                'package_id' => $package->id,
                 'number_of_sessions' => $package->number_of_sessions,
                 'price' => $package->price,
             ]);
@@ -151,8 +153,7 @@ class TrainingPackageController extends Controller
             session()->flash('success', 'Payment has been successfully processed.');
             return to_route('packages.index');
         } catch (\Throwable $th) {
-            session()->flash('fail', 'Payment has been failed.');
-            dd($th);
+            session()->flash('fail', 'Payment has been failed.');;
             return back();
         }
     }
