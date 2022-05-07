@@ -118,7 +118,7 @@ class CityManagerController extends Controller
             $avatar_name = $avatar->getClientOriginalName();
             $request->file('avatar')->storeAs($detination_path, $avatar_name);
         } else {
-            $avatar_name = 'images/default_avatar.jpg';
+            $avatar_name = env('DEFAULT_IMAGE');
         }
 
         $user=User::create([

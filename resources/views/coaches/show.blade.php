@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section("page-title")
+    Coach Details
+@endsection
 @section('content-header')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -27,15 +30,15 @@
                                 <img class="profile-user-img img-fluid img-circle" src="{{asset($coach->avatar)}}"
                                      alt="User profile picture">
                             </div>
-
                             <p class="profile-username text-center"><strong>Name: </strong>{{ $coach->name}}</p>
+                            <p class="profile-username text-center"><strong>Email: </strong>{{ $coach->email }}</p>
+                            <p class="profile-username text-center"><strong>Sessions
+                                    Count: </strong>{{ $coach->sessions ? $coach->sessions->count() : 0 }}</p>
 
-                            <p class="profile-username text-center"> <strong>Email: </strong>{{ $coach->email }}</p>
-
-
-
-
-
+                            <div class="text-center p-4 align-items-center d-flex justify-content-center">
+                                <a href="{{ route('coaches.edit', ['coach' => $coach->id]) }}" class="btn btn-success">Edit
+                                    Info</a>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

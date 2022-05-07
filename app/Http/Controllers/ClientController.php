@@ -61,7 +61,7 @@ class ClientController extends Controller
         if($request->file('avatar'))
         {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
         else
-            $path=env('DEFAULTIMAGE');
+            $path=env('DEFAULT_IMAGE');
        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -95,7 +95,7 @@ class ClientController extends Controller
         if($request->file('avatar'))
         {$path = Storage::putFile('avatars/clients', $request->file('avatar'));}
         else
-            $path=env('DEFAULTIMAGE');
+            $path=env('DEFAULT_IMAGE');
         $client=Client::find($clientId);
       $user =User::where('id', $client->user_id)->update([
             'name' => $data['name'],

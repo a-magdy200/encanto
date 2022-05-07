@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreCoachRequest extends FormRequest
+class UpdateCoachRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class StoreCoachRequest extends FormRequest
         return [
             'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
             'email' =>['required','email',Rule::unique('users')->ignore($this->coach)],
-            'password'=>['required','string','min:8', 'password', 'confirmed'],
             'avatar'=>['image','mimes:jpg,jpeg'],
 
         ];
