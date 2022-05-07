@@ -123,7 +123,13 @@ class GymManagerController extends Controller
     }
     public function create()
     {
-        $gyms = Gym::all();
+        if (auth()->user()->hasRole("Super Admin")) {
+            $gyms = Gym::all();
+        } else if (auth()->user()->hasRole('City Manager')) {
+            $gyms = auth()->user()->manager->city ? auth()->user()->manager->city->gyms : [];
+        } else {
+            return view('errors.401');
+        }
         return view('gym-managers.create', [
             'gyms' => $gyms,
         ]);

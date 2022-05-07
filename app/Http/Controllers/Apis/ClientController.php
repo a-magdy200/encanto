@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Apis;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Apis\RegisterRequest;
 use App\Http\Requests\StoreAttendanceRequest;
+use App\Mail\NotifyEmail;
 use App\Models\Attendance;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
@@ -20,7 +23,8 @@ class ClientController extends Controller
     public function index($id){
         $client=DB::table('users')->where('users.id',$id)
         ->join('clients','users.id','=','clients.user_id')
-        ->select('users.name','users.email','users.password','users.avatar','clients.gender','clients.date_of_birth')->get();
+        ->select('users.name','users.email','users.password','users.avatar','clients.gender','clients.date_of_birth')
+        ->get();
         return Response()->json(['Client Profile'=>$client]);
     }
 
@@ -99,6 +103,18 @@ class ClientController extends Controller
 
         return response()->json(["Attendance History"=>$data]);
     }
+    public function remainingSessions(){
+        $userId=Auth::user()->id;
+        $clientId=Client::where('user_id',$userId)->first()->id;
+        $orders=Order::where('client_id',$clientId)->get();
+        $attendedSessions=Attendance::where('client_id',$clientId)->count();
+
+        // $remaining_sessions=(int)$orders-(int)$attendedSessions;
+
+
+        return response()->json(["total_training_sessions"=>$orders]);
+    }
+
 
 
 }

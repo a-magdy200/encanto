@@ -141,4 +141,4 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/training-sessions/{trainingSession}', [TrainingSessionController::class, 'delete'])->name('training-sessions.delete');
     Route::get('/ajax', [TrainingSessionController::class, 'ajax'])->name('training-sessions.ajax');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
