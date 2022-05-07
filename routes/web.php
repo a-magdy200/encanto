@@ -90,13 +90,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatepass');
 
 
-    Route::get('/gyms', [GymController::class, 'showGyms'])->name('show.AllGyms');
-    Route::get('/gyms/create', [GymController::class, 'showGymForm'])->name('show.gymForm');
-    Route::post('/gyms', [GymController::class, 'createGymForm'])->name('create.gymForm');
-    Route::get('/gyms/{gymId}/edit', [GymController::class, 'editGymForm'])->name('edit.gymForm');
-    Route::get('/gyms/{gymId}', [GymController::class, 'showSingleGym'])->name('show.singleGym');
-    Route::put('/gyms/{gymId}', [GymController::class, 'updateGymForm'])->name('update.gymForm');
-    Route::delete('/gyms/{gymId}', [GymController::class, 'deleteGym'])->name('delete.gym');
+    Route::get('/gyms', [GymController::class, 'index'])->name('gyms.index');
+    Route::get('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
+    Route::post('/gyms', [GymController::class, 'store'])->name('gyms.store');
+    Route::get('/gyms/{gym}/edit', [GymController::class, 'edit'])->name('gyms.edit');
+    Route::get('/gyms/{gym}', [GymController::class, 'show'])->name('gyms.show');
+    Route::put('/gyms/{gym}', [GymController::class, 'update'])->name('gyms.update');
+    Route::delete('/gyms/{gym}', [GymController::class, 'destroy'])->name('gyms.destroy');
 
 
     /////////////////// City Routes ///////////

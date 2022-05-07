@@ -19,6 +19,10 @@ class Gym extends Model
         'city_id',
         'created_by',
     ];
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class, 'city_id');
@@ -34,6 +38,10 @@ class Gym extends Model
     public function packages(): HasMany
     {
         return $this->hasMany(TrainingPackage::class)->with('orders');
+    }
+    public function coachesCount(): int
+    {
+        return 0;
     }
 
 

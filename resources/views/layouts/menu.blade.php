@@ -40,7 +40,7 @@
 
 @if(auth()->user()->hasAnyRole(['Super Admin', 'City Manager']))
 <li class="nav-item">
-    <a href="{{ route('show.AllGyms') }}" class="nav-link">
+    <a href="{{ route('gyms.index') }}" class="nav-link">
         <i class="nav-icon fas fa-building"></i>
         <p>Gyms</p>
     </a>
