@@ -151,7 +151,7 @@ class TrainingPackageController extends Controller
             ]);
             broadcast(new AppNotificationEvent("A new training package purchase"));
             session()->flash('success', 'Payment has been successfully processed.');
-            return to_route('packages.index');
+            return to_route('orders.index');
         } catch (\Throwable $th) {
             session()->flash('fail', 'Payment has been failed.');;
             return back();

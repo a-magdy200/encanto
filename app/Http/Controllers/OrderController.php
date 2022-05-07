@@ -7,14 +7,14 @@ use App\Models\User;
 use App\Models\TrainingPackage;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use DataTables;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $headings = ['id', 'Client Name', 'Package Name', 'number_of_sessions', 'price'];
+        $headings = ['id', 'Client Name', 'Package Name', 'Number of Sessions', 'Price'];
         $title = 'orders';
         if ($request->ajax()) {
             $Orders = Order::select('*');
@@ -33,12 +33,15 @@ class OrderController extends Controller
                     $edit=route('orders.edit',['order'=>$row->id]);
                     $delete=route('orders.delete',['id'=>$row->id]);
 
-                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
-                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
-                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
-                    return $btn;
+                    //                    $btn = "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>
+//                    <a href='$edit' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
+//                    <a href='$delete' class='btn btn-danger delete-btn' data-toggle='modal' data-target='#delete-modal'><i class='fa fa-times'></i></a>";
+                    return "<a href='$show' class='btn btn-info'><i class='fa fa-eye'></i></a>";
                 })
-                ->rawColumns(['Client Name','action'])
+                ->addColumn('price', function($row) {
+                    return $row->price / 100;
+                })
+                ->rawColumns(['Client Name','action', 'price'])
                 ->make(true);
         }
 
