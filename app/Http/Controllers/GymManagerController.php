@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\AppNotificationEvent;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateGymManagerRequest;
 use App\Models\CityManager;
@@ -41,15 +42,15 @@ class GymManagerController extends Controller
                         return $row->gym->name;
                     })
                     ->addColumn('avatar',function($row){
-                        $image=$row->avatar;
-                        $imageUrl=asset($image);
+                        $image=$row->user->avatar;
+                        $imageUrl=Storage::url($image);
                         // $cover_image='<img src=\"" + $imageUrl + "\" height=\"100px\" width=\"100px\" alt=\"gym_cover_image\"/>';
                         return '<img src='.$imageUrl.' style="width:100px;height:100px;" alt="user avatar"/>';
                     })
                     ->addColumn('action', function($row){
-                        $showUrl = route('gymmanagers.create', ['gymmanagerid'=>$row->id]);
-                        $editUrl = route('gymmanagers.edit', ['gymmanagerid'=>$row->id]);
-                        $deleteUrl = route('gymmanagers.destroy', ['gymmanagerid' => $row->id]);
+                        $showUrl = route('gym-managers.show', ['gymManager'=>$row]);
+                        $editUrl = route('gym-managers.edit', ['gymManager'=>$row]);
+                        $deleteUrl = route('gym-managers.destroy', ['gymManager' => $row]);
 
                         $btn ="<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                            <a href='$editUrl' class='btn btn-warning mx-2'><i class='fa fa-edit'></i></a>
@@ -62,8 +63,8 @@ class GymManagerController extends Controller
                     ->make(true);
             }
             $headings = ['Manager Name','Gym Name', 'Avatar', 'National ID', 'Action'];
-            $title = 'gymmanager';
-            return view('gymmanagers.index')->with(['title' => $title, 'headings' => $headings]);
+            $title = 'Gym Manager';
+            return view('gym-managers.index')->with(['title' => $title, 'headings' => $headings]);
         }
 
     public function destroy($gymmanagerid)
@@ -82,58 +83,47 @@ class GymManagerController extends Controller
         }
     }
 
-    public function show($gymmanagerid)
+    public function show(GymManager $gymManager)
     {
-        $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;
-        $user = User::where('id', $user_id)->first();
-        $gymmanager = GymManager::where('id', $gymmanagerid)->first();
-        $gym = Gym::where('id', $gymmanager->gym_id)->first();
-        $headings = ['name', 'email', 'avatar', 'national_id', 'is_banned',];
-        $title = 'gymmanager';
-        return view('gymmanagers.show', [
-            'gymmanager' => $gymmanager,
-            'user' => $user,
-            'gym' => $gym,
+        return view('gym-managers.show', [
+            'gymManager' => $gymManager,
         ]);
     }
 
-    public function edit($gymmanagerid)
+    public function edit(GymManager $gymManager)
     {
-        $gymmanager = GymManager::find($gymmanagerid);
-        $user_id=$gymmanager->user_id;
-        $user = User::where('id', $user_id)->first();
-        $gymmanager = GymManager::where('id', $gymmanagerid)->first();
-        $gyms = Gym::all();
-        return view('gymmanagers.edit', [
-            'gymmanager' => $gymmanager,
-            'user' => $user,
+        if (auth()->user()->hasRole('Super Admin')) {
+            $gyms = Gym::all();
+        } else if (auth()->user()->hasRole('City Manager')) {
+            $gyms = auth()->user()->manager->city ? auth()->user()->manager->city->gyms : [];
+        }
+        return view('gym-managers.edit', [
+            'gymManager' => $gymManager,
             'gyms' => $gyms,
         ]);
     }
-    public function update(UpdateGymManagerRequest $request , $gymmanagerid)
+    public function update(UpdateGymManagerRequest $request , GymManager $gymManager)
     {
         $data = request()->all();
-        $path=Storage::putFile('avatars',$request->file('image'));
-        $gym = Gym::where('name', $data['gym'])->first();
-        User::where('id', $gymmanagerid)
-            ->update([
+            $user = $gymManager->user;
+        if ($request->hasFile("image")) {
+            $path = Storage::putFile('avatars', $request->file('image'));
+            $user->avatar = $path;
+            $user->save();
+        }
+        $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'avatar'=>$path,
             ]);
-        GymManager::where('user_id', $gymmanagerid)
-            ->update([
-                'is_banned' => '0',
-                'gym_id' => $gym->id,
-            ]);
+        $gymManager->gym_id = $data['gym'];
+        $gymManager->save();
 
-        return to_route('gymmanagers.index');
+        return to_route('gym-managers.index');
     }
     public function create()
     {
         $gyms = Gym::all();
-        return view('gymmanagers.create', [
+        return view('gym-managers.create', [
             'gyms' => $gyms,
         ]);
     }
@@ -141,7 +131,11 @@ class GymManagerController extends Controller
     {
 
         $data = request()->all();
-        $path = Storage::putFile('avatars', $request->file('image'));
+        if ($request->hasFile("image")) {
+            $path = Storage::putFile('avatars', $request->file('image'));
+        } else {
+            $path = env('DEFAULT_IMAGE');
+        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -151,14 +145,16 @@ class GymManagerController extends Controller
         ]);
         $user->assignRole('Gym Manager');
 
-        $gymmanager = GymManager::create([
+       GymManager::create([
             'national_id' => $data['national_id'],
-            'is_banned' => '0',
+            'is_banned' => false,
             'user_id' => $user->id,
             'gym_id' => $data['gym'],
-
+           'is_approved' => true
         ]);
-        return to_route('gymmanagers.index');
+       session()->flash("success", "Gym managers has been added successfully");
+       broadcast(new AppNotificationEvent("A new gym manager has been added"));
+        return to_route('gym-managers.index');
     }
     public function ban($id)
     {
@@ -171,7 +167,7 @@ class GymManagerController extends Controller
        $gymmanager->ban();
        // dd($x);
        $gymmanager->update();
-       return to_route('gymmanagers.index');
+       return to_route('gym-managers.index');
 
     }
     public function approve($id)
@@ -179,7 +175,7 @@ class GymManagerController extends Controller
         $gymmanager = GymManager::find($id);
         $gymmanager->is_approved='1';
        $gymmanager->update();
-       return to_route('gymmanagers.index');
+       return to_route('gym-managers.index');
 
     }
 }

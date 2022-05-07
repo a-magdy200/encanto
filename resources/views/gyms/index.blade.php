@@ -32,6 +32,16 @@
     <script type="text/javascript">
         $(function () {
             $('.datatable').DataTable({
+                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                responsive: true,
+                dom: 'Bfrtip',
+                pageLength: 10,
+                paging: true,
+                lengthChange: false,
+                searching: true,
+                ordering: true,
+                info: false,
+                autoWidth: false,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('gyms.index') }}",

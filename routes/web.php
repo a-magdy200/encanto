@@ -34,16 +34,16 @@ Route::get('/test', [HomeController::class, 'test'])->name('test');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['web', 'auth']], function () {
     // Route::get('/table', [HomeController::class, 'table'])->name('home');
-    Route::get('/gymmanagers/create/', [GymManagerController::class, 'create'])->name('gymmanagers.create');
-    Route::get('/gymmanagers/{id}/ban', [GymManagerController::class, 'ban'])->name('gymmanagers.ban');
-    Route::get('/gymmanagers/{id}/approve', [GymManagerController::class, 'approve'])->name('gymmanagers.approve');
+    Route::get('/gym-managers/create/', [GymManagerController::class, 'create'])->name('gym-managers.create');
+    Route::get('/gym-managers/{gymManager}/ban', [GymManagerController::class, 'ban'])->name('gym-managers.ban');
+    Route::get('/gym-managers/{gymManager}/approve', [GymManagerController::class, 'approve'])->name('gym-managers.approve');
 
-    Route::get('/gymmanagers/{gymmanagerid}/edit', [GymManagerController::class, 'edit'])->name('gymmanagers.edit');
-    Route::get('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'show'])->name('gymmanagers.show');
-    Route::put('/gymmanagers/{gymmanagerid}', [GymManagerController::class, 'update'])->name('gymmanagers.update');
-    Route::post('gymmanagers/create', [GymManagerController::class, 'store'])->name('gymmanagers.store');
-    Route::get('/gymmanagers', [GymManagerController::class, 'index'])->name('gymmanagers.index')->middleware('forbid-banned-user');
-    Route::delete('/gymmanagers/{gymmanagerid}/delete', [GymManagerController::class, 'destroy'])->name('gymmanagers.destroy');
+    Route::get('/gym-managers/{gymManager}/edit', [GymManagerController::class, 'edit'])->name('gym-managers.edit');
+    Route::get('/gym-managers/{gymManager}', [GymManagerController::class, 'show'])->name('gym-managers.show');
+    Route::put('/gym-managers/{gymManager}', [GymManagerController::class, 'update'])->name('gym-managers.update');
+    Route::post('gym-managers/create', [GymManagerController::class, 'store'])->name('gym-managers.store');
+    Route::get('/gym-managers', [GymManagerController::class, 'index'])->name('gym-managers.index')->middleware('forbid-banned-user');
+    Route::delete('/gym-managers/{gymManager}/delete', [GymManagerController::class, 'destroy'])->name('gym-managers.destroy');
 
     Route::get('/revenues', [RevenueController::class, 'index'])->name('revenues.admin');
 

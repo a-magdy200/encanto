@@ -31,8 +31,8 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($this->gymmanagerid)],
-            'password' => ['required', 'string', 'min:8'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'avatar' => ['image|mimes:jpg,png|max:2048'],
             'national_id' => ['integer', 'digits:16'],
         ];

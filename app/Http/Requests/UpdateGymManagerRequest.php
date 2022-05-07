@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,9 +30,10 @@ class UpdateGymManagerRequest extends FormRequest
      */
     public function rules()
     {
+        $id = User::where('email', $this->email)->first()->id;
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($this->gymmanagerid)],
+            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($id)],
             'avatar' => ['image|mimes:jpg,png|max:2048'],
 
         ];

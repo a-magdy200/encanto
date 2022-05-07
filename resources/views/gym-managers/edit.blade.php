@@ -11,24 +11,24 @@
   </ul>
 </div>
 @endif
-<form method="post" action="{{route('gymmanagers.update',['gymmanagerid'=>$gymmanager['user_id']])}}" enctype="multipart/form-data">
+<form method="post" action="{{route('gym-managers.update',['gymManager'=>$gymManager])}}" enctype="multipart/form-data">
   @method('put')
   @csrf
 
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Name</label>
-    <input name="name" type="text" class="form-control" id="exampleFormControlInput1" value="{{$user['name']}}">
+    <input name="name" type="text" class="form-control" id="exampleFormControlInput1" value="{{$gymManager->user->name}}">
   </div>
   <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Email</label>
-    <textarea name='email' class="form-control" id="exampleFormControlTextarea1" rows="3">{{$user['email']}}</textarea>
+    <label for="exampleFormControlEmail" class="form-label">Email</label>
+    <input type="email" name='email' class="form-control" id="exampleFormControlEmail" value="{{$gymManager->user->email}}" />
   </div>
 
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">Gym</label>
     <select name="gym" class="form-control">
       @foreach ($gyms as $gym)
-      <option name="gym">{{$gym->name}}</option>
+      <option value="{{$gym->id}}" @checked($gymManager->gym && ($gymManager->gym->id ==$gym->id)) name="gym">{{$gym->name}}</option>
       @endforeach
     </select>
   </div>

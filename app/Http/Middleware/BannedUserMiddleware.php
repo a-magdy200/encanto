@@ -24,7 +24,7 @@ class BannedUserMiddleware
         $gymManager = GymManager::find(['user_id', $userId]);
         if ($gymManager) {
             if ($gymManager->is_banned) {
-                return view('gymmanagers.banned');
+                return view('gym-managers.banned');
             } else {
                 return $next($request);
             }
