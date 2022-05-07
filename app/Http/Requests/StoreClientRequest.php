@@ -33,7 +33,7 @@ class StoreClientRequest extends FormRequest
             'password'=>['required','string','min:8', 'confirmed'],
             'gender'=>['required'],
             'date'=>['required','before:today'],
-            'avatar'=>['image','mimes:jpg,jpeg'],
+            'avatar' => ['image', 'mimes:jpg,jpeg'],
         ];
 
     }

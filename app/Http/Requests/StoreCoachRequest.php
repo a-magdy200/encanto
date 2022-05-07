@@ -27,7 +27,7 @@ class StoreCoachRequest extends FormRequest
         return [
             'name'=>['required','regex:/^[\pL\s\-]+$/u','min:3'],
             'email' =>['required','email',Rule::unique('users')->ignore($this->coach)],
-            'password'=>['required','string','min:8', 'confirmed'],
+            'password'=>['required','string','min:8',  'confirmed'],
             'avatar'=>['image','mimes:jpg,jpeg'],
 
         ];
