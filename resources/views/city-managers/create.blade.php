@@ -31,8 +31,8 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Name</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1" value="{{old('name')}}">
+                            <label for="exampleInputName">Name</label>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" value="{{old('name')}}">
                         </div>
                         @error('name')
                         <div class="alert alert-danger">{{ $message }}</div>

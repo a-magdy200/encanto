@@ -30,12 +30,6 @@
         <p>City Managers</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user-alt"></i>
-        <p>Users</p>
-    </a>
-</li>
 @endif
 
 @if(auth()->user()->hasAnyRole(['Super Admin', 'City Manager']))

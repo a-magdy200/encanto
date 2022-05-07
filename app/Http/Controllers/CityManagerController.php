@@ -18,10 +18,10 @@ class CityManagerController extends Controller
     public function index(Request $request)
     {
 
-        $headings = ['id', 'name', 'city', 'Approved'];
+        $headings = ['ID', 'Name', 'City', 'Approved'];
         $title = 'City Managers';
         $user = auth()->user();
-        if (!$user->hasRole(['Super Admin'])) {
+        if (!$user->hasRole('Super Admin')) {
             return view('errors.401');
         } else {
 
