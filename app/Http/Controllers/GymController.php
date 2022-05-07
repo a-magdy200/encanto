@@ -201,6 +201,7 @@
                 if ($sessions) {
                     $gym->delete();
                     Storage::disk('public')->delete('GymImages/' . $gym['cover_image']);
+                    broadcast(new AppNotificationEvent("A gym has been removed"));
                     return response()->json([], 200);
                 } else {
                     return response()->json([], 400);

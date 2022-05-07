@@ -27,26 +27,26 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="POST" action="{{ route('citymanagers.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('city-managers.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1" value="">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1" value="{{old('name')}}">
                         </div>
                         @error('name')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" name="email" value="">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" name="email" value="{{old('email')}}">
                         </div>
                         @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
                             <label for="exampleInputEmail1">National Id</label>
-                            <input type="text" class="form-control @error('national_id') is-invalid @enderror" id="exampleInputEmail1" name="national_id" value="">
+                            <input type="text" class="form-control @error('national_id') is-invalid @enderror" id="exampleInputEmail1" name="national_id" value="{{old('national_id')}}">
                         </div>
                         @error('national_id')
                         <div class="alert alert-danger">{{ $message }}</div>

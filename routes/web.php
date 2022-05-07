@@ -110,13 +110,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/cities/{city}/delete', [CityController::class, 'destroy'])->name('cities.destroy');
 
 
-    Route::get('/citymanagers', [CityManagerController::class, 'index'])->name('citymanagers.index');
-    Route::get('/citymanagers/create', [CityManagerController::class, 'create'])->name('citymanagers.create');
-    Route::post('/citymanagers', [CityManagerController::class, 'store'])->name('citymanagers.store');
-    Route::get('/citymanagers/{citymanager}/edit', [CityManagerController::class, 'edit'])->name('citymanagers.edit');
-    Route::put('/citymanagers/{citymanager}', [CityManagerController::class, 'update'])->name('citymanagers.update');
-    Route::delete('/citymanagers/{citymanager}', [CityManagerController::class, 'destroy'])->name('citymanagers.destroy');
-    Route::get('/citymanagers/{citymanager}', [CityManagerController::class, 'show'])->name('citymanagers.show');
+    Route::get('/city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
+    Route::get('/city-managers/create', [CityManagerController::class, 'create'])->name('city-managers.create');
+    Route::post('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
+    Route::get('/city-managers/{cityManager}/edit', [CityManagerController::class, 'edit'])->name('city-managers.edit');
+    Route::put('/city-managers/{cityManager}', [CityManagerController::class, 'update'])->name('city-managers.update');
+    Route::delete('/city-managers/{cityManager}', [CityManagerController::class, 'destroy'])->name('city-managers.destroy');
+    Route::get('/city-managers/{cityManager}', [CityManagerController::class, 'show'])->name('city-managers.show');
+    Route::get('/city-managers/{cityManager}/approve', [CityManagerController::class, 'approve'])->name('city-managers.approve');
 
 
     Route::get('/packages/create/', [TrainingPackageController::class, 'create'])->name('packages.create');

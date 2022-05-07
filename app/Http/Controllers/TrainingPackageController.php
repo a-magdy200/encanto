@@ -114,6 +114,7 @@ class TrainingPackageController extends Controller
     public function delete($package)
     {
         TrainingPackage::find($package)->delete();
+        broadcast(new AppNotificationEvent("A training package has been removed"));
         return response()->json([], 200);
     }
 

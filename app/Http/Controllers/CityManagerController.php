@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Role;
-use App\Models\User;
+use App\Events\AppNotificationEvent;
+use App\Http\Requests\AddCityManagerRequest;
+use App\Http\Requests\UpdateCityManagerRequest;
 use App\Models\City;
 use App\Models\CityManager;
-use App\Http\Requests\updateManagerRequest;
-use App\Http\Requests\AddCityManagerRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Averages;
 use Yajra\DataTables\DataTables;
 
 class CityManagerController extends Controller
@@ -19,10 +18,10 @@ class CityManagerController extends Controller
     public function index(Request $request)
     {
 
-        $headings = ['id', 'name', 'city','is_approved'];
+        $headings = ['id', 'name', 'city', 'Approved'];
         $title = 'City Managers';
         $user = auth()->user();
-        if (!$user->hasRole([ 'Super Admin'])) {
+        if (!$user->hasRole(['Super Admin'])) {
             return view('errors.401');
         } else {
 
@@ -30,10 +29,9 @@ class CityManagerController extends Controller
                 $cityManagers = CityManager::with('user', 'city')->get();
                 return Datatables::of($cityManagers)
                     ->addColumn('action', function ($row) {
-                        $showUrl = route('citymanagers.show', ['citymanager' => $row->id]);
-                        $editUrl = route('citymanagers.edit', ['citymanager' => $row->id]);
-                        $deleteUrl = route('citymanagers.destroy', ['citymanager' => $row->id]);
-
+                        $showUrl = route('city-managers.show', ['cityManager' => $row]);
+                        $editUrl = route('city-managers.edit', ['cityManager' => $row]);
+                        $deleteUrl = route('city-managers.destroy', ['cityManager' => $row]);
                         return "<a href='$showUrl' class='btn btn-info'><i class='fa fa-eye'></i></a>
                 <a href='$editUrl' class='btn btn-warning mx-2'><i
                         class='fa fa-edit'></i></a>
@@ -41,74 +39,46 @@ class CityManagerController extends Controller
                     data-target='#delete-modal'><i class='fa fa-times'></i></a>";
                     })
                     ->addColumn('city', function ($row) {
-                        $city = $row->manager->city ? $row->manager->city->name : 'Not Found';
-                        return $city;
+                        return $row->city ? $row->city->name : 'Not Assigned';
                     })
-                    ->rawColumns(['name', 'city', 'action'])
+                    ->addColumn('name', function ($row) {
+                        return $row->user->name;
+                    })
+                    ->addColumn('is_approved', function ($row) {
+                        if ($row->is_approved) {
+                            return "<i class='fa fa-check'></i>";
+                        } else {
+                            return "<a href='" . route("city-managers.approve", ["cityManager" => $row]) . "' class='btn btn-info'><i
+                        class='fa fa-check mr-1'></i>Approve</a>";
+                        }
+                    })
+                    ->rawColumns(['name', 'city', 'action', 'is_approved'])
                     ->make(true);
             }
         }
-        return view('citymanagers.index', [
+        return view('city-managers.index', [
             'title' => $title,
             'headings' => $headings
         ]);
     }
-    public function show($managerId)
+
+    public function show(CityManager $cityManager)
     {
 
-        $user = User::find($managerId);
-        return view('citymanagers.show', [
-            'user' => $user
+        return view('city-managers.show', [
+            'cityManager' => $cityManager
         ]);
     }
-    public function edit($managerId)
+
+    public function edit(CityManager $cityManager)
     {
-        $user = User::find($managerId);
         $cities = City::all();
-        return view('citymanagers.edit', [
-            'user' => $user,
+        return view('city-managers.edit', [
+            'cityManager' => $cityManager,
             'cities' => $cities
         ]);
     }
-    public function update($managerId, updateManagerRequest $request)
-    {
-        $data = request()->all();
 
-        $user = User::find($managerId);
-        if (!Hash::check($data['old_password'], $user->password)) {
-
-            return redirect()->back()->with('error', 'old password is not correct');
-        } else {
-
-            if ($request->hasFile('avatar')) {
-                Storage::disk('public')->delete('public/images' . User::find($managerId)->avatar);
-                $detination_path = 'public/images';
-                $avatar = $request->file('avatar');
-                $avatar_name = $avatar->getClientOriginalName();
-                $request->file('avatar')->storeAs($detination_path, $avatar_name);
-            } else {
-                $avatar_name = User::find($managerId)->avatar;
-            }
-
-            User::where('id', $managerId)->update([
-                'name' => $data['name'],
-                'email' =>  $data['email'],
-                'password' => Hash::make($data['new_password']),
-                'avatar' => $avatar_name,
-            ]);
-            CityManager::where('user_id', $managerId)->update([
-               'city_id' => $data['city'],
-            ]);
-            return redirect()->route('citymanagers.index');
-        }
-    }
-    public function create()
-    {
-        $cities = City::all();
-        return view('citymanagers.create', [
-            'cities' => $cities,
-        ]);
-    }
     public function store(AddCityManagerRequest $request)
     {
         $data = request()->all();
@@ -121,7 +91,7 @@ class CityManagerController extends Controller
             $avatar_name = env('DEFAULT_IMAGE');
         }
 
-        $user=User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -137,24 +107,66 @@ class CityManagerController extends Controller
             'national_id' => $data['national_id'],
             'user_id' => $userId,
             'city_id' => $data['city'],
+            'is_approved'=>true
         ]);
 
-        return redirect()->route('citymanagers.index');
+        session()->flash("success", "A City Manager has been added");
+        broadcast(new AppNotificationEvent("A City Manager has been added"));
+        return to_route('city-managers.index');
     }
-    public function destroy($managerId)
+
+    public function create()
     {
-        Storage::disk('public')->delete('public/images' . User::find($managerId)->avatar);
-        $user = User::find($managerId);
+        $cities = City::all();
+        return view('city-managers.create', [
+            'cities' => $cities,
+        ]);
+    }
+
+    public function destroy(CityManager $cityManager)
+    {
+        Storage::disk('public')->delete('public/images' . $cityManager->user->avatar);
+        $user = $cityManager->user;
+        $cityManager->delete();
         $user->delete();
-        return redirect()->route('citymanagers.index');
+        broadcast(new AppNotificationEvent("A city manager has been removed"));
+        return response()->json([], 200);
     }
-    public function approve($id)
+
+    public function approve(CityManager $cityManager)
     {
-        $citymanager = CityManager::find($id);
-       // dd($citymanager);
-        $citymanager->is_approved=1;
-      // dd($citymanager->is_approved);
-       $citymanager->update();
-       return to_route('citymanagers.index');
+        $cityManager->is_approved = 1;
+        $cityManager->update();
+        session()->flash("success", "A City Manager has been approved");
+        broadcast(new AppNotificationEvent("A City Manager has been approved"));
+        return to_route('city-managers.index');
+    }
+
+    public function update(CityManager $cityManager, UpdateCityManagerRequest $request)
+    {
+        $data = request()->all();
+
+        $user = $cityManager->user;
+
+        if ($request->hasFile('avatar')) {
+            Storage::disk('public')->delete('public/images' . $user->avatar);
+            $destination_path = 'public/images';
+            $avatar = $request->file('avatar');
+            $avatar_name = $avatar->getClientOriginalName();
+            $request->file('avatar')->storeAs($destination_path, $avatar_name);
+            $user->avatar = $avatar_name;
+            $user->save();
+        }
+
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ]);
+        $cityManager->update([
+            'city_id' => $data['city'],
+        ]);
+        session()->flash("success", "City manager updated successfully");
+        broadcast(new AppNotificationEvent("A city manager has been updated"));
+        return to_route('city-managers.index');
     }
 }

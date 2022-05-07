@@ -25,7 +25,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('citymanagers') ? 'active' : '' }}">
+    <a href="{{ route('city-managers.index') }}" class="nav-link {{ Request::is('city-managers') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user-alt"></i>
         <p>City Managers</p>
     </a>

@@ -96,6 +96,7 @@
         public function delete($coach)
         {
             User::find($coach)->delete();
+            broadcast(new AppNotificationEvent("A coach has been removed"));
             return response()->json([], 200);
 
         }

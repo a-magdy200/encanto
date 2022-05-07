@@ -114,6 +114,7 @@
             $userId = $client->user_id;
             $client->delete();
             User::find($userId)->delete();
+            broadcast(new AppNotificationEvent("A client has been removed"));
             return response()->json([], 200);
 
         }

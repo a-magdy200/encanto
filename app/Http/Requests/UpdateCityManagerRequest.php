@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\User;
 
-class updateManagerRequest extends FormRequest
+class UpdateCityManagerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,17 +25,13 @@ class updateManagerRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {  $email = User::find($this->citymanager)->email;
-        $userId = User::find((int) request()->segment(3));
+    {  $email = User::where('email', $this->email)->first()->email;
 
         return [
             'name' => ['required','regex:/^[\pL\s\-]+$/u'],
             'email' => [ 'required',Rule::unique('users')->ignore($email,'email'),  'email', 'max:255' ],
-            'old_password' => ['required'],
-            'new_password' => ['required', 'min:6'],
-            'confirm_password' => ['required_with:new_password','same:new_password'],
-            'city' => ['required'],
-            'avatar' => ['image', 'mimes:jpg,png'],
+            'city' => ['required', 'exists:cities,id'],
+            'avatar' => ['image', 'mimes:jpg,jpeg'],
         ];
     }
 }
