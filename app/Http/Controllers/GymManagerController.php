@@ -152,7 +152,7 @@ class GymManagerController extends Controller
         $user->assignRole('Gym Manager');
 
         $gymmanager = GymManager::create([
-            'national_id' => $data['nationalid'],
+            'national_id' => $data['national_id'],
             'is_banned' => '0',
             'user_id' => $user->id,
             'gym_id' => $data['gym'],

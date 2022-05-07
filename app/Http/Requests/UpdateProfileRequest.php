@@ -28,9 +28,9 @@ class UpdateProfileRequest extends FormRequest
         return [
             'userName'=>['required','min:3'],
             'userEmail'=>['required','email'],
-            'nationalid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 2),'min:16' ],
+            'national_id' => [Rule::requiredIf(fn () => Auth::user()->role_id === 2),'min:16' ],
             'cityid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 2),'exists:cities,id'],
-            'nationalid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'min:16' ],
+            'national_id' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'min:16' ],
             'gymid' => [Rule::requiredIf(fn () => Auth::user()->role_id === 3),'exists:gyms,id'],
             'date_of_birth' => [Rule::requiredIf(fn () => Auth::user()->role_id === 5), 'date', 'before:today'],
 

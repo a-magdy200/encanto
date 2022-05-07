@@ -6,87 +6,81 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('show.AllGyms') }}" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Gyms
-        </p>
+    <a href="{{ route('revenues.admin') }}" class="nav-link">
+        <i class="nav-icon fas fa-money-bill"></i>
+        <p>Revenues</p>
     </a>
 </li>
-
+<li class="nav-item">
+    <a href="{{ route('profile.info') }}" class="nav-link {{ Request::is('profile') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user"></i>
+        <p>Profile</p>
+    </a>
+</li>
+@if(auth()->user()->hasRole('Super Admin'))
 <li class="nav-item">
     <a href="{{ route('show.cities') }}" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Cities
-        </p>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Users
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('gymmanagers.index') }}" class="nav-link {{ Request::is('gymmanagers') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-table"></i>
-        <p>Gym Managers</p>
+        <i class="nav-icon fas fa-city"></i>
+        <p>Cities</p>
     </a>
 </li>
 <li class="nav-item">
     <a href="{{ route('citymanagers.index') }}" class="nav-link {{ Request::is('citymanagers') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-table"></i>
+        <i class="nav-icon fas fa-user-alt"></i>
         <p>City Managers</p>
     </a>
 </li>
-
-
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Revenue
-        </p>
+        <i class="nav-icon fas fa-user-alt"></i>
+        <p>Users</p>
+    </a>
+</li>
+@endif
+
+@if(auth()->user()->hasAnyRole(['Super Admin', 'City Manager']))
+<li class="nav-item">
+    <a href="{{ route('show.AllGyms') }}" class="nav-link">
+        <i class="nav-icon fas fa-building"></i>
+        <p>Gyms</p>
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-table"></i>
+    <a href="{{ route('gymmanagers.index') }}" class="nav-link {{ Request::is('gymmanagers') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user-alt"></i>
+        <p>Gym Managers</p>
+    </a>
+</li>
+@endif
 
+<li class="nav-item">
+    <a href="{{ route('attendance.index') }}" class="nav-link {{ Request::is('attendance') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-table"></i>
         <p>Attendance</p>
     </a>
 </li>
 
 <li class="nav-item">
     <a href="{{ route('coaches.index') }}" class="nav-link {{ Request::is('coaches') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-table"></i>
-
+        <i class="nav-icon fas fa-user-alt"></i>
         <p>Coaches</p>
     </a>
 </li>
-
 <li class="nav-item">
     <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-table"></i>
-
+        <i class="nav-icon fas fa-user-alt"></i>
         <p>Clients</p>
     </a>
 </li>
-
 <li class="nav-item">
     <a href="{{ route('packages.index') }}" class="nav-link {{ Request::is('packages') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-table"></i>
+        <i class="nav-icon fas fa-list"></i>
         <p>Training Packages</p>
     </a>
 </li>
-
 <li class="nav-item">
     <a href="{{ route('trainingSessions.index') }}" class="nav-link {{ Request::is('trainingSessions') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-table"></i>
+        <i class="nav-icon fas fa-list"></i>
         <p>Training Sessions</p>
     </a>
 </li>
@@ -96,18 +90,5 @@
         <p>Orders History</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="{{ route('profile.info') }}" class="nav-link {{ Request::is('profile') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-street"></i>
-        <p>profile info</p>
-    </a>
-</li><li class="nav-item">
-    <a href="{{ route('revenues.admin') }}" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>
-        Revenues
-        </p>
-    </a>
-
 
 

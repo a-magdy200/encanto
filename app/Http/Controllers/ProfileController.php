@@ -22,16 +22,7 @@ class ProfileController extends Controller
     }
     public function edit()
     {
-        
-        if (Auth::user()->role_id == 2) {
-            $cities = City::all();
-            return view('profile.edit', ['cities' => $cities]);
-        } else if (Auth::user()->role_id == 3) {
-            $gyms = Gym::all();
-            return view('profile.edit', ['gyms' => $gyms]);
-        } else {
-            return view('profile.edit');
-        }
+        return view('profile.edit');
     }
     public function update(UpdateProfileRequest $request)
     {
@@ -42,36 +33,36 @@ class ProfileController extends Controller
         $user->email = $request->get('userEmail');
         $user->update();
 
-        if ($userid == 2) {
-            $citymanager = CityManager::where('user_id','=',$userid)->first();
-            $citymanager->city_id=$request->get('cityid');
-            $citymanager->national_id=$request->get('nationalid');
-            $citymanager->update();
+        if ($user->hasRole('City Manager')) {
+//            $citymanager = CityManager::where('user_id','=',$userid)->first();
+//            $citymanager->city_id=$request->get('cityid');
+//            $citymanager->national_id=$request->get('national_id');
+//            $citymanager->update();
 
-        } else if ($userid == 3) {
-            $gymmanager = GymManager::where('user_id','=',$userid)->first();
-            $gymmanager->gym_id=$request->get('gymid');
-            $gymmanager->national_id=$request->get('nationalid');
-            $gymmanager->update();
-        } else if ($userid == 5) {
+        } else if ($user->hasRole('Gym Manager')) {
+//            $gymmanager = GymManager::where('user_id','=',$userid)->first();
+//            $gymmanager->gym_id=$request->get('gymid');
+//            $gymmanager->national_id=$request->get('national_id');
+//            $gymmanager->update();
+        } else if ($user->hasRole('Client')) {
             $client = Client::where('user_id','=',$userid)->first();
             $client->date_of_birth=$request->get('dateofbirth');
             $client->update();
         }
-
-
-        return view('profile.info');
+        session()->flash("success", "Profile info updated successfully");
+        return to_route('profile.info');
     }
-    public function editpass()
+    public function editPassword()
     {
-       return view('profile.editpass');
+       return view('profile.edit-pass');
     }
-    public function updatepass(UpdatePasswordRequest $request)
+    public function updatePassword(UpdatePasswordRequest $request)
     {
         $userid=Auth::user()->id;
         $user = User::find($userid);
         $user->password = $request->get('password');
         $user->update();
-        return to_route('profile.edit');
+        session()->flash("success", "Password updated successfully");
+        return to_route('profile.info');
     }
 }

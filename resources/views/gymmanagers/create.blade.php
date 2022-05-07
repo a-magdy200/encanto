@@ -42,8 +42,8 @@
                     <input name="password" value="" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputnationalid1">National ID</label>
-                    <input name="nationalid" value="" type="text" class="form-control" id="exampleInputnattionalid1" placeholder="Enter national id">
+                    <label for="exampleInputnational_id1">National ID</label>
+                    <input name="national_id" value="" type="text" class="form-control" id="exampleInputnattionalid1" placeholder="Enter national id">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Gym</label>
