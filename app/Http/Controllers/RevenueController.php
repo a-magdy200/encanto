@@ -23,11 +23,8 @@ class RevenueController extends Controller
 //            $users = User::where('role_id', '=', $roleId)->get();
             $orders = Order::all();
             $revenues = Order::all()->sum('price');
-
             $clientsCount = $clients->count();
             $ordersCount = $orders->count();
-
-
         }
 
         /* City Manager */
@@ -70,11 +67,14 @@ class RevenueController extends Controller
 
 
 
+        } else {
+            return view("errors.401");
         }
         return view('revenues.index', [
             'clientsCount' => $clientsCount,
             'ordersCount' => $ordersCount,
             'revenues' => $revenues,
+            'orders' => $orders
         ]);
 
     }

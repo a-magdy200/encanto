@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section("page-title")
+    Revenues
+@endsection
 @section('content-header')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -15,8 +18,8 @@
                 </div>
             </div>
         </div><!-- /.container-fluid -->
-    @endsection
-    @section('content')
+        @endsection
+        @section('content')
             <div class="container mt-5">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
@@ -25,9 +28,6 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{ $clientsCount }}</h3>
-
-
-
                                 <p>Number of Users</p>
                             </div>
                             <div class="icon">
@@ -41,8 +41,6 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{ $ordersCount }}<sup style="font-size:20px"></sup></h3>
-
-
                                 <p>Number of Orders</p>
                             </div>
                             <div class="icon">
@@ -56,10 +54,6 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>${{ $revenues/100 }}</h3>
-
-
-
-
                                 <p>Total Revenues</p>
                             </div>
                             <div class="icon">
@@ -71,5 +65,4 @@
                 </div>
                 <!-- /.row -->
             </div>
-
-     @endsection
+@endsection
