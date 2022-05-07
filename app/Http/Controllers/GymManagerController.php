@@ -46,6 +46,21 @@ class GymManagerController extends Controller
                         $imageUrl=Storage::url($image);
                         // $cover_image='<img src=\"" + $imageUrl + "\" height=\"100px\" width=\"100px\" alt=\"gym_cover_image\"/>';
                         return '<img src='.$imageUrl.' style="width:100px;height:100px;" alt="user avatar"/>';
+                    })->addColumn('is_approved', function ($row) {
+                        if ($row->is_approved) {
+                            return "<i class='fa fa-check'></i>";
+                        } else {
+                            return "<a href='" . route("gym-managers.approve", ["gymManager" => $row]) . "' class='btn btn-info'><i
+                        class='fa fa-check mr-1'></i>Approve</a>";
+                        }
+                    })->addColumn('is_banned', function ($row) {
+                        if ($row->is_banned) {
+                            return "<a href='" . route("gym-managers.unban", ["gymManager" => $row]) . "' class='btn btn-success'><i
+                        class='fa fa-check mr-1'></i>Unban</a>";
+                        } else {
+                            return "<a href='" . route("gym-managers.ban", ["gymManager" => $row]) . "' class='btn btn-danger'><i
+                        class='fa fa-ban mr-1'></i>Ban</a>";
+                        }
                     })
                     ->addColumn('action', function($row){
                         $showUrl = route('gym-managers.show', ['gymManager'=>$row]);
@@ -59,10 +74,10 @@ class GymManagerController extends Controller
                         return $btn;
                     })
 
-                    ->rawColumns(['avatar', 'manager_name', 'gym_name','action'])
+                    ->rawColumns(['avatar', 'manager_name', 'is_banned', 'is_approved', 'gym_name','action'])
                     ->make(true);
             }
-            $headings = ['Manager Name','Gym Name', 'Avatar', 'National ID', 'Action'];
+            $headings = ['Manager Name','Gym Name', 'Avatar', 'National ID', 'Banned', 'Approved', 'Action'];
             $title = 'Gym Manager';
             return view('gym-managers.index')->with(['title' => $title, 'headings' => $headings]);
         }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->date('date_of_birth');
-            $table->date('last_login')->default(Carbon::now());
+            $table->date('last_login')->default(\Carbon\Carbon::now());
             $table->enum('gender', ['male', 'female']);
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();

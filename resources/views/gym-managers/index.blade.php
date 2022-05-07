@@ -51,6 +51,8 @@
                             {data: 'gym_name', name: 'Gym Name'},
                             {data: 'avatar', name: 'Avatar'},
                             {data: 'national_id', name: 'National ID'},
+                            {data: 'is_banned', name: 'Banned'},
+                            {data: 'is_approved', name: 'Approved'},
                             {data: 'action', name: 'action', orderable: false, searchable: false},
                         ]
                     });
