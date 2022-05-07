@@ -106,14 +106,15 @@ class GymManagerController extends Controller
     {
         $data = request()->all();
             $user = $gymManager->user;
-        if ($request->hasFile("image")) {
-            $path = Storage::putFile('avatars', $request->file('image'));
-            $user->avatar = $path;
-            $user->save();
+        if ($request->file('image')) {
+            $path = Storage::putFile('public/avatars/gymmanagers', $request->file('image'));
+        } else {
+            $path = env('DEFAULT_IMAGE');
         }
         $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
+            'avatar'=>$path,
             ]);
         $gymManager->gym_id = $data['gym'];
         $gymManager->save();
@@ -131,8 +132,8 @@ class GymManagerController extends Controller
     {
 
         $data = request()->all();
-        if ($request->hasFile("image")) {
-            $path = Storage::putFile('avatars', $request->file('image'));
+        if ($request->file('image')) {
+            $path = Storage::putFile('public/avatars/gymmanagers', $request->file('image'));
         } else {
             $path = env('DEFAULT_IMAGE');
         }
@@ -140,7 +141,7 @@ class GymManagerController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-//            'role_id'=>'3',
+
             'avatar'=>$path,
         ]);
         $user->assignRole('Gym Manager');
